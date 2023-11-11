@@ -1,0 +1,1300 @@
+ARM GAS  /tmp/ccJFjpfO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"objectlist.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	SDOobjects
+  20              		.global	SDO7002
+  21              		.global	SDO6502
+  22              		.global	SDO6061
+  23              		.global	SDO6060
+  24              		.global	SDO6002
+  25              		.global	SDO1C33
+  26              		.global	SDO1C32
+  27              		.global	SDO1C13
+  28              		.global	SDO1C12
+  29              		.global	SDO1C00
+  30              		.global	SDO1A00
+  31              		.global	SDO1600
+  32              		.global	SDO10F1
+  33              		.global	SDO1018
+  34              		.global	SDO100A
+  35              		.section	.rodata.str1.4,"aMS",%progbits,1
+  36              		.align	2
+  37              	.LC0:
+  38 0000 302E302E 		.ascii	"0.0.1\000"
+  38      3100
+  39              		.global	SDO1009
+  40              		.global	SDO1008
+  41 0006 0000     		.align	2
+  42              	.LC1:
+  43 0008 322D6368 		.ascii	"2-channel Hypergalactic input superimpermanator\000"
+  43      616E6E65 
+  43      6C204879 
+  43      70657267 
+  43      616C6163 
+  44              		.global	SDO1001
+  45              		.global	SDO1000
+  46              		.section	.rodata.SDO1000,"a"
+  47              		.align	2
+  50              	SDO1000:
+  51 0000 0000     		.short	0
+  52 0002 0700     		.short	7
+  53 0004 2000     		.short	32
+  54 0006 0700     		.short	7
+ARM GAS  /tmp/ccJFjpfO.s 			page 2
+
+
+  55 0008 00000000 		.word	acName1000
+  56 000c 89130000 		.word	5001
+  57 0010 00000000 		.word	0
+  58              		.section	.rodata.SDO1001,"a"
+  59              		.align	2
+  62              	SDO1001:
+  63 0000 0000     		.short	0
+  64 0002 0500     		.short	5
+  65 0004 0800     		.short	8
+  66 0006 0700     		.short	7
+  67 0008 00000000 		.word	acName1001
+  68 000c 00000000 		.word	0
+  69 0010 08000000 		.word	Obj+8
+  70              		.section	.rodata.SDO1008,"a"
+  71              		.align	2
+  74              	SDO1008:
+  75 0000 0000     		.short	0
+  76 0002 0900     		.short	9
+  77 0004 7801     		.short	376
+  78 0006 0700     		.short	7
+  79 0008 00000000 		.word	acName1008
+  80 000c 00000000 		.word	0
+  81 0010 08000000 		.word	.LC1
+  82              		.section	.rodata.SDO1009,"a"
+  83              		.align	2
+  86              	SDO1009:
+  87 0000 0000     		.short	0
+  88 0002 0900     		.short	9
+  89 0004 2800     		.short	40
+  90 0006 0700     		.short	7
+  91 0008 00000000 		.word	acName1009
+  92 000c 00000000 		.word	0
+  93 0010 00000000 		.word	.LC0
+  94              		.section	.rodata.SDO100A,"a"
+  95              		.align	2
+  98              	SDO100A:
+  99 0000 0000     		.short	0
+ 100 0002 0900     		.short	9
+ 101 0004 2800     		.short	40
+ 102 0006 0700     		.short	7
+ 103 0008 00000000 		.word	acName100A
+ 104 000c 00000000 		.word	0
+ 105 0010 00000000 		.word	.LC0
+ 106              		.section	.rodata.SDO1018,"a"
+ 107              		.align	2
+ 110              	SDO1018:
+ 111 0000 0000     		.short	0
+ 112 0002 0500     		.short	5
+ 113 0004 0800     		.short	8
+ 114 0006 0700     		.short	7
+ 115 0008 00000000 		.word	acName1018_00
+ 116 000c 04000000 		.word	4
+ 117 0010 00000000 		.word	0
+ 118 0014 0100     		.short	1
+ 119 0016 0700     		.short	7
+ 120 0018 2000     		.short	32
+ 121 001a 0700     		.short	7
+ARM GAS  /tmp/ccJFjpfO.s 			page 3
+
+
+ 122 001c 00000000 		.word	acName1018_01
+ 123 0020 00000000 		.word	0
+ 124 0024 00000000 		.word	0
+ 125 0028 0200     		.short	2
+ 126 002a 0700     		.short	7
+ 127 002c 2000     		.short	32
+ 128 002e 0700     		.short	7
+ 129 0030 00000000 		.word	acName1018_02
+ 130 0034 23B10A00 		.word	700707
+ 131 0038 00000000 		.word	0
+ 132 003c 0300     		.short	3
+ 133 003e 0700     		.short	7
+ 134 0040 2000     		.short	32
+ 135 0042 0700     		.short	7
+ 136 0044 00000000 		.word	acName1018_03
+ 137 0048 02000000 		.word	2
+ 138 004c 00000000 		.word	0
+ 139 0050 0400     		.short	4
+ 140 0052 0700     		.short	7
+ 141 0054 2000     		.short	32
+ 142 0056 0700     		.short	7
+ 143 0058 00000000 		.word	acName1018_04
+ 144 005c 01000000 		.word	1
+ 145 0060 00000000 		.word	Obj
+ 146              		.section	.rodata.SDO10F1,"a"
+ 147              		.align	2
+ 150              	SDO10F1:
+ 151 0000 0000     		.short	0
+ 152 0002 0500     		.short	5
+ 153 0004 0800     		.short	8
+ 154 0006 0700     		.short	7
+ 155 0008 00000000 		.word	acName10F1_00
+ 156 000c 02000000 		.word	2
+ 157 0010 00000000 		.word	0
+ 158 0014 0100     		.short	1
+ 159 0016 0700     		.short	7
+ 160 0018 2000     		.short	32
+ 161 001a 0700     		.short	7
+ 162 001c 00000000 		.word	acName10F1_01
+ 163 0020 00000000 		.word	0
+ 164 0024 0C000000 		.word	Obj+12
+ 165 0028 0200     		.short	2
+ 166 002a 0700     		.short	7
+ 167 002c 2000     		.short	32
+ 168 002e 0700     		.short	7
+ 169 0030 00000000 		.word	acName10F1_02
+ 170 0034 C8000000 		.word	200
+ 171 0038 10000000 		.word	Obj+16
+ 172              		.section	.rodata.SDO1600,"a"
+ 173              		.align	2
+ 176              	SDO1600:
+ 177 0000 0000     		.short	0
+ 178 0002 0500     		.short	5
+ 179 0004 0800     		.short	8
+ 180 0006 0700     		.short	7
+ 181 0008 00000000 		.word	acName1600_00
+ 182 000c 04000000 		.word	4
+ARM GAS  /tmp/ccJFjpfO.s 			page 4
+
+
+ 183 0010 00000000 		.word	0
+ 184 0014 0100     		.short	1
+ 185 0016 0700     		.short	7
+ 186 0018 2000     		.short	32
+ 187 001a 0700     		.short	7
+ 188 001c 00000000 		.word	acName1600_01
+ 189 0020 01010270 		.word	1879179521
+ 190 0024 00000000 		.word	0
+ 191 0028 0200     		.short	2
+ 192 002a 0700     		.short	7
+ 193 002c 2000     		.short	32
+ 194 002e 0700     		.short	7
+ 195 0030 00000000 		.word	acName1600_02
+ 196 0034 07000000 		.word	7
+ 197 0038 00000000 		.word	0
+ 198 003c 0300     		.short	3
+ 199 003e 0700     		.short	7
+ 200 0040 2000     		.short	32
+ 201 0042 0700     		.short	7
+ 202 0044 00000000 		.word	acName1600_03
+ 203 0048 01020270 		.word	1879179777
+ 204 004c 00000000 		.word	0
+ 205 0050 0400     		.short	4
+ 206 0052 0700     		.short	7
+ 207 0054 2000     		.short	32
+ 208 0056 0700     		.short	7
+ 209 0058 00000000 		.word	acName1600_04
+ 210 005c 07000000 		.word	7
+ 211 0060 00000000 		.word	0
+ 212              		.section	.rodata.SDO1A00,"a"
+ 213              		.align	2
+ 216              	SDO1A00:
+ 217 0000 0000     		.short	0
+ 218 0002 0500     		.short	5
+ 219 0004 0800     		.short	8
+ 220 0006 0700     		.short	7
+ 221 0008 00000000 		.word	acName1A00_00
+ 222 000c 04000000 		.word	4
+ 223 0010 00000000 		.word	0
+ 224 0014 0100     		.short	1
+ 225 0016 0700     		.short	7
+ 226 0018 2000     		.short	32
+ 227 001a 0700     		.short	7
+ 228 001c 00000000 		.word	acName1A00_01
+ 229 0020 01010260 		.word	1610744065
+ 230 0024 00000000 		.word	0
+ 231 0028 0200     		.short	2
+ 232 002a 0700     		.short	7
+ 233 002c 2000     		.short	32
+ 234 002e 0700     		.short	7
+ 235 0030 00000000 		.word	acName1A00_02
+ 236 0034 07000000 		.word	7
+ 237 0038 00000000 		.word	0
+ 238 003c 0300     		.short	3
+ 239 003e 0700     		.short	7
+ 240 0040 2000     		.short	32
+ 241 0042 0700     		.short	7
+ARM GAS  /tmp/ccJFjpfO.s 			page 5
+
+
+ 242 0044 00000000 		.word	acName1A00_03
+ 243 0048 01020260 		.word	1610744321
+ 244 004c 00000000 		.word	0
+ 245 0050 0400     		.short	4
+ 246 0052 0700     		.short	7
+ 247 0054 2000     		.short	32
+ 248 0056 0700     		.short	7
+ 249 0058 00000000 		.word	acName1A00_04
+ 250 005c 07000000 		.word	7
+ 251 0060 00000000 		.word	0
+ 252              		.section	.rodata.SDO1C00,"a"
+ 253              		.align	2
+ 256              	SDO1C00:
+ 257 0000 0000     		.short	0
+ 258 0002 0500     		.short	5
+ 259 0004 0800     		.short	8
+ 260 0006 0700     		.short	7
+ 261 0008 00000000 		.word	acName1C00_00
+ 262 000c 04000000 		.word	4
+ 263 0010 00000000 		.word	0
+ 264 0014 0100     		.short	1
+ 265 0016 0500     		.short	5
+ 266 0018 0800     		.short	8
+ 267 001a 0700     		.short	7
+ 268 001c 00000000 		.word	acName1C00_01
+ 269 0020 01000000 		.word	1
+ 270 0024 00000000 		.word	0
+ 271 0028 0200     		.short	2
+ 272 002a 0500     		.short	5
+ 273 002c 0800     		.short	8
+ 274 002e 0700     		.short	7
+ 275 0030 00000000 		.word	acName1C00_02
+ 276 0034 02000000 		.word	2
+ 277 0038 00000000 		.word	0
+ 278 003c 0300     		.short	3
+ 279 003e 0500     		.short	5
+ 280 0040 0800     		.short	8
+ 281 0042 0700     		.short	7
+ 282 0044 00000000 		.word	acName1C00_03
+ 283 0048 03000000 		.word	3
+ 284 004c 00000000 		.word	0
+ 285 0050 0400     		.short	4
+ 286 0052 0500     		.short	5
+ 287 0054 0800     		.short	8
+ 288 0056 0700     		.short	7
+ 289 0058 00000000 		.word	acName1C00_04
+ 290 005c 04000000 		.word	4
+ 291 0060 00000000 		.word	0
+ 292              		.section	.rodata.SDO1C12,"a"
+ 293              		.align	2
+ 296              	SDO1C12:
+ 297 0000 0000     		.short	0
+ 298 0002 0500     		.short	5
+ 299 0004 0800     		.short	8
+ 300 0006 0700     		.short	7
+ 301 0008 00000000 		.word	acName1C12_00
+ 302 000c 01000000 		.word	1
+ARM GAS  /tmp/ccJFjpfO.s 			page 6
+
+
+ 303 0010 00000000 		.word	0
+ 304 0014 0100     		.short	1
+ 305 0016 0600     		.short	6
+ 306 0018 1000     		.short	16
+ 307 001a 0700     		.short	7
+ 308 001c 00000000 		.word	acName1C12_01
+ 309 0020 00160000 		.word	5632
+ 310 0024 00000000 		.word	0
+ 311              		.section	.rodata.SDO1C13,"a"
+ 312              		.align	2
+ 315              	SDO1C13:
+ 316 0000 0000     		.short	0
+ 317 0002 0500     		.short	5
+ 318 0004 0800     		.short	8
+ 319 0006 0700     		.short	7
+ 320 0008 00000000 		.word	acName1C13_00
+ 321 000c 01000000 		.word	1
+ 322 0010 00000000 		.word	0
+ 323 0014 0100     		.short	1
+ 324 0016 0600     		.short	6
+ 325 0018 1000     		.short	16
+ 326 001a 0700     		.short	7
+ 327 001c 00000000 		.word	acName1C13_01
+ 328 0020 001A0000 		.word	6656
+ 329 0024 00000000 		.word	0
+ 330              		.section	.rodata.SDO1C32,"a"
+ 331              		.align	2
+ 334              	SDO1C32:
+ 335 0000 0000     		.short	0
+ 336 0002 0500     		.short	5
+ 337 0004 0800     		.short	8
+ 338 0006 0700     		.short	7
+ 339 0008 00000000 		.word	acName1C32_00
+ 340 000c 05000000 		.word	5
+ 341 0010 00000000 		.word	0
+ 342 0014 0100     		.short	1
+ 343 0016 0600     		.short	6
+ 344 0018 1000     		.short	16
+ 345 001a 0F00     		.short	15
+ 346 001c 00000000 		.word	acName1C32_01
+ 347 0020 01000000 		.word	1
+ 348 0024 14000000 		.word	Obj+20
+ 349 0028 0200     		.short	2
+ 350 002a 0700     		.short	7
+ 351 002c 2000     		.short	32
+ 352 002e 0700     		.short	7
+ 353 0030 00000000 		.word	acName1C32_02
+ 354 0034 00000000 		.word	0
+ 355 0038 18000000 		.word	Obj+24
+ 356 003c 0300     		.short	3
+ 357 003e 0700     		.short	7
+ 358 0040 2000     		.short	32
+ 359 0042 0700     		.short	7
+ 360 0044 00000000 		.word	acName1C32_03
+ 361 0048 00000000 		.word	0
+ 362 004c 1C000000 		.word	Obj+28
+ 363 0050 0400     		.short	4
+ARM GAS  /tmp/ccJFjpfO.s 			page 7
+
+
+ 364 0052 0600     		.short	6
+ 365 0054 1000     		.short	16
+ 366 0056 0700     		.short	7
+ 367 0058 00000000 		.word	acName1C32_04
+ 368 005c 06000000 		.word	6
+ 369 0060 20000000 		.word	Obj+32
+ 370 0064 0500     		.short	5
+ 371 0066 0700     		.short	7
+ 372 0068 2000     		.short	32
+ 373 006a 0700     		.short	7
+ 374 006c 00000000 		.word	acName1C32_05
+ 375 0070 48E80100 		.word	125000
+ 376 0074 24000000 		.word	Obj+36
+ 377              		.section	.rodata.SDO1C33,"a"
+ 378              		.align	2
+ 381              	SDO1C33:
+ 382 0000 0000     		.short	0
+ 383 0002 0500     		.short	5
+ 384 0004 0800     		.short	8
+ 385 0006 0700     		.short	7
+ 386 0008 00000000 		.word	acName1C33_00
+ 387 000c 05000000 		.word	5
+ 388 0010 00000000 		.word	0
+ 389 0014 0100     		.short	1
+ 390 0016 0600     		.short	6
+ 391 0018 1000     		.short	16
+ 392 001a 0F00     		.short	15
+ 393 001c 00000000 		.word	acName1C33_01
+ 394 0020 01000000 		.word	1
+ 395 0024 28000000 		.word	Obj+40
+ 396 0028 0200     		.short	2
+ 397 002a 0700     		.short	7
+ 398 002c 2000     		.short	32
+ 399 002e 0700     		.short	7
+ 400 0030 00000000 		.word	acName1C33_02
+ 401 0034 00000000 		.word	0
+ 402 0038 2C000000 		.word	Obj+44
+ 403 003c 0300     		.short	3
+ 404 003e 0700     		.short	7
+ 405 0040 2000     		.short	32
+ 406 0042 0700     		.short	7
+ 407 0044 00000000 		.word	acName1C33_03
+ 408 0048 00000000 		.word	0
+ 409 004c 30000000 		.word	Obj+48
+ 410 0050 0400     		.short	4
+ 411 0052 0600     		.short	6
+ 412 0054 1000     		.short	16
+ 413 0056 0700     		.short	7
+ 414 0058 00000000 		.word	acName1C33_04
+ 415 005c 06000000 		.word	6
+ 416 0060 34000000 		.word	Obj+52
+ 417 0064 0500     		.short	5
+ 418 0066 0700     		.short	7
+ 419 0068 2000     		.short	32
+ 420 006a 0700     		.short	7
+ 421 006c 00000000 		.word	acName1C33_05
+ 422 0070 48E80100 		.word	125000
+ARM GAS  /tmp/ccJFjpfO.s 			page 8
+
+
+ 423 0074 38000000 		.word	Obj+56
+ 424              		.section	.rodata.SDO6002,"a"
+ 425              		.align	2
+ 428              	SDO6002:
+ 429 0000 0000     		.short	0
+ 430 0002 0500     		.short	5
+ 431 0004 0800     		.short	8
+ 432 0006 0700     		.short	7
+ 433 0008 00000000 		.word	acName6002_00
+ 434 000c 02000000 		.word	2
+ 435 0010 00000000 		.word	0
+ 436 0014 0100     		.short	1
+ 437 0016 0100     		.short	1
+ 438 0018 0100     		.short	1
+ 439 001a 0700     		.short	7
+ 440 001c 00000000 		.word	acName6002_01
+ 441 0020 00000000 		.word	0
+ 442 0024 04000000 		.word	Obj+4
+ 443 0028 0200     		.short	2
+ 444 002a 0100     		.short	1
+ 445 002c 0100     		.short	1
+ 446 002e 0700     		.short	7
+ 447 0030 00000000 		.word	acName6002_02
+ 448 0034 00000000 		.word	0
+ 449 0038 05000000 		.word	Obj+5
+ 450              		.section	.rodata.SDO6060,"a"
+ 451              		.align	2
+ 454              	SDO6060:
+ 455 0000 0000     		.short	0
+ 456 0002 0200     		.short	2
+ 457 0004 0800     		.short	8
+ 458 0006 0700     		.short	7
+ 459 0008 00000000 		.word	acName6060
+ 460 000c 00000000 		.word	0
+ 461 0010 3C000000 		.word	Obj+60
+ 462              		.section	.rodata.SDO6061,"a"
+ 463              		.align	2
+ 466              	SDO6061:
+ 467 0000 0000     		.short	0
+ 468 0002 0200     		.short	2
+ 469 0004 0800     		.short	8
+ 470 0006 0700     		.short	7
+ 471 0008 00000000 		.word	acName6061
+ 472 000c 00000000 		.word	0
+ 473 0010 3D000000 		.word	Obj+61
+ 474              		.section	.rodata.SDO6502,"a"
+ 475              		.align	2
+ 478              	SDO6502:
+ 479 0000 0000     		.short	0
+ 480 0002 0700     		.short	7
+ 481 0004 2000     		.short	32
+ 482 0006 0700     		.short	7
+ 483 0008 00000000 		.word	acName6502
+ 484 000c 00000000 		.word	0
+ 485 0010 40000000 		.word	Obj+64
+ 486              		.section	.rodata.SDO7002,"a"
+ 487              		.align	2
+ARM GAS  /tmp/ccJFjpfO.s 			page 9
+
+
+ 490              	SDO7002:
+ 491 0000 0000     		.short	0
+ 492 0002 0500     		.short	5
+ 493 0004 0800     		.short	8
+ 494 0006 0700     		.short	7
+ 495 0008 00000000 		.word	acName7002_00
+ 496 000c 02000000 		.word	2
+ 497 0010 00000000 		.word	0
+ 498 0014 0100     		.short	1
+ 499 0016 0100     		.short	1
+ 500 0018 0100     		.short	1
+ 501 001a 3F00     		.short	63
+ 502 001c 00000000 		.word	acName7002_01
+ 503 0020 00000000 		.word	0
+ 504 0024 06000000 		.word	Obj+6
+ 505 0028 0200     		.short	2
+ 506 002a 0100     		.short	1
+ 507 002c 0100     		.short	1
+ 508 002e 3F00     		.short	63
+ 509 0030 00000000 		.word	acName7002_02
+ 510 0034 00000000 		.word	0
+ 511 0038 07000000 		.word	Obj+7
+ 512              		.section	.rodata.SDOobjects,"a"
+ 513              		.align	2
+ 516              	SDOobjects:
+ 517 0000 0010     		.short	4096
+ 518 0002 0700     		.short	7
+ 519 0004 00       		.byte	0
+ 520 0005 00       		.byte	0
+ 521 0006 0000     		.space	2
+ 522 0008 00000000 		.word	acName1000
+ 523 000c 00000000 		.word	SDO1000
+ 524 0010 0110     		.short	4097
+ 525 0012 0700     		.short	7
+ 526 0014 00       		.byte	0
+ 527 0015 00       		.byte	0
+ 528 0016 0000     		.space	2
+ 529 0018 00000000 		.word	acName1001
+ 530 001c 00000000 		.word	SDO1001
+ 531 0020 0810     		.short	4104
+ 532 0022 0700     		.short	7
+ 533 0024 00       		.byte	0
+ 534 0025 00       		.byte	0
+ 535 0026 0000     		.space	2
+ 536 0028 00000000 		.word	acName1008
+ 537 002c 00000000 		.word	SDO1008
+ 538 0030 0910     		.short	4105
+ 539 0032 0700     		.short	7
+ 540 0034 00       		.byte	0
+ 541 0035 00       		.byte	0
+ 542 0036 0000     		.space	2
+ 543 0038 00000000 		.word	acName1009
+ 544 003c 00000000 		.word	SDO1009
+ 545 0040 0A10     		.short	4106
+ 546 0042 0700     		.short	7
+ 547 0044 00       		.byte	0
+ 548 0045 00       		.byte	0
+ARM GAS  /tmp/ccJFjpfO.s 			page 10
+
+
+ 549 0046 0000     		.space	2
+ 550 0048 00000000 		.word	acName100A
+ 551 004c 00000000 		.word	SDO100A
+ 552 0050 1810     		.short	4120
+ 553 0052 0900     		.short	9
+ 554 0054 04       		.byte	4
+ 555 0055 00       		.byte	0
+ 556 0056 0000     		.space	2
+ 557 0058 00000000 		.word	acName1018
+ 558 005c 00000000 		.word	SDO1018
+ 559 0060 F110     		.short	4337
+ 560 0062 0900     		.short	9
+ 561 0064 02       		.byte	2
+ 562 0065 00       		.byte	0
+ 563 0066 0000     		.space	2
+ 564 0068 00000000 		.word	acName10F1
+ 565 006c 00000000 		.word	SDO10F1
+ 566 0070 0016     		.short	5632
+ 567 0072 0900     		.short	9
+ 568 0074 04       		.byte	4
+ 569 0075 00       		.byte	0
+ 570 0076 0000     		.space	2
+ 571 0078 00000000 		.word	acName1600
+ 572 007c 00000000 		.word	SDO1600
+ 573 0080 001A     		.short	6656
+ 574 0082 0900     		.short	9
+ 575 0084 04       		.byte	4
+ 576 0085 00       		.byte	0
+ 577 0086 0000     		.space	2
+ 578 0088 00000000 		.word	acName1A00
+ 579 008c 00000000 		.word	SDO1A00
+ 580 0090 001C     		.short	7168
+ 581 0092 0800     		.short	8
+ 582 0094 04       		.byte	4
+ 583 0095 00       		.byte	0
+ 584 0096 0000     		.space	2
+ 585 0098 00000000 		.word	acName1C00
+ 586 009c 00000000 		.word	SDO1C00
+ 587 00a0 121C     		.short	7186
+ 588 00a2 0800     		.short	8
+ 589 00a4 01       		.byte	1
+ 590 00a5 00       		.byte	0
+ 591 00a6 0000     		.space	2
+ 592 00a8 00000000 		.word	acName1C12
+ 593 00ac 00000000 		.word	SDO1C12
+ 594 00b0 131C     		.short	7187
+ 595 00b2 0800     		.short	8
+ 596 00b4 01       		.byte	1
+ 597 00b5 00       		.byte	0
+ 598 00b6 0000     		.space	2
+ 599 00b8 00000000 		.word	acName1C13
+ 600 00bc 00000000 		.word	SDO1C13
+ 601 00c0 321C     		.short	7218
+ 602 00c2 0900     		.short	9
+ 603 00c4 05       		.byte	5
+ 604 00c5 00       		.byte	0
+ 605 00c6 0000     		.space	2
+ARM GAS  /tmp/ccJFjpfO.s 			page 11
+
+
+ 606 00c8 00000000 		.word	acName1C32
+ 607 00cc 00000000 		.word	SDO1C32
+ 608 00d0 331C     		.short	7219
+ 609 00d2 0900     		.short	9
+ 610 00d4 05       		.byte	5
+ 611 00d5 00       		.byte	0
+ 612 00d6 0000     		.space	2
+ 613 00d8 00000000 		.word	acName1C33
+ 614 00dc 00000000 		.word	SDO1C33
+ 615 00e0 0260     		.short	24578
+ 616 00e2 0900     		.short	9
+ 617 00e4 02       		.byte	2
+ 618 00e5 00       		.byte	0
+ 619 00e6 0000     		.space	2
+ 620 00e8 00000000 		.word	acName6002
+ 621 00ec 00000000 		.word	SDO6002
+ 622 00f0 6060     		.short	24672
+ 623 00f2 0700     		.short	7
+ 624 00f4 00       		.byte	0
+ 625 00f5 00       		.byte	0
+ 626 00f6 0000     		.space	2
+ 627 00f8 00000000 		.word	acName6060
+ 628 00fc 00000000 		.word	SDO6060
+ 629 0100 6160     		.short	24673
+ 630 0102 0700     		.short	7
+ 631 0104 00       		.byte	0
+ 632 0105 00       		.byte	0
+ 633 0106 0000     		.space	2
+ 634 0108 00000000 		.word	acName6061
+ 635 010c 00000000 		.word	SDO6061
+ 636 0110 0265     		.short	25858
+ 637 0112 0700     		.short	7
+ 638 0114 00       		.byte	0
+ 639 0115 00       		.byte	0
+ 640 0116 0000     		.space	2
+ 641 0118 00000000 		.word	acName6502
+ 642 011c 00000000 		.word	SDO6502
+ 643 0120 0270     		.short	28674
+ 644 0122 0900     		.short	9
+ 645 0124 02       		.byte	2
+ 646 0125 00       		.byte	0
+ 647 0126 0000     		.space	2
+ 648 0128 00000000 		.word	acName7002
+ 649 012c 00000000 		.word	SDO7002
+ 650 0130 FFFF     		.short	-1
+ 651 0132 FF00     		.short	255
+ 652 0134 FF       		.byte	-1
+ 653 0135 FF       		.byte	-1
+ 654 0136 0000     		.space	2
+ 655 0138 00000000 		.word	0
+ 656 013c 00000000 		.word	0
+ 657              		.section	.rodata.acName1000,"a"
+ 658              		.align	2
+ 661              	acName1000:
+ 662 0000 44657669 		.ascii	"Device Type\000"
+ 662      63652054 
+ 662      79706500 
+ARM GAS  /tmp/ccJFjpfO.s 			page 12
+
+
+ 663              		.section	.rodata.acName1001,"a"
+ 664              		.align	2
+ 667              	acName1001:
+ 668 0000 4572726F 		.ascii	"Error register\000"
+ 668      72207265 
+ 668      67697374 
+ 668      657200
+ 669              		.section	.rodata.acName1008,"a"
+ 670              		.align	2
+ 673              	acName1008:
+ 674 0000 44657669 		.ascii	"Device Name\000"
+ 674      6365204E 
+ 674      616D6500 
+ 675              		.section	.rodata.acName1009,"a"
+ 676              		.align	2
+ 679              	acName1009:
+ 680 0000 48617264 		.ascii	"Hardware Version\000"
+ 680      77617265 
+ 680      20566572 
+ 680      73696F6E 
+ 680      00
+ 681              		.section	.rodata.acName100A,"a"
+ 682              		.align	2
+ 685              	acName100A:
+ 686 0000 536F6674 		.ascii	"Software Version\000"
+ 686      77617265 
+ 686      20566572 
+ 686      73696F6E 
+ 686      00
+ 687              		.section	.rodata.acName1018,"a"
+ 688              		.align	2
+ 691              	acName1018:
+ 692 0000 4964656E 		.ascii	"Identity Object\000"
+ 692      74697479 
+ 692      204F626A 
+ 692      65637400 
+ 693              		.section	.rodata.acName1018_00,"a"
+ 694              		.align	2
+ 697              	acName1018_00:
+ 698 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 698      53756249 
+ 698      6E646578 
+ 698      00
+ 699              		.section	.rodata.acName1018_01,"a"
+ 700              		.align	2
+ 703              	acName1018_01:
+ 704 0000 56656E64 		.ascii	"Vendor ID\000"
+ 704      6F722049 
+ 704      4400
+ 705              		.section	.rodata.acName1018_02,"a"
+ 706              		.align	2
+ 709              	acName1018_02:
+ 710 0000 50726F64 		.ascii	"Product Code\000"
+ 710      75637420 
+ 710      436F6465 
+ 710      00
+ 711              		.section	.rodata.acName1018_03,"a"
+ARM GAS  /tmp/ccJFjpfO.s 			page 13
+
+
+ 712              		.align	2
+ 715              	acName1018_03:
+ 716 0000 52657669 		.ascii	"Revision Number\000"
+ 716      73696F6E 
+ 716      204E756D 
+ 716      62657200 
+ 717              		.section	.rodata.acName1018_04,"a"
+ 718              		.align	2
+ 721              	acName1018_04:
+ 722 0000 53657269 		.ascii	"Serial Number\000"
+ 722      616C204E 
+ 722      756D6265 
+ 722      7200
+ 723              		.section	.rodata.acName10F1,"a"
+ 724              		.align	2
+ 727              	acName10F1:
+ 728 0000 4572726F 		.ascii	"Error Settings\000"
+ 728      72205365 
+ 728      7474696E 
+ 728      677300
+ 729              		.section	.rodata.acName10F1_00,"a"
+ 730              		.align	2
+ 733              	acName10F1_00:
+ 734 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 734      53756249 
+ 734      6E646578 
+ 734      00
+ 735              		.section	.rodata.acName10F1_01,"a"
+ 736              		.align	2
+ 739              	acName10F1_01:
+ 740 0000 4C6F6361 		.ascii	"Local Error Reaction\000"
+ 740      6C204572 
+ 740      726F7220 
+ 740      52656163 
+ 740      74696F6E 
+ 741              		.section	.rodata.acName10F1_02,"a"
+ 742              		.align	2
+ 745              	acName10F1_02:
+ 746 0000 53796E63 		.ascii	"SyncErrorCounterLimit\000"
+ 746      4572726F 
+ 746      72436F75 
+ 746      6E746572 
+ 746      4C696D69 
+ 747              		.section	.rodata.acName1600,"a"
+ 748              		.align	2
+ 751              	acName1600:
+ 752 0000 6C65645F 		.ascii	"led_rx\000"
+ 752      727800
+ 753              		.section	.rodata.acName1600_00,"a"
+ 754              		.align	2
+ 757              	acName1600_00:
+ 758 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 758      53756249 
+ 758      6E646578 
+ 758      00
+ 759              		.section	.rodata.acName1600_01,"a"
+ 760              		.align	2
+ARM GAS  /tmp/ccJFjpfO.s 			page 14
+
+
+ 763              	acName1600_01:
+ 764 0000 6C656432 		.ascii	"led2_rx\000"
+ 764      5F727800 
+ 765              		.section	.rodata.acName1600_02,"a"
+ 766              		.align	2
+ 769              	acName1600_02:
+ 770 0000 50616464 		.ascii	"Padding 3\000"
+ 770      696E6720 
+ 770      3300
+ 771              		.section	.rodata.acName1600_03,"a"
+ 772              		.align	2
+ 775              	acName1600_03:
+ 776 0000 6C656431 		.ascii	"led1_rx\000"
+ 776      5F727800 
+ 777              		.section	.rodata.acName1600_04,"a"
+ 778              		.align	2
+ 781              	acName1600_04:
+ 782 0000 50616464 		.ascii	"Padding 4\000"
+ 782      696E6720 
+ 782      3400
+ 783              		.section	.rodata.acName1A00,"a"
+ 784              		.align	2
+ 787              	acName1A00:
+ 788 0000 6C65645F 		.ascii	"led_tx\000"
+ 788      747800
+ 789              		.section	.rodata.acName1A00_00,"a"
+ 790              		.align	2
+ 793              	acName1A00_00:
+ 794 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 794      53756249 
+ 794      6E646578 
+ 794      00
+ 795              		.section	.rodata.acName1A00_01,"a"
+ 796              		.align	2
+ 799              	acName1A00_01:
+ 800 0000 6C656431 		.ascii	"led1_tx\000"
+ 800      5F747800 
+ 801              		.section	.rodata.acName1A00_02,"a"
+ 802              		.align	2
+ 805              	acName1A00_02:
+ 806 0000 50616464 		.ascii	"Padding 1\000"
+ 806      696E6720 
+ 806      3100
+ 807              		.section	.rodata.acName1A00_03,"a"
+ 808              		.align	2
+ 811              	acName1A00_03:
+ 812 0000 6C656432 		.ascii	"led2_tx\000"
+ 812      5F747800 
+ 813              		.section	.rodata.acName1A00_04,"a"
+ 814              		.align	2
+ 817              	acName1A00_04:
+ 818 0000 50616464 		.ascii	"Padding 2\000"
+ 818      696E6720 
+ 818      3200
+ 819              		.section	.rodata.acName1C00,"a"
+ 820              		.align	2
+ 823              	acName1C00:
+ARM GAS  /tmp/ccJFjpfO.s 			page 15
+
+
+ 824 0000 53796E63 		.ascii	"Sync Manager Communication Type\000"
+ 824      204D616E 
+ 824      61676572 
+ 824      20436F6D 
+ 824      6D756E69 
+ 825              		.section	.rodata.acName1C00_00,"a"
+ 826              		.align	2
+ 829              	acName1C00_00:
+ 830 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 830      53756249 
+ 830      6E646578 
+ 830      00
+ 831              		.section	.rodata.acName1C00_01,"a"
+ 832              		.align	2
+ 835              	acName1C00_01:
+ 836 0000 436F6D6D 		.ascii	"Communications Type SM0\000"
+ 836      756E6963 
+ 836      6174696F 
+ 836      6E732054 
+ 836      79706520 
+ 837              		.section	.rodata.acName1C00_02,"a"
+ 838              		.align	2
+ 841              	acName1C00_02:
+ 842 0000 436F6D6D 		.ascii	"Communications Type SM1\000"
+ 842      756E6963 
+ 842      6174696F 
+ 842      6E732054 
+ 842      79706520 
+ 843              		.section	.rodata.acName1C00_03,"a"
+ 844              		.align	2
+ 847              	acName1C00_03:
+ 848 0000 436F6D6D 		.ascii	"Communications Type SM2\000"
+ 848      756E6963 
+ 848      6174696F 
+ 848      6E732054 
+ 848      79706520 
+ 849              		.section	.rodata.acName1C00_04,"a"
+ 850              		.align	2
+ 853              	acName1C00_04:
+ 854 0000 436F6D6D 		.ascii	"Communications Type SM3\000"
+ 854      756E6963 
+ 854      6174696F 
+ 854      6E732054 
+ 854      79706520 
+ 855              		.section	.rodata.acName1C12,"a"
+ 856              		.align	2
+ 859              	acName1C12:
+ 860 0000 53796E63 		.ascii	"Sync Manager 2 PDO Assignment\000"
+ 860      204D616E 
+ 860      61676572 
+ 860      20322050 
+ 860      444F2041 
+ 861              		.section	.rodata.acName1C12_00,"a"
+ 862              		.align	2
+ 865              	acName1C12_00:
+ 866 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 866      53756249 
+ARM GAS  /tmp/ccJFjpfO.s 			page 16
+
+
+ 866      6E646578 
+ 866      00
+ 867              		.section	.rodata.acName1C12_01,"a"
+ 868              		.align	2
+ 871              	acName1C12_01:
+ 872 0000 50444F20 		.ascii	"PDO Mapping\000"
+ 872      4D617070 
+ 872      696E6700 
+ 873              		.section	.rodata.acName1C13,"a"
+ 874              		.align	2
+ 877              	acName1C13:
+ 878 0000 53796E63 		.ascii	"Sync Manager 3 PDO Assignment\000"
+ 878      204D616E 
+ 878      61676572 
+ 878      20332050 
+ 878      444F2041 
+ 879              		.section	.rodata.acName1C13_00,"a"
+ 880              		.align	2
+ 883              	acName1C13_00:
+ 884 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 884      53756249 
+ 884      6E646578 
+ 884      00
+ 885              		.section	.rodata.acName1C13_01,"a"
+ 886              		.align	2
+ 889              	acName1C13_01:
+ 890 0000 50444F20 		.ascii	"PDO Mapping\000"
+ 890      4D617070 
+ 890      696E6700 
+ 891              		.section	.rodata.acName1C32,"a"
+ 892              		.align	2
+ 895              	acName1C32:
+ 896 0000 53796E63 		.ascii	"Sync Manager 2 Parameters\000"
+ 896      204D616E 
+ 896      61676572 
+ 896      20322050 
+ 896      6172616D 
+ 897              		.section	.rodata.acName1C32_00,"a"
+ 898              		.align	2
+ 901              	acName1C32_00:
+ 902 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 902      53756249 
+ 902      6E646578 
+ 902      00
+ 903              		.section	.rodata.acName1C32_01,"a"
+ 904              		.align	2
+ 907              	acName1C32_01:
+ 908 0000 53796E63 		.ascii	"Sync mode\000"
+ 908      206D6F64 
+ 908      6500
+ 909              		.section	.rodata.acName1C32_02,"a"
+ 910              		.align	2
+ 913              	acName1C32_02:
+ 914 0000 4379636C 		.ascii	"CycleTime\000"
+ 914      6554696D 
+ 914      6500
+ 915              		.section	.rodata.acName1C32_03,"a"
+ARM GAS  /tmp/ccJFjpfO.s 			page 17
+
+
+ 916              		.align	2
+ 919              	acName1C32_03:
+ 920 0000 53686966 		.ascii	"ShiftTime\000"
+ 920      7454696D 
+ 920      6500
+ 921              		.section	.rodata.acName1C32_04,"a"
+ 922              		.align	2
+ 925              	acName1C32_04:
+ 926 0000 53796E63 		.ascii	"Sync modes supported\000"
+ 926      206D6F64 
+ 926      65732073 
+ 926      7570706F 
+ 926      72746564 
+ 927              		.section	.rodata.acName1C32_05,"a"
+ 928              		.align	2
+ 931              	acName1C32_05:
+ 932 0000 4D696E69 		.ascii	"Minimum Cycle Time\000"
+ 932      6D756D20 
+ 932      4379636C 
+ 932      65205469 
+ 932      6D6500
+ 933              		.section	.rodata.acName1C33,"a"
+ 934              		.align	2
+ 937              	acName1C33:
+ 938 0000 53796E63 		.ascii	"Sync Manager 3 Parameters\000"
+ 938      204D616E 
+ 938      61676572 
+ 938      20332050 
+ 938      6172616D 
+ 939              		.section	.rodata.acName1C33_00,"a"
+ 940              		.align	2
+ 943              	acName1C33_00:
+ 944 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 944      53756249 
+ 944      6E646578 
+ 944      00
+ 945              		.section	.rodata.acName1C33_01,"a"
+ 946              		.align	2
+ 949              	acName1C33_01:
+ 950 0000 53796E63 		.ascii	"Sync mode\000"
+ 950      206D6F64 
+ 950      6500
+ 951              		.section	.rodata.acName1C33_02,"a"
+ 952              		.align	2
+ 955              	acName1C33_02:
+ 956 0000 4379636C 		.ascii	"CycleTime\000"
+ 956      6554696D 
+ 956      6500
+ 957              		.section	.rodata.acName1C33_03,"a"
+ 958              		.align	2
+ 961              	acName1C33_03:
+ 962 0000 53686966 		.ascii	"ShiftTime\000"
+ 962      7454696D 
+ 962      6500
+ 963              		.section	.rodata.acName1C33_04,"a"
+ 964              		.align	2
+ 967              	acName1C33_04:
+ARM GAS  /tmp/ccJFjpfO.s 			page 18
+
+
+ 968 0000 53796E63 		.ascii	"Sync modes supported\000"
+ 968      206D6F64 
+ 968      65732073 
+ 968      7570706F 
+ 968      72746564 
+ 969              		.section	.rodata.acName1C33_05,"a"
+ 970              		.align	2
+ 973              	acName1C33_05:
+ 974 0000 4D696E69 		.ascii	"Minimum Cycle Time\000"
+ 974      6D756D20 
+ 974      4379636C 
+ 974      65205469 
+ 974      6D6500
+ 975              		.section	.rodata.acName6002,"a"
+ 976              		.align	2
+ 979              	acName6002:
+ 980 0000 6C65645F 		.ascii	"led_tx\000"
+ 980      747800
+ 981              		.section	.rodata.acName6002_00,"a"
+ 982              		.align	2
+ 985              	acName6002_00:
+ 986 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 986      53756249 
+ 986      6E646578 
+ 986      00
+ 987              		.section	.rodata.acName6002_01,"a"
+ 988              		.align	2
+ 991              	acName6002_01:
+ 992 0000 6C656431 		.ascii	"led1_tx\000"
+ 992      5F747800 
+ 993              		.section	.rodata.acName6002_02,"a"
+ 994              		.align	2
+ 997              	acName6002_02:
+ 998 0000 6C656432 		.ascii	"led2_tx\000"
+ 998      5F747800 
+ 999              		.section	.rodata.acName6060,"a"
+ 1000              		.align	2
+ 1003              	acName6060:
+ 1004 0000 4D6F6465 		.ascii	"Modes of operation\000"
+ 1004      73206F66 
+ 1004      206F7065 
+ 1004      72617469 
+ 1004      6F6E00
+ 1005              		.section	.rodata.acName6061,"a"
+ 1006              		.align	2
+ 1009              	acName6061:
+ 1010 0000 4D6F6465 		.ascii	"Mode of operation display\000"
+ 1010      206F6620 
+ 1010      6F706572 
+ 1010      6174696F 
+ 1010      6E206469 
+ 1011              		.section	.rodata.acName6502,"a"
+ 1012              		.align	2
+ 1015              	acName6502:
+ 1016 0000 53757070 		.ascii	"Supported drive modes\000"
+ 1016      6F727465 
+ 1016      64206472 
+ARM GAS  /tmp/ccJFjpfO.s 			page 19
+
+
+ 1016      69766520 
+ 1016      6D6F6465 
+ 1017              		.section	.rodata.acName7002,"a"
+ 1018              		.align	2
+ 1021              	acName7002:
+ 1022 0000 6C65645F 		.ascii	"led_rx\000"
+ 1022      727800
+ 1023              		.section	.rodata.acName7002_00,"a"
+ 1024              		.align	2
+ 1027              	acName7002_00:
+ 1028 0000 4D617820 		.ascii	"Max SubIndex\000"
+ 1028      53756249 
+ 1028      6E646578 
+ 1028      00
+ 1029              		.section	.rodata.acName7002_01,"a"
+ 1030              		.align	2
+ 1033              	acName7002_01:
+ 1034 0000 6C656432 		.ascii	"led2_rx\000"
+ 1034      5F727800 
+ 1035              		.section	.rodata.acName7002_02,"a"
+ 1036              		.align	2
+ 1039              	acName7002_02:
+ 1040 0000 6C656431 		.ascii	"led1_rx\000"
+ 1040      5F727800 
+ 1041              		.text
+ 1042              	.Letext0:
+ 1043              		.file 1 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 1044              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 1045              		.file 3 "Lib/soes/inc/esc_coe.h"
+ 1046              		.file 4 "Lib/soes-esi/utypes.h"
+ 1047              		.file 5 "Lib/soes-esi/objectlist.c"
+ARM GAS  /tmp/ccJFjpfO.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 objectlist.c
+     /tmp/ccJFjpfO.s:516    .rodata.SDOobjects:0000000000000000 SDOobjects
+     /tmp/ccJFjpfO.s:490    .rodata.SDO7002:0000000000000000 SDO7002
+     /tmp/ccJFjpfO.s:478    .rodata.SDO6502:0000000000000000 SDO6502
+     /tmp/ccJFjpfO.s:466    .rodata.SDO6061:0000000000000000 SDO6061
+     /tmp/ccJFjpfO.s:454    .rodata.SDO6060:0000000000000000 SDO6060
+     /tmp/ccJFjpfO.s:428    .rodata.SDO6002:0000000000000000 SDO6002
+     /tmp/ccJFjpfO.s:381    .rodata.SDO1C33:0000000000000000 SDO1C33
+     /tmp/ccJFjpfO.s:334    .rodata.SDO1C32:0000000000000000 SDO1C32
+     /tmp/ccJFjpfO.s:315    .rodata.SDO1C13:0000000000000000 SDO1C13
+     /tmp/ccJFjpfO.s:296    .rodata.SDO1C12:0000000000000000 SDO1C12
+     /tmp/ccJFjpfO.s:256    .rodata.SDO1C00:0000000000000000 SDO1C00
+     /tmp/ccJFjpfO.s:216    .rodata.SDO1A00:0000000000000000 SDO1A00
+     /tmp/ccJFjpfO.s:176    .rodata.SDO1600:0000000000000000 SDO1600
+     /tmp/ccJFjpfO.s:150    .rodata.SDO10F1:0000000000000000 SDO10F1
+     /tmp/ccJFjpfO.s:110    .rodata.SDO1018:0000000000000000 SDO1018
+     /tmp/ccJFjpfO.s:98     .rodata.SDO100A:0000000000000000 SDO100A
+     /tmp/ccJFjpfO.s:36     .rodata.str1.4:0000000000000000 $d
+     /tmp/ccJFjpfO.s:86     .rodata.SDO1009:0000000000000000 SDO1009
+     /tmp/ccJFjpfO.s:74     .rodata.SDO1008:0000000000000000 SDO1008
+     /tmp/ccJFjpfO.s:62     .rodata.SDO1001:0000000000000000 SDO1001
+     /tmp/ccJFjpfO.s:50     .rodata.SDO1000:0000000000000000 SDO1000
+     /tmp/ccJFjpfO.s:47     .rodata.SDO1000:0000000000000000 $d
+     /tmp/ccJFjpfO.s:661    .rodata.acName1000:0000000000000000 acName1000
+     /tmp/ccJFjpfO.s:59     .rodata.SDO1001:0000000000000000 $d
+     /tmp/ccJFjpfO.s:667    .rodata.acName1001:0000000000000000 acName1001
+     /tmp/ccJFjpfO.s:71     .rodata.SDO1008:0000000000000000 $d
+     /tmp/ccJFjpfO.s:673    .rodata.acName1008:0000000000000000 acName1008
+     /tmp/ccJFjpfO.s:83     .rodata.SDO1009:0000000000000000 $d
+     /tmp/ccJFjpfO.s:679    .rodata.acName1009:0000000000000000 acName1009
+     /tmp/ccJFjpfO.s:95     .rodata.SDO100A:0000000000000000 $d
+     /tmp/ccJFjpfO.s:685    .rodata.acName100A:0000000000000000 acName100A
+     /tmp/ccJFjpfO.s:107    .rodata.SDO1018:0000000000000000 $d
+     /tmp/ccJFjpfO.s:697    .rodata.acName1018_00:0000000000000000 acName1018_00
+     /tmp/ccJFjpfO.s:703    .rodata.acName1018_01:0000000000000000 acName1018_01
+     /tmp/ccJFjpfO.s:709    .rodata.acName1018_02:0000000000000000 acName1018_02
+     /tmp/ccJFjpfO.s:715    .rodata.acName1018_03:0000000000000000 acName1018_03
+     /tmp/ccJFjpfO.s:721    .rodata.acName1018_04:0000000000000000 acName1018_04
+     /tmp/ccJFjpfO.s:147    .rodata.SDO10F1:0000000000000000 $d
+     /tmp/ccJFjpfO.s:733    .rodata.acName10F1_00:0000000000000000 acName10F1_00
+     /tmp/ccJFjpfO.s:739    .rodata.acName10F1_01:0000000000000000 acName10F1_01
+     /tmp/ccJFjpfO.s:745    .rodata.acName10F1_02:0000000000000000 acName10F1_02
+     /tmp/ccJFjpfO.s:173    .rodata.SDO1600:0000000000000000 $d
+     /tmp/ccJFjpfO.s:757    .rodata.acName1600_00:0000000000000000 acName1600_00
+     /tmp/ccJFjpfO.s:763    .rodata.acName1600_01:0000000000000000 acName1600_01
+     /tmp/ccJFjpfO.s:769    .rodata.acName1600_02:0000000000000000 acName1600_02
+     /tmp/ccJFjpfO.s:775    .rodata.acName1600_03:0000000000000000 acName1600_03
+     /tmp/ccJFjpfO.s:781    .rodata.acName1600_04:0000000000000000 acName1600_04
+     /tmp/ccJFjpfO.s:213    .rodata.SDO1A00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:793    .rodata.acName1A00_00:0000000000000000 acName1A00_00
+     /tmp/ccJFjpfO.s:799    .rodata.acName1A00_01:0000000000000000 acName1A00_01
+     /tmp/ccJFjpfO.s:805    .rodata.acName1A00_02:0000000000000000 acName1A00_02
+     /tmp/ccJFjpfO.s:811    .rodata.acName1A00_03:0000000000000000 acName1A00_03
+     /tmp/ccJFjpfO.s:817    .rodata.acName1A00_04:0000000000000000 acName1A00_04
+     /tmp/ccJFjpfO.s:253    .rodata.SDO1C00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:829    .rodata.acName1C00_00:0000000000000000 acName1C00_00
+ARM GAS  /tmp/ccJFjpfO.s 			page 21
+
+
+     /tmp/ccJFjpfO.s:835    .rodata.acName1C00_01:0000000000000000 acName1C00_01
+     /tmp/ccJFjpfO.s:841    .rodata.acName1C00_02:0000000000000000 acName1C00_02
+     /tmp/ccJFjpfO.s:847    .rodata.acName1C00_03:0000000000000000 acName1C00_03
+     /tmp/ccJFjpfO.s:853    .rodata.acName1C00_04:0000000000000000 acName1C00_04
+     /tmp/ccJFjpfO.s:293    .rodata.SDO1C12:0000000000000000 $d
+     /tmp/ccJFjpfO.s:865    .rodata.acName1C12_00:0000000000000000 acName1C12_00
+     /tmp/ccJFjpfO.s:871    .rodata.acName1C12_01:0000000000000000 acName1C12_01
+     /tmp/ccJFjpfO.s:312    .rodata.SDO1C13:0000000000000000 $d
+     /tmp/ccJFjpfO.s:883    .rodata.acName1C13_00:0000000000000000 acName1C13_00
+     /tmp/ccJFjpfO.s:889    .rodata.acName1C13_01:0000000000000000 acName1C13_01
+     /tmp/ccJFjpfO.s:331    .rodata.SDO1C32:0000000000000000 $d
+     /tmp/ccJFjpfO.s:901    .rodata.acName1C32_00:0000000000000000 acName1C32_00
+     /tmp/ccJFjpfO.s:907    .rodata.acName1C32_01:0000000000000000 acName1C32_01
+     /tmp/ccJFjpfO.s:913    .rodata.acName1C32_02:0000000000000000 acName1C32_02
+     /tmp/ccJFjpfO.s:919    .rodata.acName1C32_03:0000000000000000 acName1C32_03
+     /tmp/ccJFjpfO.s:925    .rodata.acName1C32_04:0000000000000000 acName1C32_04
+     /tmp/ccJFjpfO.s:931    .rodata.acName1C32_05:0000000000000000 acName1C32_05
+     /tmp/ccJFjpfO.s:378    .rodata.SDO1C33:0000000000000000 $d
+     /tmp/ccJFjpfO.s:943    .rodata.acName1C33_00:0000000000000000 acName1C33_00
+     /tmp/ccJFjpfO.s:949    .rodata.acName1C33_01:0000000000000000 acName1C33_01
+     /tmp/ccJFjpfO.s:955    .rodata.acName1C33_02:0000000000000000 acName1C33_02
+     /tmp/ccJFjpfO.s:961    .rodata.acName1C33_03:0000000000000000 acName1C33_03
+     /tmp/ccJFjpfO.s:967    .rodata.acName1C33_04:0000000000000000 acName1C33_04
+     /tmp/ccJFjpfO.s:973    .rodata.acName1C33_05:0000000000000000 acName1C33_05
+     /tmp/ccJFjpfO.s:425    .rodata.SDO6002:0000000000000000 $d
+     /tmp/ccJFjpfO.s:985    .rodata.acName6002_00:0000000000000000 acName6002_00
+     /tmp/ccJFjpfO.s:991    .rodata.acName6002_01:0000000000000000 acName6002_01
+     /tmp/ccJFjpfO.s:997    .rodata.acName6002_02:0000000000000000 acName6002_02
+     /tmp/ccJFjpfO.s:451    .rodata.SDO6060:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1003   .rodata.acName6060:0000000000000000 acName6060
+     /tmp/ccJFjpfO.s:463    .rodata.SDO6061:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1009   .rodata.acName6061:0000000000000000 acName6061
+     /tmp/ccJFjpfO.s:475    .rodata.SDO6502:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1015   .rodata.acName6502:0000000000000000 acName6502
+     /tmp/ccJFjpfO.s:487    .rodata.SDO7002:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1027   .rodata.acName7002_00:0000000000000000 acName7002_00
+     /tmp/ccJFjpfO.s:1033   .rodata.acName7002_01:0000000000000000 acName7002_01
+     /tmp/ccJFjpfO.s:1039   .rodata.acName7002_02:0000000000000000 acName7002_02
+     /tmp/ccJFjpfO.s:513    .rodata.SDOobjects:0000000000000000 $d
+     /tmp/ccJFjpfO.s:691    .rodata.acName1018:0000000000000000 acName1018
+     /tmp/ccJFjpfO.s:727    .rodata.acName10F1:0000000000000000 acName10F1
+     /tmp/ccJFjpfO.s:751    .rodata.acName1600:0000000000000000 acName1600
+     /tmp/ccJFjpfO.s:787    .rodata.acName1A00:0000000000000000 acName1A00
+     /tmp/ccJFjpfO.s:823    .rodata.acName1C00:0000000000000000 acName1C00
+     /tmp/ccJFjpfO.s:859    .rodata.acName1C12:0000000000000000 acName1C12
+     /tmp/ccJFjpfO.s:877    .rodata.acName1C13:0000000000000000 acName1C13
+     /tmp/ccJFjpfO.s:895    .rodata.acName1C32:0000000000000000 acName1C32
+     /tmp/ccJFjpfO.s:937    .rodata.acName1C33:0000000000000000 acName1C33
+     /tmp/ccJFjpfO.s:979    .rodata.acName6002:0000000000000000 acName6002
+     /tmp/ccJFjpfO.s:1021   .rodata.acName7002:0000000000000000 acName7002
+     /tmp/ccJFjpfO.s:658    .rodata.acName1000:0000000000000000 $d
+     /tmp/ccJFjpfO.s:664    .rodata.acName1001:0000000000000000 $d
+     /tmp/ccJFjpfO.s:670    .rodata.acName1008:0000000000000000 $d
+     /tmp/ccJFjpfO.s:676    .rodata.acName1009:0000000000000000 $d
+     /tmp/ccJFjpfO.s:682    .rodata.acName100A:0000000000000000 $d
+     /tmp/ccJFjpfO.s:688    .rodata.acName1018:0000000000000000 $d
+     /tmp/ccJFjpfO.s:694    .rodata.acName1018_00:0000000000000000 $d
+ARM GAS  /tmp/ccJFjpfO.s 			page 22
+
+
+     /tmp/ccJFjpfO.s:700    .rodata.acName1018_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:706    .rodata.acName1018_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:712    .rodata.acName1018_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:718    .rodata.acName1018_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:724    .rodata.acName10F1:0000000000000000 $d
+     /tmp/ccJFjpfO.s:730    .rodata.acName10F1_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:736    .rodata.acName10F1_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:742    .rodata.acName10F1_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:748    .rodata.acName1600:0000000000000000 $d
+     /tmp/ccJFjpfO.s:754    .rodata.acName1600_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:760    .rodata.acName1600_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:766    .rodata.acName1600_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:772    .rodata.acName1600_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:778    .rodata.acName1600_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:784    .rodata.acName1A00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:790    .rodata.acName1A00_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:796    .rodata.acName1A00_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:802    .rodata.acName1A00_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:808    .rodata.acName1A00_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:814    .rodata.acName1A00_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:820    .rodata.acName1C00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:826    .rodata.acName1C00_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:832    .rodata.acName1C00_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:838    .rodata.acName1C00_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:844    .rodata.acName1C00_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:850    .rodata.acName1C00_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:856    .rodata.acName1C12:0000000000000000 $d
+     /tmp/ccJFjpfO.s:862    .rodata.acName1C12_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:868    .rodata.acName1C12_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:874    .rodata.acName1C13:0000000000000000 $d
+     /tmp/ccJFjpfO.s:880    .rodata.acName1C13_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:886    .rodata.acName1C13_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:892    .rodata.acName1C32:0000000000000000 $d
+     /tmp/ccJFjpfO.s:898    .rodata.acName1C32_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:904    .rodata.acName1C32_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:910    .rodata.acName1C32_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:916    .rodata.acName1C32_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:922    .rodata.acName1C32_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:928    .rodata.acName1C32_05:0000000000000000 $d
+     /tmp/ccJFjpfO.s:934    .rodata.acName1C33:0000000000000000 $d
+     /tmp/ccJFjpfO.s:940    .rodata.acName1C33_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:946    .rodata.acName1C33_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:952    .rodata.acName1C33_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:958    .rodata.acName1C33_03:0000000000000000 $d
+     /tmp/ccJFjpfO.s:964    .rodata.acName1C33_04:0000000000000000 $d
+     /tmp/ccJFjpfO.s:970    .rodata.acName1C33_05:0000000000000000 $d
+     /tmp/ccJFjpfO.s:976    .rodata.acName6002:0000000000000000 $d
+     /tmp/ccJFjpfO.s:982    .rodata.acName6002_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:988    .rodata.acName6002_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:994    .rodata.acName6002_02:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1000   .rodata.acName6060:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1006   .rodata.acName6061:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1012   .rodata.acName6502:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1018   .rodata.acName7002:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1024   .rodata.acName7002_00:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1030   .rodata.acName7002_01:0000000000000000 $d
+     /tmp/ccJFjpfO.s:1036   .rodata.acName7002_02:0000000000000000 $d
+ARM GAS  /tmp/ccJFjpfO.s 			page 23
+
+
+
+UNDEFINED SYMBOLS
+Obj
