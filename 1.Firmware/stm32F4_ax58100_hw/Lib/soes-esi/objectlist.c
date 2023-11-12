@@ -18,18 +18,14 @@ static const char acName10F1[] = "Error Settings";
 static const char acName10F1_00[] = "Max SubIndex";
 static const char acName10F1_01[] = "Local Error Reaction";
 static const char acName10F1_02[] = "SyncErrorCounterLimit";
-static const char acName1600[] = "led_rx";
+static const char acName1600[] = "led";
 static const char acName1600_00[] = "Max SubIndex";
-static const char acName1600_01[] = "led2_rx";
-static const char acName1600_02[] = "Padding 3";
-static const char acName1600_03[] = "led1_rx";
-static const char acName1600_04[] = "Padding 4";
-static const char acName1A00[] = "led_tx";
+static const char acName1600_01[] = "L0";
+static const char acName1600_02[] = "L1";
+static const char acName1600_03[] = "L2";
+static const char acName1A00[] = "can1_rec";
 static const char acName1A00_00[] = "Max SubIndex";
-static const char acName1A00_01[] = "led1_tx";
-static const char acName1A00_02[] = "Padding 1";
-static const char acName1A00_03[] = "led2_tx";
-static const char acName1A00_04[] = "Padding 2";
+static const char acName1A00_01[] = "stdid";
 static const char acName1C00[] = "Sync Manager Communication Type";
 static const char acName1C00_00[] = "Max SubIndex";
 static const char acName1C00_01[] = "Communications Type SM0";
@@ -56,17 +52,17 @@ static const char acName1C33_02[] = "CycleTime";
 static const char acName1C33_03[] = "ShiftTime";
 static const char acName1C33_04[] = "Sync modes supported";
 static const char acName1C33_05[] = "Minimum Cycle Time";
-static const char acName6002[] = "led_tx";
-static const char acName6002_00[] = "Max SubIndex";
-static const char acName6002_01[] = "led1_tx";
-static const char acName6002_02[] = "led2_tx";
+static const char acName6000[] = "can1_rec";
+static const char acName6000_00[] = "Max SubIndex";
+static const char acName6000_01[] = "stdid";
 static const char acName6060[] = "Modes of operation";
 static const char acName6061[] = "Mode of operation display";
 static const char acName6502[] = "Supported drive modes";
-static const char acName7002[] = "led_rx";
-static const char acName7002_00[] = "Max SubIndex";
-static const char acName7002_01[] = "led2_rx";
-static const char acName7002_02[] = "led1_rx";
+static const char acName7000[] = "led";
+static const char acName7000_00[] = "Max SubIndex";
+static const char acName7000_01[] = "L0";
+static const char acName7000_02[] = "L1";
+static const char acName7000_03[] = "L2";
 
 const _objd SDO1000[] =
 {
@@ -104,19 +100,15 @@ const _objd SDO10F1[] =
 };
 const _objd SDO1600[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1600_00, 4, NULL},
-  {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_01, 0x70020101, NULL},
-  {0x02, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_02, 0x00000007, NULL},
-  {0x03, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_03, 0x70020201, NULL},
-  {0x04, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_04, 0x00000007, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1600_00, 3, NULL},
+  {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_01, 0x70000101, NULL},
+  {0x02, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_02, 0x70000201, NULL},
+  {0x03, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_03, 0x70000301, NULL},
 };
 const _objd SDO1A00[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1A00_00, 4, NULL},
-  {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_01, 0x60020101, NULL},
-  {0x02, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_02, 0x00000007, NULL},
-  {0x03, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_03, 0x60020201, NULL},
-  {0x04, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_04, 0x00000007, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1A00_00, 1, NULL},
+  {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_01, 0x60000120, NULL},
 };
 const _objd SDO1C00[] =
 {
@@ -154,11 +146,10 @@ const _objd SDO1C33[] =
   {0x04, DTYPE_UNSIGNED16, 16, ATYPE_RO, acName1C33_04, 6, &Obj.Sync_Manager_3_Parameters.Sync_modes_supported},
   {0x05, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1C33_05, 125000, &Obj.Sync_Manager_3_Parameters.Minimum_Cycle_Time},
 };
-const _objd SDO6002[] =
+const _objd SDO6000[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName6002_00, 2, NULL},
-  {0x01, DTYPE_BOOLEAN, 1, ATYPE_RO, acName6002_01, 0, &Obj.led_tx.led1_tx},
-  {0x02, DTYPE_BOOLEAN, 1, ATYPE_RO, acName6002_02, 0, &Obj.led_tx.led2_tx},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName6000_00, 1, NULL},
+  {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RW, acName6000_01, 0, &Obj.can1_rec.stdid},
 };
 const _objd SDO6060[] =
 {
@@ -172,11 +163,12 @@ const _objd SDO6502[] =
 {
   {0x0, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName6502, 0, &Obj.Supported_drive_modes},
 };
-const _objd SDO7002[] =
+const _objd SDO7000[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName7002_00, 2, NULL},
-  {0x01, DTYPE_BOOLEAN, 1, ATYPE_RW, acName7002_01, 0, &Obj.led_rx.led2_rx},
-  {0x02, DTYPE_BOOLEAN, 1, ATYPE_RW, acName7002_02, 0, &Obj.led_rx.led1_rx},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName7000_00, 3, NULL},
+  {0x01, DTYPE_BOOLEAN, 1, ATYPE_RO | ATYPE_RXPDO, acName7000_01, 0, &Obj.led[0]},
+  {0x02, DTYPE_BOOLEAN, 1, ATYPE_RO | ATYPE_RXPDO, acName7000_02, 0, &Obj.led[1]},
+  {0x03, DTYPE_BOOLEAN, 1, ATYPE_RO | ATYPE_RXPDO, acName7000_03, 0, &Obj.led[2]},
 };
 
 const _objectlist SDOobjects[] =
@@ -188,17 +180,17 @@ const _objectlist SDOobjects[] =
   {0x100A, OTYPE_VAR, 0, 0, acName100A, SDO100A},
   {0x1018, OTYPE_RECORD, 4, 0, acName1018, SDO1018},
   {0x10F1, OTYPE_RECORD, 2, 0, acName10F1, SDO10F1},
-  {0x1600, OTYPE_RECORD, 4, 0, acName1600, SDO1600},
-  {0x1A00, OTYPE_RECORD, 4, 0, acName1A00, SDO1A00},
+  {0x1600, OTYPE_RECORD, 3, 0, acName1600, SDO1600},
+  {0x1A00, OTYPE_RECORD, 1, 0, acName1A00, SDO1A00},
   {0x1C00, OTYPE_ARRAY, 4, 0, acName1C00, SDO1C00},
   {0x1C12, OTYPE_ARRAY, 1, 0, acName1C12, SDO1C12},
   {0x1C13, OTYPE_ARRAY, 1, 0, acName1C13, SDO1C13},
   {0x1C32, OTYPE_RECORD, 5, 0, acName1C32, SDO1C32},
   {0x1C33, OTYPE_RECORD, 5, 0, acName1C33, SDO1C33},
-  {0x6002, OTYPE_RECORD, 2, 0, acName6002, SDO6002},
+  {0x6000, OTYPE_RECORD, 1, 0, acName6000, SDO6000},
   {0x6060, OTYPE_VAR, 0, 0, acName6060, SDO6060},
   {0x6061, OTYPE_VAR, 0, 0, acName6061, SDO6061},
   {0x6502, OTYPE_VAR, 0, 0, acName6502, SDO6502},
-  {0x7002, OTYPE_RECORD, 2, 0, acName7002, SDO7002},
+  {0x7000, OTYPE_ARRAY, 3, 0, acName7000, SDO7000},
   {0xffff, 0xff, 0xff, 0xff, NULL, NULL}
 };

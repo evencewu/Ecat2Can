@@ -167,27 +167,20 @@
       }
     },
     "txpdo": {
-      "6002": {
+      "6000": {
         "otype": "RECORD",
-        "name": "led_tx",
+        "name": "can1_rec",
         "access": "RO",
         "items": [
           {
             "name": "Max SubIndex"
           },
           {
-            "name": "led1_tx",
-            "dtype": "BOOLEAN",
-            "data": "&Obj.led_tx.led1_tx",
+            "name": "stdid",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can1_rec.stdid",
             "value": "0",
-            "access": "RO"
-          },
-          {
-            "name": "led2_tx",
-            "dtype": "BOOLEAN",
-            "value": "0",
-            "access": "RO",
-            "data": "&Obj.led_tx.led2_tx"
+            "access": "RW"
           }
         ],
         "pdo_mappings": [
@@ -196,32 +189,34 @@
       }
     },
     "rxpdo": {
-      "7002": {
-        "otype": "RECORD",
-        "name": "led_rx",
+      "7000": {
+        "otype": "ARRAY",
+        "name": "led",
         "access": "RO",
         "items": [
           {
             "name": "Max SubIndex"
           },
           {
-            "name": "led2_rx",
-            "dtype": "BOOLEAN",
-            "data": "&Obj.led_rx.led2_rx",
-            "value": "0",
-            "access": "RW"
+            "name": "L0",
+            "data": "&Obj.led[0]",
+            "value": "0"
           },
           {
-            "name": "led1_rx",
-            "dtype": "BOOLEAN",
+            "name": "L1",
             "value": "0",
-            "access": "RW",
-            "data": "&Obj.led_rx.led1_rx"
+            "data": "&Obj.led[1]"
+          },
+          {
+            "name": "L2",
+            "value": "0",
+            "data": "&Obj.led[2]"
           }
         ],
         "pdo_mappings": [
           "rxpdo"
-        ]
+        ],
+        "dtype": "BOOLEAN"
       }
     }
   },

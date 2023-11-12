@@ -19,7 +19,9 @@ build/ecatapp.o: Core/Src/ecatapp.c Lib/soes/inc/esc.h Lib/soes/inc/cc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_tim.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h \
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h \
+ Lib/bsp/Inc/bsp_can.h Lib/bsp/Inc/stm32f4xx_conf.h
 Lib/soes/inc/esc.h:
 Lib/soes/inc/cc.h:
 Lib/soes/inc/esc_coe.h:
@@ -49,4 +51,7 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_syscfg.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_tim.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h:
+Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h:
+Lib/bsp/Inc/bsp_can.h:
+Lib/bsp/Inc/stm32f4xx_conf.h:

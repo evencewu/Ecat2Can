@@ -15,17 +15,12 @@ typedef struct
 
    struct
    {
-      uint8_t led1_tx;
-      uint8_t led2_tx;
-   } led_tx;
+      uint32_t stdid;
+   } can1_rec;
 
    /* Outputs */
 
-   struct
-   {
-      uint8_t led2_rx;
-      uint8_t led1_rx;
-   } led_rx;
+   uint8_t led[3];
 
    /* Parameters */
 

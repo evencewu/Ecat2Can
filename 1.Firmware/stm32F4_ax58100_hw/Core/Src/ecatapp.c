@@ -7,6 +7,13 @@
 #include "ecatapp.h"
 #include "stm32f4xx.h"
 
+#include "bsp_can.h"
+
+extern __IO uint32_t flag;
+
+extern CanTxMsg TxMessage; // 发送缓冲区
+extern CanRxMsg RxMessage; // 接收缓冲区
+
 /* CANopen Object Dictionary */
 _Objects Obj;
 
@@ -97,7 +104,24 @@ void ecatapp()
 
 void cb_get_inputs()
 {
-    if (Obj.led_rx.led1_rx != 0)
+    //TxMessage.StdId = Obj.can1.stdid; 
+    //TxMessage.ExtId = Obj.can1.extid;
+    //TxMessage.IDE = Obj.can1.ide; 
+    //TxMessage.RTR = Obj.can1.rtr;
+    //TxMessage.DLC = Obj.can1.dlc;
+
+    //TxMessage.Data[0] = Obj.can1.data_0;
+    //TxMessage.Data[1] = Obj.can1.data_1;
+    //TxMessage.Data[2] = Obj.can1.data_2;
+    //TxMessage.Data[3] = Obj.can1.data_3;
+    //TxMessage.Data[4] = Obj.can1.data_4;
+    //TxMessage.Data[5] = Obj.can1.data_5;
+    //TxMessage.Data[6] = Obj.can1.data_6;
+    //TxMessage.Data[7] = Obj.can1.data_7;
+
+    //CAN_Transmit(CANx, &TxMessage);
+
+    if (Obj.led[0] != 0)
     {
         GPIO_SetBits(GPIOB, GPIO_Pin_15);
     }
@@ -106,7 +130,7 @@ void cb_get_inputs()
         GPIO_ResetBits(GPIOB, GPIO_Pin_15);
     }
 
-    if (Obj.led_rx.led2_rx != 0)
+    if (Obj.led[1] != 0)
     {
         GPIO_SetBits(GPIOB, GPIO_Pin_14);
     }
@@ -114,12 +138,20 @@ void cb_get_inputs()
     {
         GPIO_ResetBits(GPIOB, GPIO_Pin_14);
     }
+
+    if (Obj.led[2] != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_13);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+    }
 }
 
 void cb_set_outputs()
 {
-    Obj.led_tx.led1_tx = Obj.led_rx.led1_rx;
-    Obj.led_tx.led2_tx = Obj.led_rx.led2_rx;
+
 }
 
 void ecatapp_loop(void)

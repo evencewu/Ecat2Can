@@ -5,7 +5,9 @@
 #include "ecat_slv.h"
 #include "ecatapp.h"
 
+#include "bsp_can.h"
 #include "bsp_led.h"
+
 
 // uint32_t ecatapp_benchmark_us(void);
 
@@ -15,8 +17,11 @@ int main(void)
 	delay_init();
 
 	led_setup();
+	CAN_Config();
 
 	ecatapp_init();
+
+	//CAN_FIFORelease(CAN1,CAN_FIFO0);
 
 	while (1)
 	{
