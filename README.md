@@ -1,1 +1,1 @@
-# Ecat2can 1000HZ
+# Ecat2can 

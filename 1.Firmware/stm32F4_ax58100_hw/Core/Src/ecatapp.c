@@ -104,22 +104,22 @@ void ecatapp()
 
 void cb_get_inputs()
 {
-    //TxMessage.StdId = Obj.can1.stdid; 
-    //TxMessage.ExtId = Obj.can1.extid;
-    //TxMessage.IDE = Obj.can1.ide; 
-    //TxMessage.RTR = Obj.can1.rtr;
-    //TxMessage.DLC = Obj.can1.dlc;
+    TxMessage.StdId = Obj.can1.StdId; 
+    TxMessage.ExtId = Obj.can1.ExtId;
+    TxMessage.IDE = Obj.can1.IDE; 
+    TxMessage.RTR = Obj.can1.RTR;
+    TxMessage.DLC = Obj.can1.DLC;
 
-    //TxMessage.Data[0] = Obj.can1.data_0;
-    //TxMessage.Data[1] = Obj.can1.data_1;
-    //TxMessage.Data[2] = Obj.can1.data_2;
-    //TxMessage.Data[3] = Obj.can1.data_3;
-    //TxMessage.Data[4] = Obj.can1.data_4;
-    //TxMessage.Data[5] = Obj.can1.data_5;
-    //TxMessage.Data[6] = Obj.can1.data_6;
-    //TxMessage.Data[7] = Obj.can1.data_7;
+    TxMessage.Data[0] = Obj.can1_data[0];
+    TxMessage.Data[1] = Obj.can1_data[1];
+    TxMessage.Data[2] = Obj.can1_data[2];
+    TxMessage.Data[3] = Obj.can1_data[3];
+    TxMessage.Data[4] = Obj.can1_data[4];
+    TxMessage.Data[5] = Obj.can1_data[5];
+    TxMessage.Data[6] = Obj.can1_data[6];
+    TxMessage.Data[7] = Obj.can1_data[7];
 
-    //CAN_Transmit(CANx, &TxMessage);
+    CAN_Transmit(CANx, &TxMessage);
 
     if (Obj.led[0] != 0)
     {

@@ -74,19 +74,52 @@ void simpletest(char *ifname)
                         {
                                 printf("Operational state reached for all slaves.\n");
                                 inOP = TRUE;
+                                int led_tag = 0;
+                                int led_loop = 0;
                                 /* cyclic loop */
                                 for (i = 1; i <= 10000; i++)
                                 {
+
+                                        ec_slave[0].outputs[0x0000] = 0x01;
+                                        ec_slave[0].outputs[0x0001] = 0x00;
+                                        ec_slave[0].outputs[0x0002] = 0x00;
+                                        ec_slave[0].outputs[0x0003] = 0x00;
+                                        ec_slave[0].outputs[0x0004] = 0x00;
+                                        ec_slave[0].outputs[0x0005] = 0x00;
+                                        ec_slave[0].outputs[0x0006] = 0x00;
+                                        ec_slave[0].outputs[0x0007] = 0x08;
+                                        ec_slave[0].outputs[0x0008] = 0xFF;
+                                        ec_slave[0].outputs[0x0009] = 0xFF;
+                                        ec_slave[0].outputs[0x000A] = 0xFF;
+                                        ec_slave[0].outputs[0x000B] = 0xFF;
+                                        ec_slave[0].outputs[0x000C] = 0xFF;
+                                        ec_slave[0].outputs[0x000D] = 0xFF;
+                                        ec_slave[0].outputs[0x000E] = 0xFF;
+                                        ec_slave[0].outputs[0x000F] = 0xFC;
+
+                                        ec_slave[0].outputs[0x0010] = led_tag;
+
+                                        led_loop++;
+
+                                        if (led_loop == 100)
+                                        {
+                                                led_loop=0;
+                                                led_tag++;
+                                        }
+
+                                        if (led_tag == 6)
+                                        {
+                                                led_tag = 0;
+                                        }
+
                                         ec_send_processdata();
                                         wkc = ec_receive_processdata(EC_TIMEOUTRET);
 
                                         if (wkc >= expectedWKC)
                                         {
-                                                ec_slave[0].outputs[0x0000] = 0x00;
-                                                ec_slave[0].outputs[0x0001] = 0x00;
                                                 needlf = TRUE;
                                         }
-                                        osal_usleep(5000);
+                                        osal_usleep(10000);
                                 }
                                 inOP = FALSE;
                         }
@@ -207,7 +240,7 @@ int main(int argc, char *argv[])
         {
                 /* create thread to handle slave error handling in OP */
                 //      pthread_create( &thread1, NULL, (void *) &ecatcheck, (void*) &ctime);
-                osal_thread_create(&thread1, 128000, (void *) &ecatcheck, (void *)&ctime);
+                osal_thread_create(&thread1, 128000, (void *)&ecatcheck, (void *)&ctime);
                 /* start cyclic part */
                 simpletest(argv[1]);
         }

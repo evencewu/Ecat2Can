@@ -27,6 +27,8 @@ link_directories(lib)
 add_executable(test_ecat src/test_ecat.cpp)
 ament_target_dependencies(test_ecat rclcpp soem_ros2)
 
+add_executable(test_demo src/test_demo.cpp)
+ament_target_dependencies(test_demo rclcpp soem_ros2)
 
 
 install(
@@ -37,6 +39,7 @@ install(
 install(
   TARGETS 
   test_ecat
+  test_demo
   DESTINATION lib/${PROJECT_NAME})
 
 

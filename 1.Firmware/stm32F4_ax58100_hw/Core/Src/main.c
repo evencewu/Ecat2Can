@@ -8,7 +8,6 @@
 #include "bsp_can.h"
 #include "bsp_led.h"
 
-
 // uint32_t ecatapp_benchmark_us(void);
 
 int main(void)
@@ -21,17 +20,18 @@ int main(void)
 
 	ecatapp_init();
 
-	//CAN_FIFORelease(CAN1,CAN_FIFO0);
+	// CAN_FIFORelease(CAN1,CAN_FIFO0);
 
 	while (1)
 	{
+
 		// GPIO_SetBits(GPIOB, GPIO_Pin_15);
 		// GPIO_SetBits(GPIOB, GPIO_Pin_14);
 		// GPIO_SetBits(GPIOB, GPIO_Pin_13);
 
 		// ecatapp_benchmark_us();
 		ecat_slv();
-		//ecatapp_loop();
+		// ecatapp_loop();
 	}
 }
 
