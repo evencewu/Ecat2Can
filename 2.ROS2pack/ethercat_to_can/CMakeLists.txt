@@ -20,7 +20,6 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(soem_ros2 REQUIRED)
 
-
 include_directories(include)
 link_directories(lib)
 
