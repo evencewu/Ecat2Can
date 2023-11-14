@@ -15,7 +15,7 @@ void EcatStop();
 
 char IOmap[4096];
 volatile int wkc;
-
+uint8_t heart = 0;
 //
 #include "ethercat_to_can/ecat_typedef.h"
 
@@ -89,13 +89,20 @@ void EcatSyncMsg(uint8_t *data)
         ec_slave[0].outputs[0x000E] = *(data+14);
         ec_slave[0].outputs[0x000F] = *(data+15);
 
-        ec_slave[0].outputs[0x0010] = 0x0F;
+        ec_slave[0].outputs[0x0010] = heart;
+
+        heart++;
+        if(heart == 5)
+        {
+            heart = 0;
+        }
+        ec_slave[0].outputs[0x0011] = *(data+17);
 
         ec_send_processdata();
 
         ec_receive_processdata(EC_TIMEOUTRET);
 
-        osal_usleep(500);
+        osal_usleep(1000);
     }
     else
     {

@@ -17,7 +17,7 @@
 #define TX_PADDING_SIZE 8 - ADDR_SIZE                                  // COE_pdo(Un)pack wants buffers aligned to 64 bit grid
                                                                        // when address is setting, read is ALevent that it is not going to COE
                                                                        // so buffers are larger by offset so COE part starts on even address
-#define PDO_SIZE sizeof(Obj.can1) + sizeof(Obj.can1_data) + sizeof(Obj.led) // SM2_sml
+#define PDO_SIZE sizeof(Obj.can1_tx) + sizeof(Obj.can1_tx_data) + sizeof(Obj.led) + sizeof(Obj.beat_heart) // SM2_sml
 #define PDO_TR_SIZE PDO_SIZE + ADDR_SIZE + WAIT_SIZE
 
 enum DMA_PDI_transmission_state_t

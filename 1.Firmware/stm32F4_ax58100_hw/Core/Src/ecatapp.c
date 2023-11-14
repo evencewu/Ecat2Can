@@ -9,6 +9,10 @@
 
 #include "bsp_can.h"
 
+int last_heart = 0;
+int heart[10] = {0};
+bool heart_tag = 0;
+
 extern __IO uint32_t flag;
 
 extern CanTxMsg TxMessage; // 发送缓冲区
@@ -104,22 +108,47 @@ void ecatapp()
 
 void cb_get_inputs()
 {
-    TxMessage.StdId = Obj.can1.StdId; 
-    TxMessage.ExtId = Obj.can1.ExtId;
-    TxMessage.IDE = Obj.can1.IDE; 
-    TxMessage.RTR = Obj.can1.RTR;
-    TxMessage.DLC = Obj.can1.DLC;
+    //for(int i = 9;i >= 1;i--)
+    //{
+    //    heart[i] = heart[i-1];
+    //}
+    //
+    //heart[0] = Obj.beat_heart;
 
-    TxMessage.Data[0] = Obj.can1_data[0];
-    TxMessage.Data[1] = Obj.can1_data[1];
-    TxMessage.Data[2] = Obj.can1_data[2];
-    TxMessage.Data[3] = Obj.can1_data[3];
-    TxMessage.Data[4] = Obj.can1_data[4];
-    TxMessage.Data[5] = Obj.can1_data[5];
-    TxMessage.Data[6] = Obj.can1_data[6];
-    TxMessage.Data[7] = Obj.can1_data[7];
+    //TxMessage.StdId = 0;
+    //TxMessage.ExtId = 0;
+    //TxMessage.IDE = 0;
+    //TxMessage.RTR = 0;
+    //TxMessage.DLC = 0x08;
+    //
+    //TxMessage.Data[0] = 0;
+    //TxMessage.Data[1] = 0;
+    //TxMessage.Data[2] = 0;
+    //TxMessage.Data[3] = 0;
+    //TxMessage.Data[4] = 0;
+    //TxMessage.Data[5] = 0;
+    //TxMessage.Data[6] = 0;
+    //TxMessage.Data[7] = 0;
 
-    CAN_Transmit(CANx, &TxMessage);
+    //if (heart == last_heart)
+    //{
+    //    return;
+    //}
+
+    TxMessage.StdId = Obj.can1_tx.StdId;
+    TxMessage.ExtId = Obj.can1_tx.ExtId;
+    TxMessage.IDE = Obj.can1_tx.IDE;
+    TxMessage.RTR = Obj.can1_tx.RTR;
+    TxMessage.DLC = Obj.can1_tx.DLC;
+
+    TxMessage.Data[0] = Obj.can1_tx_data[0];
+    TxMessage.Data[1] = Obj.can1_tx_data[1];
+    TxMessage.Data[2] = Obj.can1_tx_data[2];
+    TxMessage.Data[3] = Obj.can1_tx_data[3];
+    TxMessage.Data[4] = Obj.can1_tx_data[4];
+    TxMessage.Data[5] = Obj.can1_tx_data[5];
+    TxMessage.Data[6] = Obj.can1_tx_data[6];
+    TxMessage.Data[7] = Obj.can1_tx_data[7];
 
     if (Obj.led[0] != 0)
     {
@@ -151,7 +180,20 @@ void cb_get_inputs()
 
 void cb_set_outputs()
 {
+    Obj.can1_rx.StdId = RxMessage.StdId;
+    Obj.can1_rx.ExtId = RxMessage.ExtId;
+    Obj.can1_rx.IDE = RxMessage.IDE;
+    Obj.can1_rx.RTR = RxMessage.RTR;
+    Obj.can1_rx.DLC = RxMessage.DLC;
 
+    Obj.can1_rx_data[0] = RxMessage.Data[0];
+    Obj.can1_rx_data[1] = RxMessage.Data[1];
+    Obj.can1_rx_data[2] = RxMessage.Data[2];
+    Obj.can1_rx_data[3] = RxMessage.Data[3];
+    Obj.can1_rx_data[4] = RxMessage.Data[4];
+    Obj.can1_rx_data[5] = RxMessage.Data[5];
+    Obj.can1_rx_data[6] = RxMessage.Data[6];
+    Obj.can1_rx_data[7] = RxMessage.Data[7];
 }
 
 void ecatapp_loop(void)

@@ -7,9 +7,14 @@
 
 #include "bsp_can.h"
 #include "bsp_led.h"
+#include "bsp_tim3.h"
+
+extern CanTxMsg TxMessage; // 发送缓冲区
+extern CanRxMsg RxMessage; // 接收缓冲区
+
+extern bool heart_tag;
 
 // uint32_t ecatapp_benchmark_us(void);
-
 int main(void)
 {
 	SysTick_Config(SystemCoreClock / 1000);
@@ -20,18 +25,30 @@ int main(void)
 
 	ecatapp_init();
 
+	// TIMx_Configuration();
+
 	// CAN_FIFORelease(CAN1,CAN_FIFO0);
 
 	while (1)
 	{
-
 		// GPIO_SetBits(GPIOB, GPIO_Pin_15);
 		// GPIO_SetBits(GPIOB, GPIO_Pin_14);
 		// GPIO_SetBits(GPIOB, GPIO_Pin_13);
 
-		// ecatapp_benchmark_us();
 		ecat_slv();
+		CAN_Transmit(CANx, &TxMessage);
+
+		// ecatapp_benchmark_us();
+
 		// ecatapp_loop();
+	}
+}
+
+void TIM6_DAC_IRQHandler(void)
+{
+	if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+	{
+		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 	}
 }
 

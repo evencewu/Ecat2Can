@@ -95,7 +95,8 @@ Core/Src/pdo_override.c \
 Core/Src/ecatapp.c \
 Core/Src/main.c \
 Lib/bsp/src/bsp_can.c \
-Lib/bsp/src/bsp_led.c
+Lib/bsp/src/bsp_led.c \
+Lib/bsp/src/bsp_tim3.c
 
 # ASM sources
 ASM_SOURCES =  \

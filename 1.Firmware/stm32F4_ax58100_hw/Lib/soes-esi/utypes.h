@@ -15,8 +15,13 @@ typedef struct
 
    struct
    {
-      uint8_t stdid;
-   } can1_rec;
+      uint32_t StdId;
+      uint8_t ExtId;
+      uint8_t IDE;
+      uint8_t RTR;
+      uint8_t DLC;
+   } can1_rx;
+   uint8_t can1_rx_data[8];
 
    /* Outputs */
 
@@ -27,8 +32,9 @@ typedef struct
       uint8_t IDE;
       uint8_t RTR;
       uint8_t DLC;
-   } can1;
-   uint8_t can1_data[8];
+   } can1_tx;
+   uint8_t can1_tx_data[8];
+   uint8_t beat_heart;
    uint8_t led[3];
 
    /* Parameters */

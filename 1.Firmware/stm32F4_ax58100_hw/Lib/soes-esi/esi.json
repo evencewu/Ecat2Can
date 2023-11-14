@@ -169,29 +169,7 @@
     "txpdo": {
       "6000": {
         "otype": "RECORD",
-        "name": "can1_rec",
-        "access": "RO",
-        "items": [
-          {
-            "name": "Max SubIndex"
-          },
-          {
-            "name": "stdid",
-            "dtype": "UNSIGNED8",
-            "data": "&Obj.can1_rec.stdid",
-            "value": "0",
-            "access": "RW"
-          }
-        ],
-        "pdo_mappings": [
-          "txpdo"
-        ]
-      }
-    },
-    "rxpdo": {
-      "7000": {
-        "otype": "RECORD",
-        "name": "can1",
+        "name": "can1_rx",
         "access": "RO",
         "items": [
           {
@@ -200,7 +178,111 @@
           {
             "name": "StdId",
             "dtype": "UNSIGNED32",
-            "data": "&Obj.can1.StdId",
+            "data": "&Obj.can1_rx.StdId",
+            "value": "0",
+            "access": "RW"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "data": "&Obj.can1_rx.ExtId",
+            "value": "0",
+            "access": "RW"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_rx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_rx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "data": "&Obj.can1_rx.DLC",
+            "value": "0",
+            "access": "RO"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ]
+      },
+      "6001": {
+        "otype": "ARRAY",
+        "name": "can1_rx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can1_rx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[5]"
+          },
+          {
+            "name": "d7",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[6]"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ],
+        "dtype": "UNSIGNED8"
+      }
+    },
+    "rxpdo": {
+      "7000": {
+        "otype": "RECORD",
+        "name": "can1_tx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can1_tx.StdId",
             "value": "0",
             "access": "RO"
           },
@@ -209,28 +291,28 @@
             "dtype": "UNSIGNED8",
             "value": "0",
             "access": "RO",
-            "data": "&Obj.can1.ExtId"
+            "data": "&Obj.can1_tx.ExtId"
           },
           {
             "name": "IDE",
             "dtype": "UNSIGNED8",
             "value": "0",
             "access": "RO",
-            "data": "&Obj.can1.IDE"
+            "data": "&Obj.can1_tx.IDE"
           },
           {
             "name": "RTR",
             "dtype": "UNSIGNED8",
             "value": "0",
             "access": "RO",
-            "data": "&Obj.can1.RTR"
+            "data": "&Obj.can1_tx.RTR"
           },
           {
             "name": "DLC",
             "dtype": "UNSIGNED8",
             "value": "0",
             "access": "RO",
-            "data": "&Obj.can1.DLC"
+            "data": "&Obj.can1_tx.DLC"
           }
         ],
         "pdo_mappings": [
@@ -239,7 +321,7 @@
       },
       "7001": {
         "otype": "ARRAY",
-        "name": "can1_data",
+        "name": "can1_tx_data",
         "access": "RO",
         "items": [
           {
@@ -247,43 +329,43 @@
           },
           {
             "name": "d1",
-            "data": "&Obj.can1_data[0]",
+            "data": "&Obj.can1_tx_data[0]",
             "value": "0"
           },
           {
             "name": "d2",
             "value": "0",
-            "data": "&Obj.can1_data[1]"
+            "data": "&Obj.can1_tx_data[1]"
           },
           {
             "name": "d3",
             "value": "0",
-            "data": "&Obj.can1_data[2]"
+            "data": "&Obj.can1_tx_data[2]"
           },
           {
             "name": "d4",
             "value": "0",
-            "data": "&Obj.can1_data[3]"
+            "data": "&Obj.can1_tx_data[3]"
           },
           {
             "name": "d5",
             "value": "0",
-            "data": "&Obj.can1_data[4]"
+            "data": "&Obj.can1_tx_data[4]"
           },
           {
             "name": "d6",
             "value": "0",
-            "data": "&Obj.can1_data[5]"
+            "data": "&Obj.can1_tx_data[5]"
           },
           {
             "name": "d7",
             "value": "0",
-            "data": "&Obj.can1_data[6]"
+            "data": "&Obj.can1_tx_data[6]"
           },
           {
             "name": "d8",
             "value": "0",
-            "data": "&Obj.can1_data[7]"
+            "data": "&Obj.can1_tx_data[7]"
           }
         ],
         "pdo_mappings": [
@@ -292,6 +374,17 @@
         "dtype": "UNSIGNED8"
       },
       "7002": {
+        "otype": "VAR",
+        "name": "beat_heart",
+        "access": "RO",
+        "pdo_mappings": [
+          "rxpdo"
+        ],
+        "dtype": "UNSIGNED8",
+        "value": "0",
+        "data": "&Obj.beat_heart"
+      },
+      "7003": {
         "otype": "ARRAY",
         "name": "led",
         "access": "RO",
@@ -310,7 +403,7 @@
             "data": "&Obj.led[1]"
           },
           {
-            "name": "L2",
+            "name": "L3",
             "value": "0",
             "data": "&Obj.led[2]"
           }

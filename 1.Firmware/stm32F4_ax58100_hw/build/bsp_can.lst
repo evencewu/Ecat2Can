@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccTHaeSX.s 			page 1
+ARM GAS  /tmp/cc6UWVmh.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
   41 0004 0121     		movs	r1, #1
   42 0006 4FF00070 		mov	r0, #33554432
   43 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
-ARM GAS  /tmp/ccTHaeSX.s 			page 2
+ARM GAS  /tmp/cc6UWVmh.s 			page 2
 
 
   44              	.LVL0:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
   86              	.LVL4:
   28:Lib/bsp/src/bsp_can.c ****     /* 配置 CAN RX 引脚 */
   29:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN_RX_PIN;
-ARM GAS  /tmp/ccTHaeSX.s 			page 3
+ARM GAS  /tmp/cc6UWVmh.s 			page 3
 
 
   87              		.loc 1 29 5 view .LVU17
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
  133 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
  134              	.LVL6:
   40:Lib/bsp/src/bsp_can.c **** 
-ARM GAS  /tmp/ccTHaeSX.s 			page 4
+ARM GAS  /tmp/cc6UWVmh.s 			page 4
 
 
   41:Lib/bsp/src/bsp_can.c ****     /*CAN寄存器初始化*/
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
  172 0040 8DF80830 		strb	r3, [sp, #8]
   58:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq; // BTR-TS1 时间段2 占用了3个时间单元
  173              		.loc 1 58 5 is_stmt 1 view .LVU46
-ARM GAS  /tmp/ccTHaeSX.s 			page 5
+ARM GAS  /tmp/cc6UWVmh.s 			page 5
 
 
  174              		.loc 1 58 31 is_stmt 0 view .LVU47
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
  217              		.loc 1 71 46 is_stmt 0 view .LVU55
  218 0004 0023     		movs	r3, #0
  219 0006 8DF80A30 		strb	r3, [sp, #10]
-ARM GAS  /tmp/ccTHaeSX.s 			page 6
+ARM GAS  /tmp/cc6UWVmh.s 			page 6
 
 
   72:Lib/bsp/src/bsp_can.c ****     // 工作在掩码模式
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
  251 0034 0221     		movs	r1, #2
  252 0036 0248     		ldr	r0, .L11
  253 0038 FFF7FEFF 		bl	CAN_ITConfig
-ARM GAS  /tmp/ccTHaeSX.s 			page 7
+ARM GAS  /tmp/cc6UWVmh.s 			page 7
 
 
  254              	.LVL11:
@@ -408,181 +408,180 @@ ARM GAS  /tmp/ccTHaeSX.s 			page 1
  290              		.loc 1 104 40 is_stmt 0 view .LVU79
  291 000c 1423     		movs	r3, #20
  292 000e 8DF80430 		strb	r3, [sp, #4]
- 105:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+ 105:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
  293              		.loc 1 105 5 is_stmt 1 view .LVU80
  294              		.loc 1 105 58 is_stmt 0 view .LVU81
- 295 0012 0223     		movs	r3, #2
+ 295 0012 0023     		movs	r3, #0
  296 0014 8DF80530 		strb	r3, [sp, #5]
- 106:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+ 106:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
  297              		.loc 1 106 5 is_stmt 1 view .LVU82
  298              		.loc 1 106 51 is_stmt 0 view .LVU83
- 299 0018 0023     		movs	r3, #0
+ 299 0018 0123     		movs	r3, #1
  300 001a 8DF80630 		strb	r3, [sp, #6]
-ARM GAS  /tmp/ccTHaeSX.s 			page 8
+ARM GAS  /tmp/cc6UWVmh.s 			page 8
 
 
  107:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
  301              		.loc 1 107 5 is_stmt 1 view .LVU84
  302              		.loc 1 107 43 is_stmt 0 view .LVU85
- 303 001e 0123     		movs	r3, #1
- 304 0020 8DF80730 		strb	r3, [sp, #7]
+ 303 001e 8DF80730 		strb	r3, [sp, #7]
  108:Lib/bsp/src/bsp_can.c ****     NVIC_Init(&NVIC_InitStructure);
- 305              		.loc 1 108 5 is_stmt 1 view .LVU86
- 306 0024 01A8     		add	r0, sp, #4
- 307 0026 FFF7FEFF 		bl	NVIC_Init
- 308              	.LVL13:
+ 304              		.loc 1 108 5 is_stmt 1 view .LVU86
+ 305 0022 01A8     		add	r0, sp, #4
+ 306 0024 FFF7FEFF 		bl	NVIC_Init
+ 307              	.LVL13:
  109:Lib/bsp/src/bsp_can.c **** }
- 309              		.loc 1 109 1 is_stmt 0 view .LVU87
- 310 002a 03B0     		add	sp, sp, #12
- 311              		.cfi_def_cfa_offset 4
- 312              		@ sp needed
- 313 002c 5DF804FB 		ldr	pc, [sp], #4
- 314              		.cfi_endproc
- 315              	.LFE126:
- 317              		.section	.text.CAN_Config,"ax",%progbits
- 318              		.align	1
- 319              		.global	CAN_Config
- 320              		.syntax unified
- 321              		.thumb
- 322              		.thumb_func
- 324              	CAN_Config:
- 325              	.LFB127:
+ 308              		.loc 1 109 1 is_stmt 0 view .LVU87
+ 309 0028 03B0     		add	sp, sp, #12
+ 310              		.cfi_def_cfa_offset 4
+ 311              		@ sp needed
+ 312 002a 5DF804FB 		ldr	pc, [sp], #4
+ 313              		.cfi_endproc
+ 314              	.LFE126:
+ 316              		.section	.text.CAN_Config,"ax",%progbits
+ 317              		.align	1
+ 318              		.global	CAN_Config
+ 319              		.syntax unified
+ 320              		.thumb
+ 321              		.thumb_func
+ 323              	CAN_Config:
+ 324              	.LFB127:
  110:Lib/bsp/src/bsp_can.c **** 
  111:Lib/bsp/src/bsp_can.c **** void CAN_Config(void)
  112:Lib/bsp/src/bsp_can.c **** {
- 326              		.loc 1 112 1 is_stmt 1 view -0
- 327              		.cfi_startproc
- 328              		@ args = 0, pretend = 0, frame = 0
- 329              		@ frame_needed = 0, uses_anonymous_args = 0
- 330 0000 08B5     		push	{r3, lr}
- 331              		.cfi_def_cfa_offset 8
- 332              		.cfi_offset 3, -8
- 333              		.cfi_offset 14, -4
+ 325              		.loc 1 112 1 is_stmt 1 view -0
+ 326              		.cfi_startproc
+ 327              		@ args = 0, pretend = 0, frame = 0
+ 328              		@ frame_needed = 0, uses_anonymous_args = 0
+ 329 0000 08B5     		push	{r3, lr}
+ 330              		.cfi_def_cfa_offset 8
+ 331              		.cfi_offset 3, -8
+ 332              		.cfi_offset 14, -4
  113:Lib/bsp/src/bsp_can.c ****     CAN_GPIO_Config();
- 334              		.loc 1 113 5 view .LVU89
- 335 0002 FFF7FEFF 		bl	CAN_GPIO_Config
- 336              	.LVL14:
+ 333              		.loc 1 113 5 view .LVU89
+ 334 0002 FFF7FEFF 		bl	CAN_GPIO_Config
+ 335              	.LVL14:
  114:Lib/bsp/src/bsp_can.c ****     CAN_Mode_Config();
- 337              		.loc 1 114 5 view .LVU90
- 338 0006 FFF7FEFF 		bl	CAN_Mode_Config
- 339              	.LVL15:
+ 336              		.loc 1 114 5 view .LVU90
+ 337 0006 FFF7FEFF 		bl	CAN_Mode_Config
+ 338              	.LVL15:
  115:Lib/bsp/src/bsp_can.c ****     CAN_Filter_Config();
- 340              		.loc 1 115 5 view .LVU91
- 341 000a FFF7FEFF 		bl	CAN_Filter_Config
- 342              	.LVL16:
+ 339              		.loc 1 115 5 view .LVU91
+ 340 000a FFF7FEFF 		bl	CAN_Filter_Config
+ 341              	.LVL16:
  116:Lib/bsp/src/bsp_can.c ****     CAN_NVIC_Config();
- 343              		.loc 1 116 5 view .LVU92
- 344 000e FFF7FEFF 		bl	CAN_NVIC_Config
- 345              	.LVL17:
+ 342              		.loc 1 116 5 view .LVU92
+ 343 000e FFF7FEFF 		bl	CAN_NVIC_Config
+ 344              	.LVL17:
  117:Lib/bsp/src/bsp_can.c **** }
- 346              		.loc 1 117 1 is_stmt 0 view .LVU93
- 347 0012 08BD     		pop	{r3, pc}
- 348              		.cfi_endproc
-ARM GAS  /tmp/ccTHaeSX.s 			page 9
+ 345              		.loc 1 117 1 is_stmt 0 view .LVU93
+ 346 0012 08BD     		pop	{r3, pc}
+ 347              		.cfi_endproc
+ 348              	.LFE127:
+ARM GAS  /tmp/cc6UWVmh.s 			page 9
 
 
- 349              	.LFE127:
- 351              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
- 352              		.align	1
- 353              		.global	CAN1_RX0_IRQHandler
- 354              		.syntax unified
- 355              		.thumb
- 356              		.thumb_func
- 358              	CAN1_RX0_IRQHandler:
- 359              	.LFB128:
+ 350              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
+ 351              		.align	1
+ 352              		.global	CAN1_RX0_IRQHandler
+ 353              		.syntax unified
+ 354              		.thumb
+ 355              		.thumb_func
+ 357              	CAN1_RX0_IRQHandler:
+ 358              	.LFB128:
  118:Lib/bsp/src/bsp_can.c **** 
  119:Lib/bsp/src/bsp_can.c **** /********************************************************************/
  120:Lib/bsp/src/bsp_can.c **** void CAN_RX_IRQHandler(void)
  121:Lib/bsp/src/bsp_can.c **** {
- 360              		.loc 1 121 1 is_stmt 1 view -0
- 361              		.cfi_startproc
- 362              		@ args = 0, pretend = 0, frame = 0
- 363              		@ frame_needed = 0, uses_anonymous_args = 0
- 364 0000 08B5     		push	{r3, lr}
- 365              		.cfi_def_cfa_offset 8
- 366              		.cfi_offset 3, -8
- 367              		.cfi_offset 14, -4
+ 359              		.loc 1 121 1 is_stmt 1 view -0
+ 360              		.cfi_startproc
+ 361              		@ args = 0, pretend = 0, frame = 0
+ 362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 363 0000 08B5     		push	{r3, lr}
+ 364              		.cfi_def_cfa_offset 8
+ 365              		.cfi_offset 3, -8
+ 366              		.cfi_offset 14, -4
  122:Lib/bsp/src/bsp_can.c ****     /*从邮箱中读出报文*/
  123:Lib/bsp/src/bsp_can.c ****     CAN_Receive(CANx, CAN_FIFO0, &RxMessage);
- 368              		.loc 1 123 5 view .LVU95
- 369 0002 034A     		ldr	r2, .L19
- 370 0004 0021     		movs	r1, #0
- 371 0006 0348     		ldr	r0, .L19+4
- 372 0008 FFF7FEFF 		bl	CAN_Receive
- 373              	.LVL18:
+ 367              		.loc 1 123 5 view .LVU95
+ 368 0002 034A     		ldr	r2, .L19
+ 369 0004 0021     		movs	r1, #0
+ 370 0006 0348     		ldr	r0, .L19+4
+ 371 0008 FFF7FEFF 		bl	CAN_Receive
+ 372              	.LVL18:
  124:Lib/bsp/src/bsp_can.c **** }...
- 374              		.loc 1 124 1 is_stmt 0 view .LVU96
- 375 000c 08BD     		pop	{r3, pc}
- 376              	.L20:
- 377 000e 00BF     		.align	2
- 378              	.L19:
- 379 0010 00000000 		.word	.LANCHOR0
- 380 0014 00640040 		.word	1073767424
- 381              		.cfi_endproc
- 382              	.LFE128:
- 384              		.global	RxMessage
- 385              		.global	TxMessage
- 386              		.global	flag
- 387              		.section	.bss.RxMessage,"aw",%nobits
- 388              		.align	2
- 389              		.set	.LANCHOR0,. + 0
- 392              	RxMessage:
- 393 0000 00000000 		.space	20
- 393      00000000 
- 393      00000000 
- 393      00000000 
- 393      00000000 
- 394              		.section	.bss.TxMessage,"aw",%nobits
- 395              		.align	2
- 398              	TxMessage:
- 399 0000 00000000 		.space	20
- 399      00000000 
- 399      00000000 
-ARM GAS  /tmp/ccTHaeSX.s 			page 10
+ 373              		.loc 1 124 1 is_stmt 0 view .LVU96
+ 374 000c 08BD     		pop	{r3, pc}
+ 375              	.L20:
+ 376 000e 00BF     		.align	2
+ 377              	.L19:
+ 378 0010 00000000 		.word	.LANCHOR0
+ 379 0014 00640040 		.word	1073767424
+ 380              		.cfi_endproc
+ 381              	.LFE128:
+ 383              		.global	RxMessage
+ 384              		.global	TxMessage
+ 385              		.global	flag
+ 386              		.section	.bss.RxMessage,"aw",%nobits
+ 387              		.align	2
+ 388              		.set	.LANCHOR0,. + 0
+ 391              	RxMessage:
+ 392 0000 00000000 		.space	20
+ 392      00000000 
+ 392      00000000 
+ 392      00000000 
+ 392      00000000 
+ 393              		.section	.bss.TxMessage,"aw",%nobits
+ 394              		.align	2
+ 397              	TxMessage:
+ 398 0000 00000000 		.space	20
+ 398      00000000 
+ 398      00000000 
+ 398      00000000 
+ARM GAS  /tmp/cc6UWVmh.s 			page 10
 
 
- 399      00000000 
- 399      00000000 
- 400              		.section	.bss.flag,"aw",%nobits
- 401              		.align	2
- 404              	flag:
- 405 0000 00000000 		.space	4
- 406              		.text
- 407              	.Letext0:
- 408              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 409              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 410              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 411              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 412              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
- 413              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h"
- 414              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/ccTHaeSX.s 			page 11
+ 398      00000000 
+ 399              		.section	.bss.flag,"aw",%nobits
+ 400              		.align	2
+ 403              	flag:
+ 404 0000 00000000 		.space	4
+ 405              		.text
+ 406              	.Letext0:
+ 407              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 408              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 409              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 410              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 411              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 412              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h"
+ 413              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/cc6UWVmh.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_can.c
-     /tmp/ccTHaeSX.s:20     .text.CAN_GPIO_Config:0000000000000000 $t
-     /tmp/ccTHaeSX.s:25     .text.CAN_GPIO_Config:0000000000000000 CAN_GPIO_Config
-     /tmp/ccTHaeSX.s:107    .text.CAN_GPIO_Config:0000000000000068 $d
-     /tmp/ccTHaeSX.s:112    .text.CAN_Mode_Config:0000000000000000 $t
-     /tmp/ccTHaeSX.s:117    .text.CAN_Mode_Config:0000000000000000 CAN_Mode_Config
-     /tmp/ccTHaeSX.s:193    .text.CAN_Mode_Config:000000000000005c $d
-     /tmp/ccTHaeSX.s:198    .text.CAN_Filter_Config:0000000000000000 $t
-     /tmp/ccTHaeSX.s:203    .text.CAN_Filter_Config:0000000000000000 CAN_Filter_Config
-     /tmp/ccTHaeSX.s:263    .text.CAN_Filter_Config:0000000000000040 $d
-     /tmp/ccTHaeSX.s:268    .text.CAN_NVIC_Config:0000000000000000 $t
-     /tmp/ccTHaeSX.s:273    .text.CAN_NVIC_Config:0000000000000000 CAN_NVIC_Config
-     /tmp/ccTHaeSX.s:318    .text.CAN_Config:0000000000000000 $t
-     /tmp/ccTHaeSX.s:324    .text.CAN_Config:0000000000000000 CAN_Config
-     /tmp/ccTHaeSX.s:352    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
-     /tmp/ccTHaeSX.s:358    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
-     /tmp/ccTHaeSX.s:379    .text.CAN1_RX0_IRQHandler:0000000000000010 $d
-     /tmp/ccTHaeSX.s:392    .bss.RxMessage:0000000000000000 RxMessage
-     /tmp/ccTHaeSX.s:398    .bss.TxMessage:0000000000000000 TxMessage
-     /tmp/ccTHaeSX.s:404    .bss.flag:0000000000000000 flag
-     /tmp/ccTHaeSX.s:388    .bss.RxMessage:0000000000000000 $d
-     /tmp/ccTHaeSX.s:395    .bss.TxMessage:0000000000000000 $d
-     /tmp/ccTHaeSX.s:401    .bss.flag:0000000000000000 $d
+     /tmp/cc6UWVmh.s:20     .text.CAN_GPIO_Config:0000000000000000 $t
+     /tmp/cc6UWVmh.s:25     .text.CAN_GPIO_Config:0000000000000000 CAN_GPIO_Config
+     /tmp/cc6UWVmh.s:107    .text.CAN_GPIO_Config:0000000000000068 $d
+     /tmp/cc6UWVmh.s:112    .text.CAN_Mode_Config:0000000000000000 $t
+     /tmp/cc6UWVmh.s:117    .text.CAN_Mode_Config:0000000000000000 CAN_Mode_Config
+     /tmp/cc6UWVmh.s:193    .text.CAN_Mode_Config:000000000000005c $d
+     /tmp/cc6UWVmh.s:198    .text.CAN_Filter_Config:0000000000000000 $t
+     /tmp/cc6UWVmh.s:203    .text.CAN_Filter_Config:0000000000000000 CAN_Filter_Config
+     /tmp/cc6UWVmh.s:263    .text.CAN_Filter_Config:0000000000000040 $d
+     /tmp/cc6UWVmh.s:268    .text.CAN_NVIC_Config:0000000000000000 $t
+     /tmp/cc6UWVmh.s:273    .text.CAN_NVIC_Config:0000000000000000 CAN_NVIC_Config
+     /tmp/cc6UWVmh.s:317    .text.CAN_Config:0000000000000000 $t
+     /tmp/cc6UWVmh.s:323    .text.CAN_Config:0000000000000000 CAN_Config
+     /tmp/cc6UWVmh.s:351    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
+     /tmp/cc6UWVmh.s:357    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
+     /tmp/cc6UWVmh.s:378    .text.CAN1_RX0_IRQHandler:0000000000000010 $d
+     /tmp/cc6UWVmh.s:391    .bss.RxMessage:0000000000000000 RxMessage
+     /tmp/cc6UWVmh.s:397    .bss.TxMessage:0000000000000000 TxMessage
+     /tmp/cc6UWVmh.s:403    .bss.flag:0000000000000000 flag
+     /tmp/cc6UWVmh.s:387    .bss.RxMessage:0000000000000000 $d
+     /tmp/cc6UWVmh.s:394    .bss.TxMessage:0000000000000000 $d
+     /tmp/cc6UWVmh.s:400    .bss.flag:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 RCC_APB1PeriphClockCmd
