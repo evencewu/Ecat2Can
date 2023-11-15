@@ -14,10 +14,10 @@
 #define ADDR_SIZE 2 // 2 bytes mode: addr < 3 | cmd
 #define WAIT_SIZE 1 // Wait State byte, single
 #define RX_PADDING_SIZE 8 - ADDR_SIZE - WAIT_SIZE
-#define TX_PADDING_SIZE 8 - ADDR_SIZE                                  // COE_pdo(Un)pack wants buffers aligned to 64 bit grid
-                                                                       // when address is setting, read is ALevent that it is not going to COE
-                                                                       // so buffers are larger by offset so COE part starts on even address
-#define PDO_SIZE sizeof(Obj.can1_tx) + sizeof(Obj.can1_tx_data) + sizeof(Obj.led) + sizeof(Obj.beat_heart) // SM2_sml
+#define TX_PADDING_SIZE 8 - ADDR_SIZE                                                                                              // COE_pdo(Un)pack wants buffers aligned to 64 bit grid
+                                                                                                                                   // when address is setting, read is ALevent that it is not going to COE
+                                                                                                                                   // so buffers are larger by offset so COE part starts on even address
+#define PDO_SIZE sizeof(Obj.can1_tx) + sizeof(Obj.can1_tx_data) + sizeof(Obj.can2_tx) + sizeof(Obj.led) + sizeof(Obj.can2_tx_data)  // SM2_sml
 #define PDO_TR_SIZE PDO_SIZE + ADDR_SIZE + WAIT_SIZE
 
 enum DMA_PDI_transmission_state_t

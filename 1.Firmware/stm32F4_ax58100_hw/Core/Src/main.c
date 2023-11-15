@@ -9,10 +9,13 @@
 #include "bsp_led.h"
 #include "bsp_tim3.h"
 
-extern CanTxMsg TxMessage; // 发送缓冲区
-extern CanRxMsg RxMessage; // 接收缓冲区
-
 extern bool heart_tag;
+
+extern CanTxMsg Can1_TxMessage; // 发送缓冲区
+extern CanRxMsg Can1_RxMessage; // 接收缓冲区
+
+extern CanTxMsg Can2_TxMessage; // 发送缓冲区
+extern CanRxMsg Can2_RxMessage; // 接收缓冲区
 
 // uint32_t ecatapp_benchmark_us(void);
 int main(void)
@@ -21,7 +24,8 @@ int main(void)
 	delay_init();
 
 	led_setup();
-	CAN_Config();
+	CAN1_Config();
+	CAN2_Config();
 
 	ecatapp_init();
 
@@ -36,7 +40,9 @@ int main(void)
 		// GPIO_SetBits(GPIOB, GPIO_Pin_13);
 
 		ecat_slv();
-		CAN_Transmit(CANx, &TxMessage);
+		
+		CAN_Transmit(CAN1, &Can1_TxMessage);
+		CAN_Transmit(CAN2, &Can2_TxMessage);
 
 		// ecatapp_benchmark_us();
 

@@ -15,8 +15,11 @@ bool heart_tag = 0;
 
 extern __IO uint32_t flag;
 
-extern CanTxMsg TxMessage; // 发送缓冲区
-extern CanRxMsg RxMessage; // 接收缓冲区
+extern CanTxMsg Can1_TxMessage; // 发送缓冲区
+extern CanRxMsg Can1_RxMessage; // 接收缓冲区
+
+extern CanTxMsg Can2_TxMessage; // 发送缓冲区
+extern CanRxMsg Can2_RxMessage; // 接收缓冲区
 
 /* CANopen Object Dictionary */
 _Objects Obj;
@@ -108,47 +111,36 @@ void ecatapp()
 
 void cb_get_inputs()
 {
-    //for(int i = 9;i >= 1;i--)
-    //{
-    //    heart[i] = heart[i-1];
-    //}
-    //
-    //heart[0] = Obj.beat_heart;
+    Can1_TxMessage.StdId = Obj.can1_tx.StdId;
+    Can1_TxMessage.ExtId = Obj.can1_tx.ExtId;
+    Can1_TxMessage.IDE = Obj.can1_tx.IDE;
+    Can1_TxMessage.RTR = Obj.can1_tx.RTR;
+    Can1_TxMessage.DLC = Obj.can1_tx.DLC;
 
-    //TxMessage.StdId = 0;
-    //TxMessage.ExtId = 0;
-    //TxMessage.IDE = 0;
-    //TxMessage.RTR = 0;
-    //TxMessage.DLC = 0x08;
-    //
-    //TxMessage.Data[0] = 0;
-    //TxMessage.Data[1] = 0;
-    //TxMessage.Data[2] = 0;
-    //TxMessage.Data[3] = 0;
-    //TxMessage.Data[4] = 0;
-    //TxMessage.Data[5] = 0;
-    //TxMessage.Data[6] = 0;
-    //TxMessage.Data[7] = 0;
+    Can1_TxMessage.Data[0] = Obj.can1_tx_data[0];
+    Can1_TxMessage.Data[1] = Obj.can1_tx_data[1];
+    Can1_TxMessage.Data[2] = Obj.can1_tx_data[2];
+    Can1_TxMessage.Data[3] = Obj.can1_tx_data[3];
+    Can1_TxMessage.Data[4] = Obj.can1_tx_data[4];
+    Can1_TxMessage.Data[5] = Obj.can1_tx_data[5];
+    Can1_TxMessage.Data[6] = Obj.can1_tx_data[6];
+    Can1_TxMessage.Data[7] = Obj.can1_tx_data[7];
 
-    //if (heart == last_heart)
-    //{
-    //    return;
-    //}
+    
+    Can2_TxMessage.StdId = Obj.can2_tx.StdId;
+    Can2_TxMessage.ExtId = Obj.can2_tx.ExtId;
+    Can2_TxMessage.IDE = Obj.can2_tx.IDE;
+    Can2_TxMessage.RTR = Obj.can2_tx.RTR;
+    Can2_TxMessage.DLC = Obj.can2_tx.DLC;
 
-    TxMessage.StdId = Obj.can1_tx.StdId;
-    TxMessage.ExtId = Obj.can1_tx.ExtId;
-    TxMessage.IDE = Obj.can1_tx.IDE;
-    TxMessage.RTR = Obj.can1_tx.RTR;
-    TxMessage.DLC = Obj.can1_tx.DLC;
-
-    TxMessage.Data[0] = Obj.can1_tx_data[0];
-    TxMessage.Data[1] = Obj.can1_tx_data[1];
-    TxMessage.Data[2] = Obj.can1_tx_data[2];
-    TxMessage.Data[3] = Obj.can1_tx_data[3];
-    TxMessage.Data[4] = Obj.can1_tx_data[4];
-    TxMessage.Data[5] = Obj.can1_tx_data[5];
-    TxMessage.Data[6] = Obj.can1_tx_data[6];
-    TxMessage.Data[7] = Obj.can1_tx_data[7];
+    Can2_TxMessage.Data[0] = Obj.can2_tx_data[0];
+    Can2_TxMessage.Data[1] = Obj.can2_tx_data[1];
+    Can2_TxMessage.Data[2] = Obj.can2_tx_data[2];
+    Can2_TxMessage.Data[3] = Obj.can2_tx_data[3];
+    Can2_TxMessage.Data[4] = Obj.can2_tx_data[4];
+    Can2_TxMessage.Data[5] = Obj.can2_tx_data[5];
+    Can2_TxMessage.Data[6] = Obj.can2_tx_data[6];
+    Can2_TxMessage.Data[7] = Obj.can2_tx_data[7];
 
     if (Obj.led[0] != 0)
     {
@@ -180,20 +172,20 @@ void cb_get_inputs()
 
 void cb_set_outputs()
 {
-    Obj.can1_rx.StdId = RxMessage.StdId;
-    Obj.can1_rx.ExtId = RxMessage.ExtId;
-    Obj.can1_rx.IDE = RxMessage.IDE;
-    Obj.can1_rx.RTR = RxMessage.RTR;
-    Obj.can1_rx.DLC = RxMessage.DLC;
+    Obj.can1_rx.StdId = Can1_RxMessage.StdId;
+    Obj.can1_rx.ExtId = Can1_RxMessage.ExtId;
+    Obj.can1_rx.IDE = Can1_RxMessage.IDE;
+    Obj.can1_rx.RTR = Can1_RxMessage.RTR;
+    Obj.can1_rx.DLC = Can1_RxMessage.DLC;
 
-    Obj.can1_rx_data[0] = RxMessage.Data[0];
-    Obj.can1_rx_data[1] = RxMessage.Data[1];
-    Obj.can1_rx_data[2] = RxMessage.Data[2];
-    Obj.can1_rx_data[3] = RxMessage.Data[3];
-    Obj.can1_rx_data[4] = RxMessage.Data[4];
-    Obj.can1_rx_data[5] = RxMessage.Data[5];
-    Obj.can1_rx_data[6] = RxMessage.Data[6];
-    Obj.can1_rx_data[7] = RxMessage.Data[7];
+    Obj.can1_rx_data[0] = Can1_RxMessage.Data[0];
+    Obj.can1_rx_data[1] = Can1_RxMessage.Data[1];
+    Obj.can1_rx_data[2] = Can1_RxMessage.Data[2];
+    Obj.can1_rx_data[3] = Can1_RxMessage.Data[3];
+    Obj.can1_rx_data[4] = Can1_RxMessage.Data[4];
+    Obj.can1_rx_data[5] = Can1_RxMessage.Data[5];
+    Obj.can1_rx_data[6] = Can1_RxMessage.Data[6];
+    Obj.can1_rx_data[7] = Can1_RxMessage.Data[7];
 }
 
 void ecatapp_loop(void)

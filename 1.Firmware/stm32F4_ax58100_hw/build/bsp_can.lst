@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc6UWVmh.s 			page 1
+ARM GAS  /tmp/ccbjtd8i.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -19,22 +19,22 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   16              		.text
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
-  19              		.section	.text.CAN_GPIO_Config,"ax",%progbits
+  19              		.section	.text.CAN1_GPIO_Config,"ax",%progbits
   20              		.align	1
   21              		.syntax unified
   22              		.thumb
   23              		.thumb_func
-  25              	CAN_GPIO_Config:
+  25              	CAN1_GPIO_Config:
   26              	.LFB123:
   27              		.file 1 "Lib/bsp/src/bsp_can.c"
    1:Lib/bsp/src/bsp_can.c **** #include "bsp_can.h"
    2:Lib/bsp/src/bsp_can.c **** 
    3:Lib/bsp/src/bsp_can.c **** __IO uint32_t flag;
    4:Lib/bsp/src/bsp_can.c **** 
-   5:Lib/bsp/src/bsp_can.c **** CanTxMsg TxMessage; // 发送缓冲区
-   6:Lib/bsp/src/bsp_can.c **** CanRxMsg RxMessage; // 接收缓冲区
+   5:Lib/bsp/src/bsp_can.c **** CanTxMsg Can1_TxMessage; // 发送缓冲区
+   6:Lib/bsp/src/bsp_can.c **** CanRxMsg Can1_RxMessage; // 接收缓冲区
    7:Lib/bsp/src/bsp_can.c **** 
-   8:Lib/bsp/src/bsp_can.c **** static void CAN_GPIO_Config(void)
+   8:Lib/bsp/src/bsp_can.c **** static void CAN1_GPIO_Config(void)
    9:Lib/bsp/src/bsp_can.c **** {
   28              		.loc 1 9 1 view -0
   29              		.cfi_startproc
@@ -53,16 +53,16 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   12:Lib/bsp/src/bsp_can.c **** 
   13:Lib/bsp/src/bsp_can.c ****     /* 使能GPIO时钟*/
   14:Lib/bsp/src/bsp_can.c **** 
-  15:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN_CLK, ENABLE);
+  15:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN1_CLK, ENABLE);
   40              		.loc 1 15 5 view .LVU2
   41 0004 0121     		movs	r1, #1
   42 0006 4FF00070 		mov	r0, #33554432
   43 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
-ARM GAS  /tmp/cc6UWVmh.s 			page 2
+ARM GAS  /tmp/ccbjtd8i.s 			page 2
 
 
   44              	.LVL0:
-  16:Lib/bsp/src/bsp_can.c ****     RCC_AHB1PeriphClockCmd(CAN_TX_GPIO_CLK | CAN_RX_GPIO_CLK, ENABLE);
+  16:Lib/bsp/src/bsp_can.c ****     RCC_AHB1PeriphClockCmd(CAN1_TX_GPIO_CLK | CAN1_RX_GPIO_CLK, ENABLE);
   45              		.loc 1 16 5 view .LVU3
   46 000e 0121     		movs	r1, #1
   47 0010 0846     		mov	r0, r1
@@ -70,7 +70,7 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   49              	.LVL1:
   17:Lib/bsp/src/bsp_can.c **** 
   18:Lib/bsp/src/bsp_can.c ****     /* 引脚源*/
-  19:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN_TX_GPIO_PORT, CAN_RX_SOURCE, CAN_AF_PORT);
+  19:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN1_TX_GPIO_PORT, CAN1_RX_SOURCE, CAN1_AF_PORT);
   50              		.loc 1 19 5 view .LVU4
   51 0016 144C     		ldr	r4, .L3
   52 0018 0922     		movs	r2, #9
@@ -78,7 +78,7 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   54 001c 2046     		mov	r0, r4
   55 001e FFF7FEFF 		bl	GPIO_PinAFConfig
   56              	.LVL2:
-  20:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN_RX_GPIO_PORT, CAN_TX_SOURCE, CAN_AF_PORT);
+  20:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN1_RX_GPIO_PORT, CAN1_TX_SOURCE, CAN1_AF_PORT);
   57              		.loc 1 20 5 view .LVU5
   58 0022 0922     		movs	r2, #9
   59 0024 0C21     		movs	r1, #12
@@ -86,7 +86,7 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   61 0028 FFF7FEFF 		bl	GPIO_PinAFConfig
   62              	.LVL3:
   21:Lib/bsp/src/bsp_can.c ****     /* 配置 CAN TX 引脚 */
-  22:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN_TX_PIN;
+  22:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN1_TX_PIN;
   63              		.loc 1 22 5 view .LVU6
   64              		.loc 1 22 33 is_stmt 0 view .LVU7
   65 002c 4FF48053 		mov	r3, #4096
@@ -110,15 +110,15 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   79              		.loc 1 26 34 is_stmt 0 view .LVU15
   80 0042 0123     		movs	r3, #1
   81 0044 8DF80730 		strb	r3, [sp, #7]
-  27:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN_TX_GPIO_PORT, &GPIO_InitStructure);
+  27:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN1_TX_GPIO_PORT, &GPIO_InitStructure);
   82              		.loc 1 27 5 is_stmt 1 view .LVU16
   83 0048 6946     		mov	r1, sp
   84 004a 2046     		mov	r0, r4
   85 004c FFF7FEFF 		bl	GPIO_Init
   86              	.LVL4:
   28:Lib/bsp/src/bsp_can.c ****     /* 配置 CAN RX 引脚 */
-  29:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN_RX_PIN;
-ARM GAS  /tmp/cc6UWVmh.s 			page 3
+  29:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN1_RX_PIN;
+ARM GAS  /tmp/ccbjtd8i.s 			page 3
 
 
   87              		.loc 1 29 5 view .LVU17
@@ -129,7 +129,7 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
   91              		.loc 1 30 5 is_stmt 1 view .LVU19
   92              		.loc 1 30 34 is_stmt 0 view .LVU20
   93 0056 8DF80450 		strb	r5, [sp, #4]
-  31:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN_RX_GPIO_PORT, &GPIO_InitStructure);
+  31:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN1_RX_GPIO_PORT, &GPIO_InitStructure);
   94              		.loc 1 31 5 is_stmt 1 view .LVU21
   95 005a 6946     		mov	r1, sp
   96 005c 2046     		mov	r0, r4
@@ -147,441 +147,1054 @@ ARM GAS  /tmp/cc6UWVmh.s 			page 1
  107 0068 00000240 		.word	1073872896
  108              		.cfi_endproc
  109              	.LFE123:
- 111              		.section	.text.CAN_Mode_Config,"ax",%progbits
+ 111              		.section	.text.CAN2_GPIO_Config,"ax",%progbits
  112              		.align	1
  113              		.syntax unified
  114              		.thumb
  115              		.thumb_func
- 117              	CAN_Mode_Config:
- 118              	.LFB124:
+ 117              	CAN2_GPIO_Config:
+ 118              	.LFB128:
   33:Lib/bsp/src/bsp_can.c **** 
-  34:Lib/bsp/src/bsp_can.c **** static void CAN_Mode_Config(void)
+  34:Lib/bsp/src/bsp_can.c **** static void CAN1_Mode_Config(void)
   35:Lib/bsp/src/bsp_can.c **** {
- 119              		.loc 1 35 1 is_stmt 1 view -0
- 120              		.cfi_startproc
- 121              		@ args = 0, pretend = 0, frame = 16
- 122              		@ frame_needed = 0, uses_anonymous_args = 0
- 123 0000 10B5     		push	{r4, lr}
- 124              		.cfi_def_cfa_offset 8
- 125              		.cfi_offset 4, -8
- 126              		.cfi_offset 14, -4
- 127 0002 84B0     		sub	sp, sp, #16
- 128              		.cfi_def_cfa_offset 24
   36:Lib/bsp/src/bsp_can.c ****     CAN_InitTypeDef CAN_InitStructure;
- 129              		.loc 1 36 5 view .LVU24
   37:Lib/bsp/src/bsp_can.c ****     /************************CAN通信参数设置************************/
   38:Lib/bsp/src/bsp_can.c ****     /* Enable CAN clock */
-  39:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN_CLK, ENABLE);
- 130              		.loc 1 39 5 view .LVU25
- 131 0004 0121     		movs	r1, #1
- 132 0006 4FF00070 		mov	r0, #33554432
- 133 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
- 134              	.LVL6:
+  39:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN1_CLK, ENABLE);
   40:Lib/bsp/src/bsp_can.c **** 
-ARM GAS  /tmp/cc6UWVmh.s 			page 4
-
-
   41:Lib/bsp/src/bsp_can.c ****     /*CAN寄存器初始化*/
   42:Lib/bsp/src/bsp_can.c ****     CAN_DeInit(CAN1);
- 135              		.loc 1 42 5 view .LVU26
- 136 000e 134C     		ldr	r4, .L7
- 137 0010 2046     		mov	r0, r4
- 138 0012 FFF7FEFF 		bl	CAN_DeInit
- 139              	.LVL7:
   43:Lib/bsp/src/bsp_can.c ****     CAN_StructInit(&CAN_InitStructure);
- 140              		.loc 1 43 5 view .LVU27
- 141 0016 01A8     		add	r0, sp, #4
- 142 0018 FFF7FEFF 		bl	CAN_StructInit
- 143              	.LVL8:
   44:Lib/bsp/src/bsp_can.c **** 
   45:Lib/bsp/src/bsp_can.c ****     /*CAN单元初始化*/
   46:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_TTCM = DISABLE;         // MCR-TTCM 关闭时间触发通信模式使能
- 144              		.loc 1 46 5 view .LVU28
- 145              		.loc 1 46 32 is_stmt 0 view .LVU29
- 146 001c 0023     		movs	r3, #0
- 147 001e 8DF80A30 		strb	r3, [sp, #10]
   47:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
- 148              		.loc 1 47 5 is_stmt 1 view .LVU30
- 149              		.loc 1 47 32 is_stmt 0 view .LVU31
- 150 0022 8DF80B30 		strb	r3, [sp, #11]
   48:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
- 151              		.loc 1 48 5 is_stmt 1 view .LVU32
- 152              		.loc 1 48 32 is_stmt 0 view .LVU33
- 153 0026 8DF80C30 		strb	r3, [sp, #12]
   49:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
- 154              		.loc 1 49 5 is_stmt 1 view .LVU34
- 155              		.loc 1 49 32 is_stmt 0 view .LVU35
- 156 002a 8DF80D30 		strb	r3, [sp, #13]
   50:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
- 157              		.loc 1 50 5 is_stmt 1 view .LVU36
- 158              		.loc 1 50 32 is_stmt 0 view .LVU37
- 159 002e 8DF80E30 		strb	r3, [sp, #14]
   51:Lib/bsp/src/bsp_can.c ****                                                   //  溢出时新报文会覆盖原有报文
   52:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_TXFP = DISABLE;         // MCR-TXFP 发送FIFO优先级取决于报文标
- 160              		.loc 1 52 5 is_stmt 1 view .LVU38
- 161              		.loc 1 52 32 is_stmt 0 view .LVU39
- 162 0032 8DF80F30 		strb	r3, [sp, #15]
   53:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Mode = CAN_Mode_Normal; // 正常工作模式
- 163              		.loc 1 53 5 is_stmt 1 view .LVU40
- 164              		.loc 1 53 32 is_stmt 0 view .LVU41
- 165 0036 8DF80630 		strb	r3, [sp, #6]
   54:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;      // BTR-SJW 重新同步跳跃宽度 2个时间单
- 166              		.loc 1 54 5 is_stmt 1 view .LVU42
- 167              		.loc 1 54 31 is_stmt 0 view .LVU43
- 168 003a 8DF80730 		strb	r3, [sp, #7]
   55:Lib/bsp/src/bsp_can.c **** 
   56:Lib/bsp/src/bsp_can.c ****     /* ss=1 bs1=5 bs2=3 位时间宽度为(1+5+3) 波特率即为时钟周期tq*(1+3+5) */
+ARM GAS  /tmp/ccbjtd8i.s 			page 4
+
+
   57:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS1 = CAN_BS1_3tq; // BTR-TS1 时间段1 占用了5个时间单元
- 169              		.loc 1 57 5 is_stmt 1 view .LVU44
- 170              		.loc 1 57 31 is_stmt 0 view .LVU45
- 171 003e 0223     		movs	r3, #2
- 172 0040 8DF80830 		strb	r3, [sp, #8]
   58:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq; // BTR-TS1 时间段2 占用了3个时间单元
- 173              		.loc 1 58 5 is_stmt 1 view .LVU46
-ARM GAS  /tmp/cc6UWVmh.s 			page 5
-
-
- 174              		.loc 1 58 31 is_stmt 0 view .LVU47
- 175 0044 8DF80930 		strb	r3, [sp, #9]
   59:Lib/bsp/src/bsp_can.c **** 
   60:Lib/bsp/src/bsp_can.c ****     /* CAN Baudrate = 1 MBps (1MBps已为stm32的CAN最高速率) (CAN 时钟频率为 APB 1 = 45 M
   61:Lib/bsp/src/bsp_can.c ****     ////BTR-BRP 波特率分频器定义了时间单元的时间长度 45/(1+5+3)/5=1 Mbps
   62:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Prescaler = 6;
- 176              		.loc 1 62 5 is_stmt 1 view .LVU48
- 177              		.loc 1 62 37 is_stmt 0 view .LVU49
- 178 0048 0623     		movs	r3, #6
- 179 004a ADF80430 		strh	r3, [sp, #4]	@ movhi
-  63:Lib/bsp/src/bsp_can.c ****     CAN_Init(CANx, &CAN_InitStructure);
- 180              		.loc 1 63 5 is_stmt 1 view .LVU50
- 181 004e 01A9     		add	r1, sp, #4
- 182 0050 2046     		mov	r0, r4
- 183 0052 FFF7FEFF 		bl	CAN_Init
- 184              	.LVL9:
+  63:Lib/bsp/src/bsp_can.c ****     CAN_Init(CAN1, &CAN_InitStructure);
   64:Lib/bsp/src/bsp_can.c **** }
- 185              		.loc 1 64 1 is_stmt 0 view .LVU51
- 186 0056 04B0     		add	sp, sp, #16
- 187              		.cfi_def_cfa_offset 8
- 188              		@ sp needed
- 189 0058 10BD     		pop	{r4, pc}
- 190              	.L8:
- 191 005a 00BF     		.align	2
- 192              	.L7:
- 193 005c 00640040 		.word	1073767424
- 194              		.cfi_endproc
- 195              	.LFE124:
- 197              		.section	.text.CAN_Filter_Config,"ax",%progbits
- 198              		.align	1
- 199              		.syntax unified
- 200              		.thumb
- 201              		.thumb_func
- 203              	CAN_Filter_Config:
- 204              	.LFB125:
   65:Lib/bsp/src/bsp_can.c **** 
-  66:Lib/bsp/src/bsp_can.c **** static void CAN_Filter_Config(void)
+  66:Lib/bsp/src/bsp_can.c **** static void CAN1_Filter_Config(void)
   67:Lib/bsp/src/bsp_can.c **** {
- 205              		.loc 1 67 1 is_stmt 1 view -0
- 206              		.cfi_startproc
- 207              		@ args = 0, pretend = 0, frame = 16
- 208              		@ frame_needed = 0, uses_anonymous_args = 0
- 209 0000 10B5     		push	{r4, lr}
- 210              		.cfi_def_cfa_offset 8
- 211              		.cfi_offset 4, -8
- 212              		.cfi_offset 14, -4
- 213 0002 84B0     		sub	sp, sp, #16
- 214              		.cfi_def_cfa_offset 24
   68:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitTypeDef CAN_FilterInitStructure;
- 215              		.loc 1 68 5 view .LVU53
   69:Lib/bsp/src/bsp_can.c **** 
   70:Lib/bsp/src/bsp_can.c ****     /*CAN筛选器初始化*/
   71:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterNumber = 0; // 筛选器组0
- 216              		.loc 1 71 5 view .LVU54
- 217              		.loc 1 71 46 is_stmt 0 view .LVU55
- 218 0004 0023     		movs	r3, #0
- 219 0006 8DF80A30 		strb	r3, [sp, #10]
-ARM GAS  /tmp/cc6UWVmh.s 			page 6
-
-
   72:Lib/bsp/src/bsp_can.c ****     // 工作在掩码模式
   73:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;
- 220              		.loc 1 73 5 is_stmt 1 view .LVU56
- 221              		.loc 1 73 44 is_stmt 0 view .LVU57
- 222 000a 8DF80B30 		strb	r3, [sp, #11]
   74:Lib/bsp/src/bsp_can.c ****     // 筛选器位宽为单个32位。
   75:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterScale = CAN_FilterScale_32bit;
- 223              		.loc 1 75 5 is_stmt 1 view .LVU58
- 224              		.loc 1 75 45 is_stmt 0 view .LVU59
- 225 000e 0124     		movs	r4, #1
- 226 0010 8DF80C40 		strb	r4, [sp, #12]
   76:Lib/bsp/src/bsp_can.c **** 
   77:Lib/bsp/src/bsp_can.c ****     /* 使能筛选器，按照标志符的内容进行比对筛选，
   78:Lib/bsp/src/bsp_can.c ****     扩展ID不是如下的就抛弃掉，是的话，会存入FIFO0。 */
   79:Lib/bsp/src/bsp_can.c ****     // 要筛选的ID高位，第0位保留，第1位为RTR标志，第2位为IDE标志，从第3�
   80:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterIdHigh = 0;
- 227              		.loc 1 80 5 is_stmt 1 view .LVU60
- 228              		.loc 1 80 46 is_stmt 0 view .LVU61
- 229 0014 ADF80030 		strh	r3, [sp]	@ movhi
   81:Lib/bsp/src/bsp_can.c **** 
   82:Lib/bsp/src/bsp_can.c ****     // 要筛选的ID低位
   83:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterIdLow = 0;
- 230              		.loc 1 83 5 is_stmt 1 view .LVU62
- 231              		.loc 1 83 45 is_stmt 0 view .LVU63
- 232 0018 ADF80230 		strh	r3, [sp, #2]	@ movhi
   84:Lib/bsp/src/bsp_can.c ****     // 筛选器高16位每位必须匹配
   85:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMaskIdHigh = 0;
- 233              		.loc 1 85 5 is_stmt 1 view .LVU64
- 234              		.loc 1 85 50 is_stmt 0 view .LVU65
- 235 001c ADF80430 		strh	r3, [sp, #4]	@ movhi
   86:Lib/bsp/src/bsp_can.c ****     // 筛选器低16位每位必须匹配
   87:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMaskIdLow = 0;
- 236              		.loc 1 87 5 is_stmt 1 view .LVU66
- 237              		.loc 1 87 49 is_stmt 0 view .LVU67
- 238 0020 ADF80630 		strh	r3, [sp, #6]	@ movhi
   88:Lib/bsp/src/bsp_can.c ****     // 筛选器被关联到FIFO0
   89:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterFIFOAssignment = CAN_Filter_FIFO0;
- 239              		.loc 1 89 5 is_stmt 1 view .LVU68
- 240              		.loc 1 89 54 is_stmt 0 view .LVU69
- 241 0024 ADF80830 		strh	r3, [sp, #8]	@ movhi
   90:Lib/bsp/src/bsp_can.c ****     // 使能筛选器
   91:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
- 242              		.loc 1 91 5 is_stmt 1 view .LVU70
- 243              		.loc 1 91 50 is_stmt 0 view .LVU71
- 244 0028 8DF80D40 		strb	r4, [sp, #13]
   92:Lib/bsp/src/bsp_can.c ****     CAN_FilterInit(&CAN_FilterInitStructure);
- 245              		.loc 1 92 5 is_stmt 1 view .LVU72
- 246 002c 6846     		mov	r0, sp
- 247 002e FFF7FEFF 		bl	CAN_FilterInit
- 248              	.LVL10:
   93:Lib/bsp/src/bsp_can.c ****     /*CAN通信中断使能*/
-  94:Lib/bsp/src/bsp_can.c ****     CAN_ITConfig(CANx, CAN_IT_FMP0, ENABLE);
- 249              		.loc 1 94 5 view .LVU73
- 250 0032 2246     		mov	r2, r4
- 251 0034 0221     		movs	r1, #2
- 252 0036 0248     		ldr	r0, .L11
- 253 0038 FFF7FEFF 		bl	CAN_ITConfig
-ARM GAS  /tmp/cc6UWVmh.s 			page 7
-
-
- 254              	.LVL11:
+  94:Lib/bsp/src/bsp_can.c ****     CAN_ITConfig(CAN1, CAN_IT_FMP0, ENABLE);
   95:Lib/bsp/src/bsp_can.c **** }
- 255              		.loc 1 95 1 is_stmt 0 view .LVU74
- 256 003c 04B0     		add	sp, sp, #16
- 257              		.cfi_def_cfa_offset 8
- 258              		@ sp needed
- 259 003e 10BD     		pop	{r4, pc}
- 260              	.L12:
- 261              		.align	2
- 262              	.L11:
- 263 0040 00640040 		.word	1073767424
- 264              		.cfi_endproc
- 265              	.LFE125:
- 267              		.section	.text.CAN_NVIC_Config,"ax",%progbits
- 268              		.align	1
- 269              		.syntax unified
- 270              		.thumb
- 271              		.thumb_func
- 273              	CAN_NVIC_Config:
- 274              	.LFB126:
   96:Lib/bsp/src/bsp_can.c **** 
-  97:Lib/bsp/src/bsp_can.c **** static void CAN_NVIC_Config(void)
+  97:Lib/bsp/src/bsp_can.c **** static void CAN1_NVIC_Config(void)
   98:Lib/bsp/src/bsp_can.c **** {
- 275              		.loc 1 98 1 is_stmt 1 view -0
- 276              		.cfi_startproc
- 277              		@ args = 0, pretend = 0, frame = 8
- 278              		@ frame_needed = 0, uses_anonymous_args = 0
- 279 0000 00B5     		push	{lr}
- 280              		.cfi_def_cfa_offset 4
- 281              		.cfi_offset 14, -4
- 282 0002 83B0     		sub	sp, sp, #12
- 283              		.cfi_def_cfa_offset 16
   99:Lib/bsp/src/bsp_can.c ****     NVIC_InitTypeDef NVIC_InitStructure;
- 284              		.loc 1 99 5 view .LVU76
  100:Lib/bsp/src/bsp_can.c ****     /* Configure one bit for preemption priority */
  101:Lib/bsp/src/bsp_can.c ****     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
- 285              		.loc 1 101 5 view .LVU77
- 286 0004 4FF4C060 		mov	r0, #1536
- 287 0008 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
- 288              	.LVL12:
  102:Lib/bsp/src/bsp_can.c ****     /*中断设置*/
  103:Lib/bsp/src/bsp_can.c **** 
- 104:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannel = CAN_RX_IRQ; // CAN RX中断
- 289              		.loc 1 104 5 view .LVU78
- 290              		.loc 1 104 40 is_stmt 0 view .LVU79
- 291 000c 1423     		movs	r3, #20
- 292 000e 8DF80430 		strb	r3, [sp, #4]
+ 104:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannel = CAN1_RX_IRQ; // CAN RX中断
  105:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
- 293              		.loc 1 105 5 is_stmt 1 view .LVU80
- 294              		.loc 1 105 58 is_stmt 0 view .LVU81
- 295 0012 0023     		movs	r3, #0
- 296 0014 8DF80530 		strb	r3, [sp, #5]
  106:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
- 297              		.loc 1 106 5 is_stmt 1 view .LVU82
- 298              		.loc 1 106 51 is_stmt 0 view .LVU83
- 299 0018 0123     		movs	r3, #1
- 300 001a 8DF80630 		strb	r3, [sp, #6]
-ARM GAS  /tmp/cc6UWVmh.s 			page 8
-
-
  107:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
- 301              		.loc 1 107 5 is_stmt 1 view .LVU84
- 302              		.loc 1 107 43 is_stmt 0 view .LVU85
- 303 001e 8DF80730 		strb	r3, [sp, #7]
  108:Lib/bsp/src/bsp_can.c ****     NVIC_Init(&NVIC_InitStructure);
- 304              		.loc 1 108 5 is_stmt 1 view .LVU86
- 305 0022 01A8     		add	r0, sp, #4
- 306 0024 FFF7FEFF 		bl	NVIC_Init
- 307              	.LVL13:
  109:Lib/bsp/src/bsp_can.c **** }
- 308              		.loc 1 109 1 is_stmt 0 view .LVU87
- 309 0028 03B0     		add	sp, sp, #12
- 310              		.cfi_def_cfa_offset 4
- 311              		@ sp needed
- 312 002a 5DF804FB 		ldr	pc, [sp], #4
- 313              		.cfi_endproc
- 314              	.LFE126:
- 316              		.section	.text.CAN_Config,"ax",%progbits
- 317              		.align	1
- 318              		.global	CAN_Config
- 319              		.syntax unified
- 320              		.thumb
- 321              		.thumb_func
- 323              	CAN_Config:
- 324              	.LFB127:
  110:Lib/bsp/src/bsp_can.c **** 
- 111:Lib/bsp/src/bsp_can.c **** void CAN_Config(void)
+ 111:Lib/bsp/src/bsp_can.c **** void CAN1_Config(void)
  112:Lib/bsp/src/bsp_can.c **** {
- 325              		.loc 1 112 1 is_stmt 1 view -0
- 326              		.cfi_startproc
- 327              		@ args = 0, pretend = 0, frame = 0
- 328              		@ frame_needed = 0, uses_anonymous_args = 0
- 329 0000 08B5     		push	{r3, lr}
- 330              		.cfi_def_cfa_offset 8
- 331              		.cfi_offset 3, -8
- 332              		.cfi_offset 14, -4
- 113:Lib/bsp/src/bsp_can.c ****     CAN_GPIO_Config();
- 333              		.loc 1 113 5 view .LVU89
- 334 0002 FFF7FEFF 		bl	CAN_GPIO_Config
- 335              	.LVL14:
- 114:Lib/bsp/src/bsp_can.c ****     CAN_Mode_Config();
- 336              		.loc 1 114 5 view .LVU90
- 337 0006 FFF7FEFF 		bl	CAN_Mode_Config
- 338              	.LVL15:
- 115:Lib/bsp/src/bsp_can.c ****     CAN_Filter_Config();
- 339              		.loc 1 115 5 view .LVU91
- 340 000a FFF7FEFF 		bl	CAN_Filter_Config
- 341              	.LVL16:
- 116:Lib/bsp/src/bsp_can.c ****     CAN_NVIC_Config();
- 342              		.loc 1 116 5 view .LVU92
- 343 000e FFF7FEFF 		bl	CAN_NVIC_Config
- 344              	.LVL17:
+ 113:Lib/bsp/src/bsp_can.c ****     CAN1_GPIO_Config();
+ARM GAS  /tmp/ccbjtd8i.s 			page 5
+
+
+ 114:Lib/bsp/src/bsp_can.c ****     CAN1_Mode_Config();
+ 115:Lib/bsp/src/bsp_can.c ****     CAN1_Filter_Config();
+ 116:Lib/bsp/src/bsp_can.c ****     CAN1_NVIC_Config();
  117:Lib/bsp/src/bsp_can.c **** }
- 345              		.loc 1 117 1 is_stmt 0 view .LVU93
- 346 0012 08BD     		pop	{r3, pc}
- 347              		.cfi_endproc
- 348              	.LFE127:
-ARM GAS  /tmp/cc6UWVmh.s 			page 9
-
-
- 350              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
- 351              		.align	1
- 352              		.global	CAN1_RX0_IRQHandler
- 353              		.syntax unified
- 354              		.thumb
- 355              		.thumb_func
- 357              	CAN1_RX0_IRQHandler:
- 358              	.LFB128:
  118:Lib/bsp/src/bsp_can.c **** 
- 119:Lib/bsp/src/bsp_can.c **** /********************************************************************/
- 120:Lib/bsp/src/bsp_can.c **** void CAN_RX_IRQHandler(void)
- 121:Lib/bsp/src/bsp_can.c **** {
- 359              		.loc 1 121 1 is_stmt 1 view -0
- 360              		.cfi_startproc
- 361              		@ args = 0, pretend = 0, frame = 0
- 362              		@ frame_needed = 0, uses_anonymous_args = 0
- 363 0000 08B5     		push	{r3, lr}
+ 119:Lib/bsp/src/bsp_can.c **** // CAN2 ============================================
+ 120:Lib/bsp/src/bsp_can.c **** 
+ 121:Lib/bsp/src/bsp_can.c **** CanTxMsg Can2_TxMessage; // 发送缓冲区
+ 122:Lib/bsp/src/bsp_can.c **** CanRxMsg Can2_RxMessage; // 接收缓冲区
+ 123:Lib/bsp/src/bsp_can.c **** 
+ 124:Lib/bsp/src/bsp_can.c **** static void CAN2_GPIO_Config(void)
+ 125:Lib/bsp/src/bsp_can.c **** {
+ 119              		.loc 1 125 1 is_stmt 1 view -0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 8
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123 0000 30B5     		push	{r4, r5, lr}
+ 124              		.cfi_def_cfa_offset 12
+ 125              		.cfi_offset 4, -12
+ 126              		.cfi_offset 5, -8
+ 127              		.cfi_offset 14, -4
+ 128 0002 83B0     		sub	sp, sp, #12
+ 129              		.cfi_def_cfa_offset 24
+ 126:Lib/bsp/src/bsp_can.c **** 
+ 127:Lib/bsp/src/bsp_can.c ****     GPIO_InitTypeDef GPIO_InitStructure;
+ 130              		.loc 1 127 5 view .LVU24
+ 128:Lib/bsp/src/bsp_can.c **** 
+ 129:Lib/bsp/src/bsp_can.c ****     /* 使能GPIO时钟*/
+ 130:Lib/bsp/src/bsp_can.c **** 
+ 131:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN2_CLK, ENABLE);
+ 131              		.loc 1 131 5 view .LVU25
+ 132 0004 0121     		movs	r1, #1
+ 133 0006 4FF08060 		mov	r0, #67108864
+ 134 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+ 135              	.LVL6:
+ 132:Lib/bsp/src/bsp_can.c ****     RCC_AHB1PeriphClockCmd(CAN2_TX_GPIO_CLK | CAN2_RX_GPIO_CLK, ENABLE);
+ 136              		.loc 1 132 5 view .LVU26
+ 137 000e 0121     		movs	r1, #1
+ 138 0010 0220     		movs	r0, #2
+ 139 0012 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+ 140              	.LVL7:
+ 133:Lib/bsp/src/bsp_can.c **** 
+ 134:Lib/bsp/src/bsp_can.c ****     /* 引脚源*/
+ 135:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN2_TX_GPIO_PORT, CAN2_RX_SOURCE, CAN2_AF_PORT);
+ 141              		.loc 1 135 5 view .LVU27
+ 142 0016 134C     		ldr	r4, .L7
+ 143 0018 0922     		movs	r2, #9
+ 144 001a 0521     		movs	r1, #5
+ 145 001c 2046     		mov	r0, r4
+ 146 001e FFF7FEFF 		bl	GPIO_PinAFConfig
+ 147              	.LVL8:
+ 136:Lib/bsp/src/bsp_can.c ****     GPIO_PinAFConfig(CAN2_RX_GPIO_PORT, CAN2_TX_SOURCE, CAN2_AF_PORT);
+ 148              		.loc 1 136 5 view .LVU28
+ 149 0022 0922     		movs	r2, #9
+ 150 0024 0621     		movs	r1, #6
+ 151 0026 2046     		mov	r0, r4
+ 152 0028 FFF7FEFF 		bl	GPIO_PinAFConfig
+ARM GAS  /tmp/ccbjtd8i.s 			page 6
+
+
+ 153              	.LVL9:
+ 137:Lib/bsp/src/bsp_can.c ****     /* 配置 CAN TX 引脚 */
+ 138:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN2_TX_PIN;
+ 154              		.loc 1 138 5 view .LVU29
+ 155              		.loc 1 138 33 is_stmt 0 view .LVU30
+ 156 002c 4023     		movs	r3, #64
+ 157 002e 0093     		str	r3, [sp]
+ 139:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 158              		.loc 1 139 5 is_stmt 1 view .LVU31
+ 159              		.loc 1 139 34 is_stmt 0 view .LVU32
+ 160 0030 0225     		movs	r5, #2
+ 161 0032 8DF80450 		strb	r5, [sp, #4]
+ 140:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 162              		.loc 1 140 5 is_stmt 1 view .LVU33
+ 163              		.loc 1 140 35 is_stmt 0 view .LVU34
+ 164 0036 8DF80550 		strb	r5, [sp, #5]
+ 141:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 165              		.loc 1 141 5 is_stmt 1 view .LVU35
+ 166              		.loc 1 141 35 is_stmt 0 view .LVU36
+ 167 003a 0023     		movs	r3, #0
+ 168 003c 8DF80630 		strb	r3, [sp, #6]
+ 142:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+ 169              		.loc 1 142 5 is_stmt 1 view .LVU37
+ 170              		.loc 1 142 34 is_stmt 0 view .LVU38
+ 171 0040 0123     		movs	r3, #1
+ 172 0042 8DF80730 		strb	r3, [sp, #7]
+ 143:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN2_TX_GPIO_PORT, &GPIO_InitStructure);
+ 173              		.loc 1 143 5 is_stmt 1 view .LVU39
+ 174 0046 6946     		mov	r1, sp
+ 175 0048 2046     		mov	r0, r4
+ 176 004a FFF7FEFF 		bl	GPIO_Init
+ 177              	.LVL10:
+ 144:Lib/bsp/src/bsp_can.c ****     /* 配置 CAN RX 引脚 */
+ 145:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Pin = CAN2_RX_PIN;
+ 178              		.loc 1 145 5 view .LVU40
+ 179              		.loc 1 145 33 is_stmt 0 view .LVU41
+ 180 004e 2023     		movs	r3, #32
+ 181 0050 0093     		str	r3, [sp]
+ 146:Lib/bsp/src/bsp_can.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 182              		.loc 1 146 5 is_stmt 1 view .LVU42
+ 183              		.loc 1 146 34 is_stmt 0 view .LVU43
+ 184 0052 8DF80450 		strb	r5, [sp, #4]
+ 147:Lib/bsp/src/bsp_can.c ****     GPIO_Init(CAN2_RX_GPIO_PORT, &GPIO_InitStructure);
+ 185              		.loc 1 147 5 is_stmt 1 view .LVU44
+ 186 0056 6946     		mov	r1, sp
+ 187 0058 2046     		mov	r0, r4
+ 188 005a FFF7FEFF 		bl	GPIO_Init
+ 189              	.LVL11:
+ 148:Lib/bsp/src/bsp_can.c **** }
+ 190              		.loc 1 148 1 is_stmt 0 view .LVU45
+ 191 005e 03B0     		add	sp, sp, #12
+ 192              		.cfi_def_cfa_offset 12
+ 193              		@ sp needed
+ 194 0060 30BD     		pop	{r4, r5, pc}
+ 195              	.L8:
+ 196 0062 00BF     		.align	2
+ 197              	.L7:
+ARM GAS  /tmp/ccbjtd8i.s 			page 7
+
+
+ 198 0064 00040240 		.word	1073873920
+ 199              		.cfi_endproc
+ 200              	.LFE128:
+ 202              		.section	.text.CAN1_Mode_Config,"ax",%progbits
+ 203              		.align	1
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 208              	CAN1_Mode_Config:
+ 209              	.LFB124:
+  35:Lib/bsp/src/bsp_can.c ****     CAN_InitTypeDef CAN_InitStructure;
+ 210              		.loc 1 35 1 is_stmt 1 view -0
+ 211              		.cfi_startproc
+ 212              		@ args = 0, pretend = 0, frame = 16
+ 213              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214 0000 10B5     		push	{r4, lr}
+ 215              		.cfi_def_cfa_offset 8
+ 216              		.cfi_offset 4, -8
+ 217              		.cfi_offset 14, -4
+ 218 0002 84B0     		sub	sp, sp, #16
+ 219              		.cfi_def_cfa_offset 24
+  36:Lib/bsp/src/bsp_can.c ****     /************************CAN通信参数设置************************/
+ 220              		.loc 1 36 5 view .LVU47
+  39:Lib/bsp/src/bsp_can.c **** 
+ 221              		.loc 1 39 5 view .LVU48
+ 222 0004 0121     		movs	r1, #1
+ 223 0006 4FF00070 		mov	r0, #33554432
+ 224 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+ 225              	.LVL12:
+  42:Lib/bsp/src/bsp_can.c ****     CAN_StructInit(&CAN_InitStructure);
+ 226              		.loc 1 42 5 view .LVU49
+ 227 000e 134C     		ldr	r4, .L11
+ 228 0010 2046     		mov	r0, r4
+ 229 0012 FFF7FEFF 		bl	CAN_DeInit
+ 230              	.LVL13:
+  43:Lib/bsp/src/bsp_can.c **** 
+ 231              		.loc 1 43 5 view .LVU50
+ 232 0016 01A8     		add	r0, sp, #4
+ 233 0018 FFF7FEFF 		bl	CAN_StructInit
+ 234              	.LVL14:
+  46:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
+ 235              		.loc 1 46 5 view .LVU51
+  46:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
+ 236              		.loc 1 46 32 is_stmt 0 view .LVU52
+ 237 001c 0023     		movs	r3, #0
+ 238 001e 8DF80A30 		strb	r3, [sp, #10]
+  47:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
+ 239              		.loc 1 47 5 is_stmt 1 view .LVU53
+  47:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
+ 240              		.loc 1 47 32 is_stmt 0 view .LVU54
+ 241 0022 8DF80B30 		strb	r3, [sp, #11]
+  48:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
+ 242              		.loc 1 48 5 is_stmt 1 view .LVU55
+  48:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
+ 243              		.loc 1 48 32 is_stmt 0 view .LVU56
+ 244 0026 8DF80C30 		strb	r3, [sp, #12]
+  49:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
+ARM GAS  /tmp/ccbjtd8i.s 			page 8
+
+
+ 245              		.loc 1 49 5 is_stmt 1 view .LVU57
+  49:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
+ 246              		.loc 1 49 32 is_stmt 0 view .LVU58
+ 247 002a 8DF80D30 		strb	r3, [sp, #13]
+  50:Lib/bsp/src/bsp_can.c ****                                                   //  溢出时新报文会覆盖原有报文
+ 248              		.loc 1 50 5 is_stmt 1 view .LVU59
+  50:Lib/bsp/src/bsp_can.c ****                                                   //  溢出时新报文会覆盖原有报文
+ 249              		.loc 1 50 32 is_stmt 0 view .LVU60
+ 250 002e 8DF80E30 		strb	r3, [sp, #14]
+  52:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Mode = CAN_Mode_Normal; // 正常工作模式
+ 251              		.loc 1 52 5 is_stmt 1 view .LVU61
+  52:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Mode = CAN_Mode_Normal; // 正常工作模式
+ 252              		.loc 1 52 32 is_stmt 0 view .LVU62
+ 253 0032 8DF80F30 		strb	r3, [sp, #15]
+  53:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;      // BTR-SJW 重新同步跳跃宽度 2个时间单
+ 254              		.loc 1 53 5 is_stmt 1 view .LVU63
+  53:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;      // BTR-SJW 重新同步跳跃宽度 2个时间单
+ 255              		.loc 1 53 32 is_stmt 0 view .LVU64
+ 256 0036 8DF80630 		strb	r3, [sp, #6]
+  54:Lib/bsp/src/bsp_can.c **** 
+ 257              		.loc 1 54 5 is_stmt 1 view .LVU65
+  54:Lib/bsp/src/bsp_can.c **** 
+ 258              		.loc 1 54 31 is_stmt 0 view .LVU66
+ 259 003a 8DF80730 		strb	r3, [sp, #7]
+  57:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq; // BTR-TS1 时间段2 占用了3个时间单元
+ 260              		.loc 1 57 5 is_stmt 1 view .LVU67
+  57:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq; // BTR-TS1 时间段2 占用了3个时间单元
+ 261              		.loc 1 57 31 is_stmt 0 view .LVU68
+ 262 003e 0223     		movs	r3, #2
+ 263 0040 8DF80830 		strb	r3, [sp, #8]
+  58:Lib/bsp/src/bsp_can.c **** 
+ 264              		.loc 1 58 5 is_stmt 1 view .LVU69
+  58:Lib/bsp/src/bsp_can.c **** 
+ 265              		.loc 1 58 31 is_stmt 0 view .LVU70
+ 266 0044 8DF80930 		strb	r3, [sp, #9]
+  62:Lib/bsp/src/bsp_can.c ****     CAN_Init(CAN1, &CAN_InitStructure);
+ 267              		.loc 1 62 5 is_stmt 1 view .LVU71
+  62:Lib/bsp/src/bsp_can.c ****     CAN_Init(CAN1, &CAN_InitStructure);
+ 268              		.loc 1 62 37 is_stmt 0 view .LVU72
+ 269 0048 0623     		movs	r3, #6
+ 270 004a ADF80430 		strh	r3, [sp, #4]	@ movhi
+  63:Lib/bsp/src/bsp_can.c **** }
+ 271              		.loc 1 63 5 is_stmt 1 view .LVU73
+ 272 004e 01A9     		add	r1, sp, #4
+ 273 0050 2046     		mov	r0, r4
+ 274 0052 FFF7FEFF 		bl	CAN_Init
+ 275              	.LVL15:
+  64:Lib/bsp/src/bsp_can.c **** 
+ 276              		.loc 1 64 1 is_stmt 0 view .LVU74
+ 277 0056 04B0     		add	sp, sp, #16
+ 278              		.cfi_def_cfa_offset 8
+ 279              		@ sp needed
+ 280 0058 10BD     		pop	{r4, pc}
+ 281              	.L12:
+ 282 005a 00BF     		.align	2
+ 283              	.L11:
+ 284 005c 00640040 		.word	1073767424
+ARM GAS  /tmp/ccbjtd8i.s 			page 9
+
+
+ 285              		.cfi_endproc
+ 286              	.LFE124:
+ 288              		.section	.text.CAN2_Mode_Config,"ax",%progbits
+ 289              		.align	1
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	CAN2_Mode_Config:
+ 295              	.LFB129:
+ 149:Lib/bsp/src/bsp_can.c **** 
+ 150:Lib/bsp/src/bsp_can.c **** static void CAN2_Mode_Config(void)
+ 151:Lib/bsp/src/bsp_can.c **** {
+ 296              		.loc 1 151 1 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 16
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300 0000 10B5     		push	{r4, lr}
+ 301              		.cfi_def_cfa_offset 8
+ 302              		.cfi_offset 4, -8
+ 303              		.cfi_offset 14, -4
+ 304 0002 84B0     		sub	sp, sp, #16
+ 305              		.cfi_def_cfa_offset 24
+ 152:Lib/bsp/src/bsp_can.c ****     CAN_InitTypeDef CAN_InitStructure;
+ 306              		.loc 1 152 5 view .LVU76
+ 153:Lib/bsp/src/bsp_can.c ****     /************************CAN通信参数设置************************/
+ 154:Lib/bsp/src/bsp_can.c ****     /* Enable CAN clock */
+ 155:Lib/bsp/src/bsp_can.c ****     RCC_APB1PeriphClockCmd(CAN2_CLK, ENABLE);
+ 307              		.loc 1 155 5 view .LVU77
+ 308 0004 0121     		movs	r1, #1
+ 309 0006 4FF08060 		mov	r0, #67108864
+ 310 000a FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+ 311              	.LVL16:
+ 156:Lib/bsp/src/bsp_can.c **** 
+ 157:Lib/bsp/src/bsp_can.c ****     /*CAN寄存器初始化*/
+ 158:Lib/bsp/src/bsp_can.c ****     CAN_DeInit(CAN2);
+ 312              		.loc 1 158 5 view .LVU78
+ 313 000e 134C     		ldr	r4, .L15
+ 314 0010 2046     		mov	r0, r4
+ 315 0012 FFF7FEFF 		bl	CAN_DeInit
+ 316              	.LVL17:
+ 159:Lib/bsp/src/bsp_can.c ****     CAN_StructInit(&CAN_InitStructure);
+ 317              		.loc 1 159 5 view .LVU79
+ 318 0016 01A8     		add	r0, sp, #4
+ 319 0018 FFF7FEFF 		bl	CAN_StructInit
+ 320              	.LVL18:
+ 160:Lib/bsp/src/bsp_can.c **** 
+ 161:Lib/bsp/src/bsp_can.c ****     /*CAN单元初始化*/
+ 162:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_TTCM = DISABLE;         // MCR-TTCM 关闭时间触发通信模式使能
+ 321              		.loc 1 162 5 view .LVU80
+ 322              		.loc 1 162 32 is_stmt 0 view .LVU81
+ 323 001c 0023     		movs	r3, #0
+ 324 001e 8DF80A30 		strb	r3, [sp, #10]
+ 163:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
+ 325              		.loc 1 163 5 is_stmt 1 view .LVU82
+ 326              		.loc 1 163 32 is_stmt 0 view .LVU83
+ 327 0022 8DF80B30 		strb	r3, [sp, #11]
+ 164:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
+ARM GAS  /tmp/ccbjtd8i.s 			page 10
+
+
+ 328              		.loc 1 164 5 is_stmt 1 view .LVU84
+ 329              		.loc 1 164 32 is_stmt 0 view .LVU85
+ 330 0026 8DF80C30 		strb	r3, [sp, #12]
+ 165:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
+ 331              		.loc 1 165 5 is_stmt 1 view .LVU86
+ 332              		.loc 1 165 32 is_stmt 0 view .LVU87
+ 333 002a 8DF80D30 		strb	r3, [sp, #13]
+ 166:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
+ 334              		.loc 1 166 5 is_stmt 1 view .LVU88
+ 335              		.loc 1 166 32 is_stmt 0 view .LVU89
+ 336 002e 8DF80E30 		strb	r3, [sp, #14]
+ 167:Lib/bsp/src/bsp_can.c ****                                                   //  溢出时新报文会覆盖原有报文
+ 168:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_TXFP = DISABLE;         // MCR-TXFP 发送FIFO优先级取决于报文标
+ 337              		.loc 1 168 5 is_stmt 1 view .LVU90
+ 338              		.loc 1 168 32 is_stmt 0 view .LVU91
+ 339 0032 8DF80F30 		strb	r3, [sp, #15]
+ 169:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Mode = CAN_Mode_Normal; // 正常工作模式
+ 340              		.loc 1 169 5 is_stmt 1 view .LVU92
+ 341              		.loc 1 169 32 is_stmt 0 view .LVU93
+ 342 0036 8DF80630 		strb	r3, [sp, #6]
+ 170:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;      // BTR-SJW 重新同步跳跃宽度 2个时间单
+ 343              		.loc 1 170 5 is_stmt 1 view .LVU94
+ 344              		.loc 1 170 31 is_stmt 0 view .LVU95
+ 345 003a 8DF80730 		strb	r3, [sp, #7]
+ 171:Lib/bsp/src/bsp_can.c **** 
+ 172:Lib/bsp/src/bsp_can.c ****     /* ss=1 bs1=5 bs2=3 位时间宽度为(1+5+3) 波特率即为时钟周期tq*(1+3+5) */
+ 173:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS1 = CAN_BS1_3tq; // BTR-TS1 时间段1 占用了5个时间单元
+ 346              		.loc 1 173 5 is_stmt 1 view .LVU96
+ 347              		.loc 1 173 31 is_stmt 0 view .LVU97
+ 348 003e 0223     		movs	r3, #2
+ 349 0040 8DF80830 		strb	r3, [sp, #8]
+ 174:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_BS2 = CAN_BS2_3tq; // BTR-TS1 时间段2 占用了3个时间单元
+ 350              		.loc 1 174 5 is_stmt 1 view .LVU98
+ 351              		.loc 1 174 31 is_stmt 0 view .LVU99
+ 352 0044 8DF80930 		strb	r3, [sp, #9]
+ 175:Lib/bsp/src/bsp_can.c **** 
+ 176:Lib/bsp/src/bsp_can.c ****     /* CAN Baudrate = 1 MBps (1MBps已为stm32的CAN最高速率) (CAN 时钟频率为 APB 1 = 45 M
+ 177:Lib/bsp/src/bsp_can.c ****     ////BTR-BRP 波特率分频器定义了时间单元的时间长度 45/(1+5+3)/5=1 Mbps
+ 178:Lib/bsp/src/bsp_can.c ****     CAN_InitStructure.CAN_Prescaler = 6;
+ 353              		.loc 1 178 5 is_stmt 1 view .LVU100
+ 354              		.loc 1 178 37 is_stmt 0 view .LVU101
+ 355 0048 0623     		movs	r3, #6
+ 356 004a ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 179:Lib/bsp/src/bsp_can.c ****     CAN_Init(CAN2, &CAN_InitStructure);
+ 357              		.loc 1 179 5 is_stmt 1 view .LVU102
+ 358 004e 01A9     		add	r1, sp, #4
+ 359 0050 2046     		mov	r0, r4
+ 360 0052 FFF7FEFF 		bl	CAN_Init
+ 361              	.LVL19:
+ 180:Lib/bsp/src/bsp_can.c **** }
+ 362              		.loc 1 180 1 is_stmt 0 view .LVU103
+ 363 0056 04B0     		add	sp, sp, #16
  364              		.cfi_def_cfa_offset 8
- 365              		.cfi_offset 3, -8
- 366              		.cfi_offset 14, -4
- 122:Lib/bsp/src/bsp_can.c ****     /*从邮箱中读出报文*/
- 123:Lib/bsp/src/bsp_can.c ****     CAN_Receive(CANx, CAN_FIFO0, &RxMessage);
- 367              		.loc 1 123 5 view .LVU95
- 368 0002 034A     		ldr	r2, .L19
- 369 0004 0021     		movs	r1, #0
- 370 0006 0348     		ldr	r0, .L19+4
- 371 0008 FFF7FEFF 		bl	CAN_Receive
- 372              	.LVL18:
- 124:Lib/bsp/src/bsp_can.c **** }...
- 373              		.loc 1 124 1 is_stmt 0 view .LVU96
- 374 000c 08BD     		pop	{r3, pc}
- 375              	.L20:
- 376 000e 00BF     		.align	2
- 377              	.L19:
- 378 0010 00000000 		.word	.LANCHOR0
- 379 0014 00640040 		.word	1073767424
- 380              		.cfi_endproc
- 381              	.LFE128:
- 383              		.global	RxMessage
- 384              		.global	TxMessage
- 385              		.global	flag
- 386              		.section	.bss.RxMessage,"aw",%nobits
- 387              		.align	2
- 388              		.set	.LANCHOR0,. + 0
- 391              	RxMessage:
- 392 0000 00000000 		.space	20
- 392      00000000 
- 392      00000000 
- 392      00000000 
- 392      00000000 
- 393              		.section	.bss.TxMessage,"aw",%nobits
- 394              		.align	2
- 397              	TxMessage:
- 398 0000 00000000 		.space	20
- 398      00000000 
- 398      00000000 
- 398      00000000 
-ARM GAS  /tmp/cc6UWVmh.s 			page 10
+ 365              		@ sp needed
+ 366 0058 10BD     		pop	{r4, pc}
+ 367              	.L16:
+ 368 005a 00BF     		.align	2
+ARM GAS  /tmp/ccbjtd8i.s 			page 11
 
 
- 398      00000000 
- 399              		.section	.bss.flag,"aw",%nobits
- 400              		.align	2
- 403              	flag:
- 404 0000 00000000 		.space	4
- 405              		.text
- 406              	.Letext0:
- 407              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 408              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 409              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 410              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 411              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
- 412              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h"
- 413              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/cc6UWVmh.s 			page 11
+ 369              	.L15:
+ 370 005c 00680040 		.word	1073768448
+ 371              		.cfi_endproc
+ 372              	.LFE129:
+ 374              		.section	.text.CAN1_Filter_Config,"ax",%progbits
+ 375              		.align	1
+ 376              		.syntax unified
+ 377              		.thumb
+ 378              		.thumb_func
+ 380              	CAN1_Filter_Config:
+ 381              	.LFB125:
+  67:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitTypeDef CAN_FilterInitStructure;
+ 382              		.loc 1 67 1 is_stmt 1 view -0
+ 383              		.cfi_startproc
+ 384              		@ args = 0, pretend = 0, frame = 16
+ 385              		@ frame_needed = 0, uses_anonymous_args = 0
+ 386 0000 10B5     		push	{r4, lr}
+ 387              		.cfi_def_cfa_offset 8
+ 388              		.cfi_offset 4, -8
+ 389              		.cfi_offset 14, -4
+ 390 0002 84B0     		sub	sp, sp, #16
+ 391              		.cfi_def_cfa_offset 24
+  68:Lib/bsp/src/bsp_can.c **** 
+ 392              		.loc 1 68 5 view .LVU105
+  71:Lib/bsp/src/bsp_can.c ****     // 工作在掩码模式
+ 393              		.loc 1 71 5 view .LVU106
+  71:Lib/bsp/src/bsp_can.c ****     // 工作在掩码模式
+ 394              		.loc 1 71 46 is_stmt 0 view .LVU107
+ 395 0004 0023     		movs	r3, #0
+ 396 0006 8DF80A30 		strb	r3, [sp, #10]
+  73:Lib/bsp/src/bsp_can.c ****     // 筛选器位宽为单个32位。
+ 397              		.loc 1 73 5 is_stmt 1 view .LVU108
+  73:Lib/bsp/src/bsp_can.c ****     // 筛选器位宽为单个32位。
+ 398              		.loc 1 73 44 is_stmt 0 view .LVU109
+ 399 000a 8DF80B30 		strb	r3, [sp, #11]
+  75:Lib/bsp/src/bsp_can.c **** 
+ 400              		.loc 1 75 5 is_stmt 1 view .LVU110
+  75:Lib/bsp/src/bsp_can.c **** 
+ 401              		.loc 1 75 45 is_stmt 0 view .LVU111
+ 402 000e 0124     		movs	r4, #1
+ 403 0010 8DF80C40 		strb	r4, [sp, #12]
+  80:Lib/bsp/src/bsp_can.c **** 
+ 404              		.loc 1 80 5 is_stmt 1 view .LVU112
+  80:Lib/bsp/src/bsp_can.c **** 
+ 405              		.loc 1 80 46 is_stmt 0 view .LVU113
+ 406 0014 ADF80030 		strh	r3, [sp]	@ movhi
+  83:Lib/bsp/src/bsp_can.c ****     // 筛选器高16位每位必须匹配
+ 407              		.loc 1 83 5 is_stmt 1 view .LVU114
+  83:Lib/bsp/src/bsp_can.c ****     // 筛选器高16位每位必须匹配
+ 408              		.loc 1 83 45 is_stmt 0 view .LVU115
+ 409 0018 ADF80230 		strh	r3, [sp, #2]	@ movhi
+  85:Lib/bsp/src/bsp_can.c ****     // 筛选器低16位每位必须匹配
+ 410              		.loc 1 85 5 is_stmt 1 view .LVU116
+  85:Lib/bsp/src/bsp_can.c ****     // 筛选器低16位每位必须匹配
+ 411              		.loc 1 85 50 is_stmt 0 view .LVU117
+ 412 001c ADF80430 		strh	r3, [sp, #4]	@ movhi
+  87:Lib/bsp/src/bsp_can.c ****     // 筛选器被关联到FIFO0
+ARM GAS  /tmp/ccbjtd8i.s 			page 12
+
+
+ 413              		.loc 1 87 5 is_stmt 1 view .LVU118
+  87:Lib/bsp/src/bsp_can.c ****     // 筛选器被关联到FIFO0
+ 414              		.loc 1 87 49 is_stmt 0 view .LVU119
+ 415 0020 ADF80630 		strh	r3, [sp, #6]	@ movhi
+  89:Lib/bsp/src/bsp_can.c ****     // 使能筛选器
+ 416              		.loc 1 89 5 is_stmt 1 view .LVU120
+  89:Lib/bsp/src/bsp_can.c ****     // 使能筛选器
+ 417              		.loc 1 89 54 is_stmt 0 view .LVU121
+ 418 0024 ADF80830 		strh	r3, [sp, #8]	@ movhi
+  91:Lib/bsp/src/bsp_can.c ****     CAN_FilterInit(&CAN_FilterInitStructure);
+ 419              		.loc 1 91 5 is_stmt 1 view .LVU122
+  91:Lib/bsp/src/bsp_can.c ****     CAN_FilterInit(&CAN_FilterInitStructure);
+ 420              		.loc 1 91 50 is_stmt 0 view .LVU123
+ 421 0028 8DF80D40 		strb	r4, [sp, #13]
+  92:Lib/bsp/src/bsp_can.c ****     /*CAN通信中断使能*/
+ 422              		.loc 1 92 5 is_stmt 1 view .LVU124
+ 423 002c 6846     		mov	r0, sp
+ 424 002e FFF7FEFF 		bl	CAN_FilterInit
+ 425              	.LVL20:
+  94:Lib/bsp/src/bsp_can.c **** }
+ 426              		.loc 1 94 5 view .LVU125
+ 427 0032 2246     		mov	r2, r4
+ 428 0034 0221     		movs	r1, #2
+ 429 0036 0248     		ldr	r0, .L19
+ 430 0038 FFF7FEFF 		bl	CAN_ITConfig
+ 431              	.LVL21:
+  95:Lib/bsp/src/bsp_can.c **** 
+ 432              		.loc 1 95 1 is_stmt 0 view .LVU126
+ 433 003c 04B0     		add	sp, sp, #16
+ 434              		.cfi_def_cfa_offset 8
+ 435              		@ sp needed
+ 436 003e 10BD     		pop	{r4, pc}
+ 437              	.L20:
+ 438              		.align	2
+ 439              	.L19:
+ 440 0040 00640040 		.word	1073767424
+ 441              		.cfi_endproc
+ 442              	.LFE125:
+ 444              		.section	.text.CAN2_Filter_Config,"ax",%progbits
+ 445              		.align	1
+ 446              		.syntax unified
+ 447              		.thumb
+ 448              		.thumb_func
+ 450              	CAN2_Filter_Config:
+ 451              	.LFB130:
+ 181:Lib/bsp/src/bsp_can.c **** 
+ 182:Lib/bsp/src/bsp_can.c **** static void CAN2_Filter_Config(void)
+ 183:Lib/bsp/src/bsp_can.c **** {
+ 452              		.loc 1 183 1 is_stmt 1 view -0
+ 453              		.cfi_startproc
+ 454              		@ args = 0, pretend = 0, frame = 16
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456 0000 10B5     		push	{r4, lr}
+ 457              		.cfi_def_cfa_offset 8
+ 458              		.cfi_offset 4, -8
+ 459              		.cfi_offset 14, -4
+ 460 0002 84B0     		sub	sp, sp, #16
+ARM GAS  /tmp/ccbjtd8i.s 			page 13
+
+
+ 461              		.cfi_def_cfa_offset 24
+ 184:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitTypeDef CAN_FilterInitStructure;
+ 462              		.loc 1 184 5 view .LVU128
+ 185:Lib/bsp/src/bsp_can.c **** 
+ 186:Lib/bsp/src/bsp_can.c ****     /*CAN筛选器初始化*/
+ 187:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterNumber = 0; // 筛选器组0
+ 463              		.loc 1 187 5 view .LVU129
+ 464              		.loc 1 187 46 is_stmt 0 view .LVU130
+ 465 0004 0023     		movs	r3, #0
+ 466 0006 8DF80A30 		strb	r3, [sp, #10]
+ 188:Lib/bsp/src/bsp_can.c ****     // 工作在掩码模式
+ 189:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;
+ 467              		.loc 1 189 5 is_stmt 1 view .LVU131
+ 468              		.loc 1 189 44 is_stmt 0 view .LVU132
+ 469 000a 8DF80B30 		strb	r3, [sp, #11]
+ 190:Lib/bsp/src/bsp_can.c ****     // 筛选器位宽为单个32位。
+ 191:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterScale = CAN_FilterScale_32bit;
+ 470              		.loc 1 191 5 is_stmt 1 view .LVU133
+ 471              		.loc 1 191 45 is_stmt 0 view .LVU134
+ 472 000e 0124     		movs	r4, #1
+ 473 0010 8DF80C40 		strb	r4, [sp, #12]
+ 192:Lib/bsp/src/bsp_can.c **** 
+ 193:Lib/bsp/src/bsp_can.c ****     /* 使能筛选器，按照标志符的内容进行比对筛选，
+ 194:Lib/bsp/src/bsp_can.c ****     扩展ID不是如下的就抛弃掉，是的话，会存入FIFO0。 */
+ 195:Lib/bsp/src/bsp_can.c ****     // 要筛选的ID高位，第0位保留，第1位为RTR标志，第2位为IDE标志，从第3�
+ 196:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterIdHigh = 0;
+ 474              		.loc 1 196 5 is_stmt 1 view .LVU135
+ 475              		.loc 1 196 46 is_stmt 0 view .LVU136
+ 476 0014 ADF80030 		strh	r3, [sp]	@ movhi
+ 197:Lib/bsp/src/bsp_can.c **** 
+ 198:Lib/bsp/src/bsp_can.c ****     // 要筛选的ID低位
+ 199:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterIdLow = 0;
+ 477              		.loc 1 199 5 is_stmt 1 view .LVU137
+ 478              		.loc 1 199 45 is_stmt 0 view .LVU138
+ 479 0018 ADF80230 		strh	r3, [sp, #2]	@ movhi
+ 200:Lib/bsp/src/bsp_can.c ****     // 筛选器高16位每位必须匹配
+ 201:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMaskIdHigh = 0;
+ 480              		.loc 1 201 5 is_stmt 1 view .LVU139
+ 481              		.loc 1 201 50 is_stmt 0 view .LVU140
+ 482 001c ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 202:Lib/bsp/src/bsp_can.c ****     // 筛选器低16位每位必须匹配
+ 203:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterMaskIdLow = 0;
+ 483              		.loc 1 203 5 is_stmt 1 view .LVU141
+ 484              		.loc 1 203 49 is_stmt 0 view .LVU142
+ 485 0020 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 204:Lib/bsp/src/bsp_can.c ****     // 筛选器被关联到FIFO0
+ 205:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterFIFOAssignment = CAN_Filter_FIFO1;
+ 486              		.loc 1 205 5 is_stmt 1 view .LVU143
+ 487              		.loc 1 205 54 is_stmt 0 view .LVU144
+ 488 0024 ADF80840 		strh	r4, [sp, #8]	@ movhi
+ 206:Lib/bsp/src/bsp_can.c ****     // 使能筛选器
+ 207:Lib/bsp/src/bsp_can.c ****     CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
+ 489              		.loc 1 207 5 is_stmt 1 view .LVU145
+ 490              		.loc 1 207 50 is_stmt 0 view .LVU146
+ 491 0028 8DF80D40 		strb	r4, [sp, #13]
+ 208:Lib/bsp/src/bsp_can.c ****     CAN_FilterInit(&CAN_FilterInitStructure);
+ 492              		.loc 1 208 5 is_stmt 1 view .LVU147
+ARM GAS  /tmp/ccbjtd8i.s 			page 14
+
+
+ 493 002c 6846     		mov	r0, sp
+ 494 002e FFF7FEFF 		bl	CAN_FilterInit
+ 495              	.LVL22:
+ 209:Lib/bsp/src/bsp_can.c ****     /*CAN通信中断使能*/
+ 210:Lib/bsp/src/bsp_can.c ****     CAN_ITConfig(CAN2, CAN_IT_FMP1, ENABLE);
+ 496              		.loc 1 210 5 view .LVU148
+ 497 0032 2246     		mov	r2, r4
+ 498 0034 1021     		movs	r1, #16
+ 499 0036 0248     		ldr	r0, .L23
+ 500 0038 FFF7FEFF 		bl	CAN_ITConfig
+ 501              	.LVL23:
+ 211:Lib/bsp/src/bsp_can.c **** }
+ 502              		.loc 1 211 1 is_stmt 0 view .LVU149
+ 503 003c 04B0     		add	sp, sp, #16
+ 504              		.cfi_def_cfa_offset 8
+ 505              		@ sp needed
+ 506 003e 10BD     		pop	{r4, pc}
+ 507              	.L24:
+ 508              		.align	2
+ 509              	.L23:
+ 510 0040 00680040 		.word	1073768448
+ 511              		.cfi_endproc
+ 512              	.LFE130:
+ 514              		.section	.text.CAN1_NVIC_Config,"ax",%progbits
+ 515              		.align	1
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 520              	CAN1_NVIC_Config:
+ 521              	.LFB126:
+  98:Lib/bsp/src/bsp_can.c ****     NVIC_InitTypeDef NVIC_InitStructure;
+ 522              		.loc 1 98 1 is_stmt 1 view -0
+ 523              		.cfi_startproc
+ 524              		@ args = 0, pretend = 0, frame = 8
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526 0000 00B5     		push	{lr}
+ 527              		.cfi_def_cfa_offset 4
+ 528              		.cfi_offset 14, -4
+ 529 0002 83B0     		sub	sp, sp, #12
+ 530              		.cfi_def_cfa_offset 16
+  99:Lib/bsp/src/bsp_can.c ****     /* Configure one bit for preemption priority */
+ 531              		.loc 1 99 5 view .LVU151
+ 101:Lib/bsp/src/bsp_can.c ****     /*中断设置*/
+ 532              		.loc 1 101 5 view .LVU152
+ 533 0004 4FF4C060 		mov	r0, #1536
+ 534 0008 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+ 535              	.LVL24:
+ 104:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ 536              		.loc 1 104 5 view .LVU153
+ 104:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ 537              		.loc 1 104 40 is_stmt 0 view .LVU154
+ 538 000c 1423     		movs	r3, #20
+ 539 000e 8DF80430 		strb	r3, [sp, #4]
+ 105:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+ 540              		.loc 1 105 5 is_stmt 1 view .LVU155
+ 105:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+ 541              		.loc 1 105 58 is_stmt 0 view .LVU156
+ARM GAS  /tmp/ccbjtd8i.s 			page 15
+
+
+ 542 0012 0023     		movs	r3, #0
+ 543 0014 8DF80530 		strb	r3, [sp, #5]
+ 106:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 544              		.loc 1 106 5 is_stmt 1 view .LVU157
+ 106:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 545              		.loc 1 106 51 is_stmt 0 view .LVU158
+ 546 0018 0123     		movs	r3, #1
+ 547 001a 8DF80630 		strb	r3, [sp, #6]
+ 107:Lib/bsp/src/bsp_can.c ****     NVIC_Init(&NVIC_InitStructure);
+ 548              		.loc 1 107 5 is_stmt 1 view .LVU159
+ 107:Lib/bsp/src/bsp_can.c ****     NVIC_Init(&NVIC_InitStructure);
+ 549              		.loc 1 107 43 is_stmt 0 view .LVU160
+ 550 001e 8DF80730 		strb	r3, [sp, #7]
+ 108:Lib/bsp/src/bsp_can.c **** }
+ 551              		.loc 1 108 5 is_stmt 1 view .LVU161
+ 552 0022 01A8     		add	r0, sp, #4
+ 553 0024 FFF7FEFF 		bl	NVIC_Init
+ 554              	.LVL25:
+ 109:Lib/bsp/src/bsp_can.c **** 
+ 555              		.loc 1 109 1 is_stmt 0 view .LVU162
+ 556 0028 03B0     		add	sp, sp, #12
+ 557              		.cfi_def_cfa_offset 4
+ 558              		@ sp needed
+ 559 002a 5DF804FB 		ldr	pc, [sp], #4
+ 560              		.cfi_endproc
+ 561              	.LFE126:
+ 563              		.section	.text.CAN2_NVIC_Config,"ax",%progbits
+ 564              		.align	1
+ 565              		.syntax unified
+ 566              		.thumb
+ 567              		.thumb_func
+ 569              	CAN2_NVIC_Config:
+ 570              	.LFB131:
+ 212:Lib/bsp/src/bsp_can.c **** 
+ 213:Lib/bsp/src/bsp_can.c **** static void CAN2_NVIC_Config(void)
+ 214:Lib/bsp/src/bsp_can.c **** {
+ 571              		.loc 1 214 1 is_stmt 1 view -0
+ 572              		.cfi_startproc
+ 573              		@ args = 0, pretend = 0, frame = 8
+ 574              		@ frame_needed = 0, uses_anonymous_args = 0
+ 575 0000 00B5     		push	{lr}
+ 576              		.cfi_def_cfa_offset 4
+ 577              		.cfi_offset 14, -4
+ 578 0002 83B0     		sub	sp, sp, #12
+ 579              		.cfi_def_cfa_offset 16
+ 215:Lib/bsp/src/bsp_can.c ****     NVIC_InitTypeDef NVIC_InitStructure;
+ 580              		.loc 1 215 5 view .LVU164
+ 216:Lib/bsp/src/bsp_can.c ****     /* Configure one bit for preemption priority */
+ 217:Lib/bsp/src/bsp_can.c ****     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+ 581              		.loc 1 217 5 view .LVU165
+ 582 0004 4FF4C060 		mov	r0, #1536
+ 583 0008 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+ 584              	.LVL26:
+ 218:Lib/bsp/src/bsp_can.c ****     /*中断设置*/
+ 219:Lib/bsp/src/bsp_can.c **** 
+ 220:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannel = CAN2_RX_IRQ; // CAN RX中断
+ 585              		.loc 1 220 5 view .LVU166
+ARM GAS  /tmp/ccbjtd8i.s 			page 16
+
+
+ 586              		.loc 1 220 40 is_stmt 0 view .LVU167
+ 587 000c 4023     		movs	r3, #64
+ 588 000e 8DF80430 		strb	r3, [sp, #4]
+ 221:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ 589              		.loc 1 221 5 is_stmt 1 view .LVU168
+ 590              		.loc 1 221 58 is_stmt 0 view .LVU169
+ 591 0012 0023     		movs	r3, #0
+ 592 0014 8DF80530 		strb	r3, [sp, #5]
+ 222:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+ 593              		.loc 1 222 5 is_stmt 1 view .LVU170
+ 594              		.loc 1 222 51 is_stmt 0 view .LVU171
+ 595 0018 0123     		movs	r3, #1
+ 596 001a 8DF80630 		strb	r3, [sp, #6]
+ 223:Lib/bsp/src/bsp_can.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 597              		.loc 1 223 5 is_stmt 1 view .LVU172
+ 598              		.loc 1 223 43 is_stmt 0 view .LVU173
+ 599 001e 8DF80730 		strb	r3, [sp, #7]
+ 224:Lib/bsp/src/bsp_can.c ****     NVIC_Init(&NVIC_InitStructure);
+ 600              		.loc 1 224 5 is_stmt 1 view .LVU174
+ 601 0022 01A8     		add	r0, sp, #4
+ 602 0024 FFF7FEFF 		bl	NVIC_Init
+ 603              	.LVL27:
+ 225:Lib/bsp/src/bsp_can.c **** }
+ 604              		.loc 1 225 1 is_stmt 0 view .LVU175
+ 605 0028 03B0     		add	sp, sp, #12
+ 606              		.cfi_def_cfa_offset 4
+ 607              		@ sp needed
+ 608 002a 5DF804FB 		ldr	pc, [sp], #4
+ 609              		.cfi_endproc
+ 610              	.LFE131:
+ 612              		.section	.text.CAN1_Config,"ax",%progbits
+ 613              		.align	1
+ 614              		.global	CAN1_Config
+ 615              		.syntax unified
+ 616              		.thumb
+ 617              		.thumb_func
+ 619              	CAN1_Config:
+ 620              	.LFB127:
+ 112:Lib/bsp/src/bsp_can.c ****     CAN1_GPIO_Config();
+ 621              		.loc 1 112 1 is_stmt 1 view -0
+ 622              		.cfi_startproc
+ 623              		@ args = 0, pretend = 0, frame = 0
+ 624              		@ frame_needed = 0, uses_anonymous_args = 0
+ 625 0000 08B5     		push	{r3, lr}
+ 626              		.cfi_def_cfa_offset 8
+ 627              		.cfi_offset 3, -8
+ 628              		.cfi_offset 14, -4
+ 113:Lib/bsp/src/bsp_can.c ****     CAN1_Mode_Config();
+ 629              		.loc 1 113 5 view .LVU177
+ 630 0002 FFF7FEFF 		bl	CAN1_GPIO_Config
+ 631              	.LVL28:
+ 114:Lib/bsp/src/bsp_can.c ****     CAN1_Filter_Config();
+ 632              		.loc 1 114 5 view .LVU178
+ 633 0006 FFF7FEFF 		bl	CAN1_Mode_Config
+ 634              	.LVL29:
+ 115:Lib/bsp/src/bsp_can.c ****     CAN1_NVIC_Config();
+ 635              		.loc 1 115 5 view .LVU179
+ARM GAS  /tmp/ccbjtd8i.s 			page 17
+
+
+ 636 000a FFF7FEFF 		bl	CAN1_Filter_Config
+ 637              	.LVL30:
+ 116:Lib/bsp/src/bsp_can.c **** }
+ 638              		.loc 1 116 5 view .LVU180
+ 639 000e FFF7FEFF 		bl	CAN1_NVIC_Config
+ 640              	.LVL31:
+ 117:Lib/bsp/src/bsp_can.c **** 
+ 641              		.loc 1 117 1 is_stmt 0 view .LVU181
+ 642 0012 08BD     		pop	{r3, pc}
+ 643              		.cfi_endproc
+ 644              	.LFE127:
+ 646              		.section	.text.CAN2_Config,"ax",%progbits
+ 647              		.align	1
+ 648              		.global	CAN2_Config
+ 649              		.syntax unified
+ 650              		.thumb
+ 651              		.thumb_func
+ 653              	CAN2_Config:
+ 654              	.LFB132:
+ 226:Lib/bsp/src/bsp_can.c **** 
+ 227:Lib/bsp/src/bsp_can.c **** void CAN2_Config(void)
+ 228:Lib/bsp/src/bsp_can.c **** {
+ 655              		.loc 1 228 1 is_stmt 1 view -0
+ 656              		.cfi_startproc
+ 657              		@ args = 0, pretend = 0, frame = 0
+ 658              		@ frame_needed = 0, uses_anonymous_args = 0
+ 659 0000 08B5     		push	{r3, lr}
+ 660              		.cfi_def_cfa_offset 8
+ 661              		.cfi_offset 3, -8
+ 662              		.cfi_offset 14, -4
+ 229:Lib/bsp/src/bsp_can.c ****     CAN2_GPIO_Config();
+ 663              		.loc 1 229 5 view .LVU183
+ 664 0002 FFF7FEFF 		bl	CAN2_GPIO_Config
+ 665              	.LVL32:
+ 230:Lib/bsp/src/bsp_can.c ****     CAN2_Mode_Config();
+ 666              		.loc 1 230 5 view .LVU184
+ 667 0006 FFF7FEFF 		bl	CAN2_Mode_Config
+ 668              	.LVL33:
+ 231:Lib/bsp/src/bsp_can.c ****     CAN2_Filter_Config();
+ 669              		.loc 1 231 5 view .LVU185
+ 670 000a FFF7FEFF 		bl	CAN2_Filter_Config
+ 671              	.LVL34:
+ 232:Lib/bsp/src/bsp_can.c ****     CAN2_NVIC_Config();
+ 672              		.loc 1 232 5 view .LVU186
+ 673 000e FFF7FEFF 		bl	CAN2_NVIC_Config
+ 674              	.LVL35:
+ 233:Lib/bsp/src/bsp_can.c **** }
+ 675              		.loc 1 233 1 is_stmt 0 view .LVU187
+ 676 0012 08BD     		pop	{r3, pc}
+ 677              		.cfi_endproc
+ 678              	.LFE132:
+ 680              		.section	.text.CAN1_RX0_IRQHandler,"ax",%progbits
+ 681              		.align	1
+ 682              		.global	CAN1_RX0_IRQHandler
+ 683              		.syntax unified
+ 684              		.thumb
+ 685              		.thumb_func
+ARM GAS  /tmp/ccbjtd8i.s 			page 18
+
+
+ 687              	CAN1_RX0_IRQHandler:
+ 688              	.LFB133:
+ 234:Lib/bsp/src/bsp_can.c **** 
+ 235:Lib/bsp/src/bsp_can.c **** /********************************************************************/
+ 236:Lib/bsp/src/bsp_can.c **** void CAN1_RX0_IRQHandler(void)
+ 237:Lib/bsp/src/bsp_can.c **** {
+ 689              		.loc 1 237 1 is_stmt 1 view -0
+ 690              		.cfi_startproc
+ 691              		@ args = 0, pretend = 0, frame = 0
+ 692              		@ frame_needed = 0, uses_anonymous_args = 0
+ 693 0000 08B5     		push	{r3, lr}
+ 694              		.cfi_def_cfa_offset 8
+ 695              		.cfi_offset 3, -8
+ 696              		.cfi_offset 14, -4
+ 238:Lib/bsp/src/bsp_can.c ****     /*从邮箱中读出报文*/
+ 239:Lib/bsp/src/bsp_can.c ****     CAN_Receive(CAN1, CAN_FIFO0, &Can1_RxMessage);
+ 697              		.loc 1 239 5 view .LVU189
+ 698 0002 034A     		ldr	r2, .L35
+ 699 0004 0021     		movs	r1, #0
+ 700 0006 0348     		ldr	r0, .L35+4
+ 701 0008 FFF7FEFF 		bl	CAN_Receive
+ 702              	.LVL36:
+ 240:Lib/bsp/src/bsp_can.c **** }
+ 703              		.loc 1 240 1 is_stmt 0 view .LVU190
+ 704 000c 08BD     		pop	{r3, pc}
+ 705              	.L36:
+ 706 000e 00BF     		.align	2
+ 707              	.L35:
+ 708 0010 00000000 		.word	.LANCHOR0
+ 709 0014 00640040 		.word	1073767424
+ 710              		.cfi_endproc
+ 711              	.LFE133:
+ 713              		.section	.text.CAN2_RX0_IRQHandler,"ax",%progbits
+ 714              		.align	1
+ 715              		.global	CAN2_RX0_IRQHandler
+ 716              		.syntax unified
+ 717              		.thumb
+ 718              		.thumb_func
+ 720              	CAN2_RX0_IRQHandler:
+ 721              	.LFB134:
+ 241:Lib/bsp/src/bsp_can.c **** 
+ 242:Lib/bsp/src/bsp_can.c **** void CAN2_RX0_IRQHandler(void)
+ 243:Lib/bsp/src/bsp_can.c **** {
+ 722              		.loc 1 243 1 is_stmt 1 view -0
+ 723              		.cfi_startproc
+ 724              		@ args = 0, pretend = 0, frame = 0
+ 725              		@ frame_needed = 0, uses_anonymous_args = 0
+ 726 0000 08B5     		push	{r3, lr}
+ 727              		.cfi_def_cfa_offset 8
+ 728              		.cfi_offset 3, -8
+ 729              		.cfi_offset 14, -4
+ 244:Lib/bsp/src/bsp_can.c ****     /*从邮箱中读出报文*/
+ 245:Lib/bsp/src/bsp_can.c ****     CAN_Receive(CAN2, CAN_FIFO1, &Can2_RxMessage);
+ 730              		.loc 1 245 5 view .LVU192
+ 731 0002 034A     		ldr	r2, .L39
+ 732 0004 0121     		movs	r1, #1
+ 733 0006 0348     		ldr	r0, .L39+4
+ARM GAS  /tmp/ccbjtd8i.s 			page 19
+
+
+ 734 0008 FFF7FEFF 		bl	CAN_Receive
+ 735              	.LVL37:
+ 246:Lib/bsp/src/bsp_can.c **** }...
+ 736              		.loc 1 246 1 is_stmt 0 view .LVU193
+ 737 000c 08BD     		pop	{r3, pc}
+ 738              	.L40:
+ 739 000e 00BF     		.align	2
+ 740              	.L39:
+ 741 0010 00000000 		.word	.LANCHOR1
+ 742 0014 00680040 		.word	1073768448
+ 743              		.cfi_endproc
+ 744              	.LFE134:
+ 746              		.global	Can2_RxMessage
+ 747              		.global	Can2_TxMessage
+ 748              		.global	Can1_RxMessage
+ 749              		.global	Can1_TxMessage
+ 750              		.global	flag
+ 751              		.section	.bss.Can1_RxMessage,"aw",%nobits
+ 752              		.align	2
+ 753              		.set	.LANCHOR0,. + 0
+ 756              	Can1_RxMessage:
+ 757 0000 00000000 		.space	20
+ 757      00000000 
+ 757      00000000 
+ 757      00000000 
+ 757      00000000 
+ 758              		.section	.bss.Can1_TxMessage,"aw",%nobits
+ 759              		.align	2
+ 762              	Can1_TxMessage:
+ 763 0000 00000000 		.space	20
+ 763      00000000 
+ 763      00000000 
+ 763      00000000 
+ 763      00000000 
+ 764              		.section	.bss.Can2_RxMessage,"aw",%nobits
+ 765              		.align	2
+ 766              		.set	.LANCHOR1,. + 0
+ 769              	Can2_RxMessage:
+ 770 0000 00000000 		.space	20
+ 770      00000000 
+ 770      00000000 
+ 770      00000000 
+ 770      00000000 
+ 771              		.section	.bss.Can2_TxMessage,"aw",%nobits
+ 772              		.align	2
+ 775              	Can2_TxMessage:
+ 776 0000 00000000 		.space	20
+ 776      00000000 
+ 776      00000000 
+ 776      00000000 
+ 776      00000000 
+ 777              		.section	.bss.flag,"aw",%nobits
+ 778              		.align	2
+ 781              	flag:
+ 782 0000 00000000 		.space	4
+ 783              		.text
+ 784              	.Letext0:
+ARM GAS  /tmp/ccbjtd8i.s 			page 20
+
+
+ 785              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 786              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 787              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 788              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 789              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 790              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h"
+ 791              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccbjtd8i.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_can.c
-     /tmp/cc6UWVmh.s:20     .text.CAN_GPIO_Config:0000000000000000 $t
-     /tmp/cc6UWVmh.s:25     .text.CAN_GPIO_Config:0000000000000000 CAN_GPIO_Config
-     /tmp/cc6UWVmh.s:107    .text.CAN_GPIO_Config:0000000000000068 $d
-     /tmp/cc6UWVmh.s:112    .text.CAN_Mode_Config:0000000000000000 $t
-     /tmp/cc6UWVmh.s:117    .text.CAN_Mode_Config:0000000000000000 CAN_Mode_Config
-     /tmp/cc6UWVmh.s:193    .text.CAN_Mode_Config:000000000000005c $d
-     /tmp/cc6UWVmh.s:198    .text.CAN_Filter_Config:0000000000000000 $t
-     /tmp/cc6UWVmh.s:203    .text.CAN_Filter_Config:0000000000000000 CAN_Filter_Config
-     /tmp/cc6UWVmh.s:263    .text.CAN_Filter_Config:0000000000000040 $d
-     /tmp/cc6UWVmh.s:268    .text.CAN_NVIC_Config:0000000000000000 $t
-     /tmp/cc6UWVmh.s:273    .text.CAN_NVIC_Config:0000000000000000 CAN_NVIC_Config
-     /tmp/cc6UWVmh.s:317    .text.CAN_Config:0000000000000000 $t
-     /tmp/cc6UWVmh.s:323    .text.CAN_Config:0000000000000000 CAN_Config
-     /tmp/cc6UWVmh.s:351    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
-     /tmp/cc6UWVmh.s:357    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
-     /tmp/cc6UWVmh.s:378    .text.CAN1_RX0_IRQHandler:0000000000000010 $d
-     /tmp/cc6UWVmh.s:391    .bss.RxMessage:0000000000000000 RxMessage
-     /tmp/cc6UWVmh.s:397    .bss.TxMessage:0000000000000000 TxMessage
-     /tmp/cc6UWVmh.s:403    .bss.flag:0000000000000000 flag
-     /tmp/cc6UWVmh.s:387    .bss.RxMessage:0000000000000000 $d
-     /tmp/cc6UWVmh.s:394    .bss.TxMessage:0000000000000000 $d
-     /tmp/cc6UWVmh.s:400    .bss.flag:0000000000000000 $d
+     /tmp/ccbjtd8i.s:20     .text.CAN1_GPIO_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:25     .text.CAN1_GPIO_Config:0000000000000000 CAN1_GPIO_Config
+     /tmp/ccbjtd8i.s:107    .text.CAN1_GPIO_Config:0000000000000068 $d
+     /tmp/ccbjtd8i.s:112    .text.CAN2_GPIO_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:117    .text.CAN2_GPIO_Config:0000000000000000 CAN2_GPIO_Config
+     /tmp/ccbjtd8i.s:198    .text.CAN2_GPIO_Config:0000000000000064 $d
+     /tmp/ccbjtd8i.s:203    .text.CAN1_Mode_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:208    .text.CAN1_Mode_Config:0000000000000000 CAN1_Mode_Config
+     /tmp/ccbjtd8i.s:284    .text.CAN1_Mode_Config:000000000000005c $d
+     /tmp/ccbjtd8i.s:289    .text.CAN2_Mode_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:294    .text.CAN2_Mode_Config:0000000000000000 CAN2_Mode_Config
+     /tmp/ccbjtd8i.s:370    .text.CAN2_Mode_Config:000000000000005c $d
+     /tmp/ccbjtd8i.s:375    .text.CAN1_Filter_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:380    .text.CAN1_Filter_Config:0000000000000000 CAN1_Filter_Config
+     /tmp/ccbjtd8i.s:440    .text.CAN1_Filter_Config:0000000000000040 $d
+     /tmp/ccbjtd8i.s:445    .text.CAN2_Filter_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:450    .text.CAN2_Filter_Config:0000000000000000 CAN2_Filter_Config
+     /tmp/ccbjtd8i.s:510    .text.CAN2_Filter_Config:0000000000000040 $d
+     /tmp/ccbjtd8i.s:515    .text.CAN1_NVIC_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:520    .text.CAN1_NVIC_Config:0000000000000000 CAN1_NVIC_Config
+     /tmp/ccbjtd8i.s:564    .text.CAN2_NVIC_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:569    .text.CAN2_NVIC_Config:0000000000000000 CAN2_NVIC_Config
+     /tmp/ccbjtd8i.s:613    .text.CAN1_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:619    .text.CAN1_Config:0000000000000000 CAN1_Config
+     /tmp/ccbjtd8i.s:647    .text.CAN2_Config:0000000000000000 $t
+     /tmp/ccbjtd8i.s:653    .text.CAN2_Config:0000000000000000 CAN2_Config
+     /tmp/ccbjtd8i.s:681    .text.CAN1_RX0_IRQHandler:0000000000000000 $t
+     /tmp/ccbjtd8i.s:687    .text.CAN1_RX0_IRQHandler:0000000000000000 CAN1_RX0_IRQHandler
+     /tmp/ccbjtd8i.s:708    .text.CAN1_RX0_IRQHandler:0000000000000010 $d
+     /tmp/ccbjtd8i.s:714    .text.CAN2_RX0_IRQHandler:0000000000000000 $t
+     /tmp/ccbjtd8i.s:720    .text.CAN2_RX0_IRQHandler:0000000000000000 CAN2_RX0_IRQHandler
+     /tmp/ccbjtd8i.s:741    .text.CAN2_RX0_IRQHandler:0000000000000010 $d
+     /tmp/ccbjtd8i.s:769    .bss.Can2_RxMessage:0000000000000000 Can2_RxMessage
+     /tmp/ccbjtd8i.s:775    .bss.Can2_TxMessage:0000000000000000 Can2_TxMessage
+     /tmp/ccbjtd8i.s:756    .bss.Can1_RxMessage:0000000000000000 Can1_RxMessage
+     /tmp/ccbjtd8i.s:762    .bss.Can1_TxMessage:0000000000000000 Can1_TxMessage
+     /tmp/ccbjtd8i.s:781    .bss.flag:0000000000000000 flag
+     /tmp/ccbjtd8i.s:752    .bss.Can1_RxMessage:0000000000000000 $d
+     /tmp/ccbjtd8i.s:759    .bss.Can1_TxMessage:0000000000000000 $d
+     /tmp/ccbjtd8i.s:765    .bss.Can2_RxMessage:0000000000000000 $d
+     /tmp/ccbjtd8i.s:772    .bss.Can2_TxMessage:0000000000000000 $d
+     /tmp/ccbjtd8i.s:778    .bss.flag:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 RCC_APB1PeriphClockCmd
@@ -595,4 +1208,7 @@ CAN_FilterInit
 CAN_ITConfig
 NVIC_PriorityGroupConfig
 NVIC_Init
+ARM GAS  /tmp/ccbjtd8i.s 			page 22
+
+
 CAN_Receive

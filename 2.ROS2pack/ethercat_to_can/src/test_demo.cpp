@@ -11,12 +11,6 @@ void sigint_handler(int sig)
     if (sig == SIGINT)
     {
         app_stopped = true;
-
-        memset(&packet, 0, sizeof(Ecat2Can_Pack));
-        EcatSyncMsg((uint8_t *)&packet);
-        
-        EcatStop();
-        printf("stop");
     }
 }
 
@@ -43,31 +37,82 @@ int main()
     // DM_can_set(1, &packet, DISABLE, 0, 1, 0, 0, 0);
     // EcatSyncMsg((uint8_t *)&packet);
 
-    int vol = 2000;
-    //int vol_tag = 1;
+    // int vol_tag = 1;
+
+    //-------------//
+    // DM4310 demo //
+    //-------------//
+
+    // DM_can_set(1, &packet, CLEAR_ERROR, 0, 10.0, 0, 0, 0);
+    // EcatSyncMsg((uint8_t *)&packet);
+    //
+    // DM_can_set(1, &packet, ENABLE, 0, 0, 0, 0, 0);
+    // EcatSyncMsg((uint8_t *)&packet);
+    //
+    // int tag = 0;
+
+    //-----END-----//
+
+    
 
     for (;;)
     {
-        //vol += vol_tag * 1;
-        GM6020_can_set(1, &packet, GM6020_TAG1, vol, 0, 0, 0);
+        printf("start\n");
+        //-------------//
+        // DM4310 demo //
+        //-------------//
+
+        // if (tag == 0)
+        //{
+        //     DM_can_set(1, &packet, MIT_CTRL, -90, 0, 1, 0.5, 0);
+        //     EcatSyncMsg((uint8_t *)&packet);
+        //     tag = 1;
+        // }
+        // else
+        //{
+        //     DM_can_set(1, &packet, MIT_CTRL, 90, 0, 1, 0.5, 0);
+        //     EcatSyncMsg((uint8_t *)&packet);
+        //     tag = 0;
+        // }
+
+        // usleep(5*1000*1000);//延时5秒
+
+        //-------------//
+        // GM6020 demo //
+        //-------------//
+
+        GM6020_can_set(2, &packet, GM6020_TAG1, 20000, 20000, 0, 0);
         packet.LED = 0x0F;
         EcatSyncMsg((uint8_t *)&packet);
 
-        // if(vol == 10000)
-        //{
-        //     vol_tag = -1;
-        // }
+        GM6020_can_set(1, &packet, GM6020_TAG1, 20000, 20000, 0, 0);
+        packet.LED = 0x0F;
+        EcatSyncMsg((uint8_t *)&packet);
 
-        // if(vol_tag == -10000)
-        //{
-        //     vol_tag = 1;
-        // }
+        //-----END-----//
+
         if (app_stopped)
         {
             break;
         }
     }
 
+    //-------------//
+    // DM4310 demo //
+    //-------------//
+
+    /*
+    DM_can_set(1, &packet, DISABLE, 0, 0, 0, 0, 0);
+    EcatSyncMsg((uint8_t *)&packet);
+    */
+
+    
+    // 
+    Stop_all(&packet);
+    EcatSyncMsg((uint8_t *)&packet);
+
     EcatStop();
+    printf("stop");
+
     return 0;
 }

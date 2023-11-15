@@ -268,6 +268,108 @@
           "txpdo"
         ],
         "dtype": "UNSIGNED8"
+      },
+      "6002": {
+        "otype": "RECORD",
+        "name": "can2_rx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can2_rx.StdId",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.ExtId"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.DLC"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ]
+      },
+      "6003": {
+        "otype": "ARRAY",
+        "name": "can2_rx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can2_rx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[5]"
+          },
+          {
+            "name": "d7",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[6]"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ],
+        "dtype": "UNSIGNED8"
       }
     },
     "rxpdo": {
@@ -374,17 +476,108 @@
         "dtype": "UNSIGNED8"
       },
       "7002": {
-        "otype": "VAR",
-        "name": "beat_heart",
+        "otype": "RECORD",
+        "name": "can2_tx",
         "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can2_tx.StdId",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.ExtId"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.DLC"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ]
+      },
+      "7003": {
+        "otype": "ARRAY",
+        "name": "can2_tx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can2_tx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[5]"
+          },
+          {
+            "name": "d7",
+            "data": "&Obj.can2_tx_data[6]",
+            "value": "0"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[7]"
+          }
+        ],
         "pdo_mappings": [
           "rxpdo"
         ],
-        "dtype": "UNSIGNED8",
-        "value": "0",
-        "data": "&Obj.beat_heart"
+        "dtype": "UNSIGNED8"
       },
-      "7003": {
+      "7004": {
         "otype": "ARRAY",
         "name": "led",
         "access": "RO",
