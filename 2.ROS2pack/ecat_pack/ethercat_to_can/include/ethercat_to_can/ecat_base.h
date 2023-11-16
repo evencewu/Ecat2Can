@@ -112,7 +112,7 @@ void EcatSyncMsg(uint8_t *data)
 
         ec_receive_processdata(EC_TIMEOUTRET);
 
-        osal_usleep(10);
+        osal_usleep(200);
     }
     else
     {
