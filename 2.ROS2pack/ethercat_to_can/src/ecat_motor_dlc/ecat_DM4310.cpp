@@ -1,44 +1,4 @@
-#ifndef __ECAT_DM4310__
-#define __ECAT_DM4310__
-
-#include "ethercat_to_can/ecat_base.h"
-#include "ethercat_to_can/ecat_typedef.h"
-
-#include <inttypes.h>
-
-//--------//
-// DM4310 //
-//--------//
-#define DM4310_ID_1 1
-#define DM4310_ID_2 2
-#define DM4310_ID_3 3
-#define DM4310_ID_4 4
-#define DM4310_ID_5 5
-#define DM4310_ID_6 6
-#define DM4310_ID_7 7
-#define DM4310_ID_8 8
-
-#define SPEED_CTRL 0
-#define POS_CTRL 1
-#define MIT_CTRL 2
-#define ENABLE 3
-#define DISABLE 4
-#define CLEAR_ERROR 5
-
-#define KP_MIN 0
-#define KP_MAX 500
-
-#define KD_MIN 0
-#define KD_MAX 5
-
-#define P_MIN -675
-#define P_MAX 675
-
-#define V_MIN 0
-#define V_MAX 5
-
-#define T_MIN 0
-#define T_MAX 5
+#include "ecat_motor_dlc/ecat_DM4310.h"
 
 float uint_to_float(int x_int, float x_min, float x_max, int bits)
 {
@@ -54,14 +14,25 @@ int float_to_uint(float x, float x_min, float x_max, int bits)
 }
 
 // DM4310_demo
-void DM_can_set(uint8_t canid, Ecat2Can_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq)
+void DM_can_set(uint8_t canid, Ecat2Can_Outputs_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq)
 {
+    if (_KP > KP_MAX)_KP = KP_MAX;
+    else if (_KP < KP_MIN)_KP = KP_MIN;
+    if (_KD > KD_MAX)_KD = KD_MAX;
+    else if (_KD < KD_MIN)_KD = KD_MIN;
+    if (_pos > POS_MAX)_pos = POS_MAX;
+    else if (_pos < POS_MIN) _pos = POS_MIN;
+    if (_vel > SPD_MAX)_vel = SPD_MAX;
+    else if (_vel < SPD_MIN)_vel = SPD_MIN;
+    if (_torq > T_MAX)_torq = T_MAX;
+    else if (_torq < T_MIN)_torq = T_MIN;
+
     uint16_t pos_tmp, vel_tmp, kp_tmp, kd_tmp, tor_tmp;
-    pos_tmp = float_to_uint(_pos, P_MIN, P_MAX, 16);
-    vel_tmp = float_to_uint(_vel, V_MIN, V_MAX, 12);
-    kp_tmp = float_to_uint(_KP, KP_MIN, KP_MAX, 12);
-    kd_tmp = float_to_uint(_KD, KD_MIN, KD_MAX, 12);
-    tor_tmp = float_to_uint(_torq, T_MIN, T_MAX, 12);
+    pos_tmp = float_to_uint(_pos, DM_P_MIN, DM_P_MAX, 16);
+    vel_tmp = float_to_uint(_vel, DM_V_MIN, DM_V_MAX, 12);
+    kp_tmp = float_to_uint(_KP, DM_KP_MIN, DM_KP_MAX, 12);
+    kd_tmp = float_to_uint(_KD, DM_KD_MIN, DM_KD_MAX, 12);
+    tor_tmp = float_to_uint(_torq, DM_T_MIN, DM_T_MAX, 12);
 
     uint8_t *pbuf, *vbuf;
     pbuf = (uint8_t *)&_pos;
@@ -172,5 +143,3 @@ void DM_can_set(uint8_t canid, Ecat2Can_Pack *pack, int mode, uint8_t id,float _
         pack->can[canid-1].Data[7] = 0xFB;
     }
 }
-
-#endif

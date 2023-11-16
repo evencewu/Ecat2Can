@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccWkXMve.s 			page 1
+ARM GAS  /tmp/cc7iCoSG.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
   27:Core/Src/pdo_override.c **** void spi_dma_prepare_transmission(uint16_t address, uint8_t * tx_buffer, uint8_t cmd)
   28:Core/Src/pdo_override.c **** {
   30              		.loc 1 28 1 view -0
-ARM GAS  /tmp/ccWkXMve.s 			page 2
+ARM GAS  /tmp/cc7iCoSG.s 			page 2
 
 
   31              		.cfi_startproc
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
   66              		.loc 1 40 9 is_stmt 1 view .LVU15
   40:Core/Src/pdo_override.c ****     }
   67              		.loc 1 40 36 is_stmt 0 view .LVU16
-ARM GAS  /tmp/ccWkXMve.s 			page 3
+ARM GAS  /tmp/cc7iCoSG.s 			page 3
 
 
   68 001e FF23     		movs	r3, #255
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
   52:Core/Src/pdo_override.c ****     }
  110              		.loc 1 52 30 is_stmt 0 view .LVU25
  111 0016 044B     		ldr	r3, .L10+8
-ARM GAS  /tmp/ccWkXMve.s 			page 4
+ARM GAS  /tmp/cc7iCoSG.s 			page 4
 
 
  112 0018 0022     		movs	r2, #0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
   66:Core/Src/pdo_override.c ****     while (DMA_GetCmdStatus(DMA1_Stream4) != DISABLE) { }
  157              		.loc 1 66 5 view .LVU31
  158              	.L13:
-ARM GAS  /tmp/ccWkXMve.s 			page 5
+ARM GAS  /tmp/cc7iCoSG.s 			page 5
 
 
  159              		.loc 1 66 57 discriminator 1 view .LVU32
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  202              		.loc 1 77 37 is_stmt 0 view .LVU54
  203 0042 4FF48063 		mov	r3, #1024
  204 0046 0793     		str	r3, [sp, #28]
-ARM GAS  /tmp/ccWkXMve.s 			page 6
+ARM GAS  /tmp/cc7iCoSG.s 			page 6
 
 
   78:Core/Src/pdo_override.c ****     DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  243              		.loc 1 93 5 view .LVU75
  244              		.loc 1 93 35 is_stmt 0 view .LVU76
  245 006e 0194     		str	r4, [sp, #4]
-ARM GAS  /tmp/ccWkXMve.s 			page 7
+ARM GAS  /tmp/cc7iCoSG.s 			page 7
 
 
   94:Core/Src/pdo_override.c ****     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  289 00ac 00000000 		.word	.LANCHOR1
  290 00b0 00000000 		.word	.LANCHOR2
  291              		.cfi_endproc
-ARM GAS  /tmp/ccWkXMve.s 			page 8
+ARM GAS  /tmp/cc7iCoSG.s 			page 8
 
 
  292              	.LFE125:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  336              	.LVL16:
  117:Core/Src/pdo_override.c ****     /* Enable the DMA SPI TX Stream */
  118:Core/Src/pdo_override.c ****     DMA_Cmd(DMA1_Stream4, ENABLE);
-ARM GAS  /tmp/ccWkXMve.s 			page 9
+ARM GAS  /tmp/cc7iCoSG.s 			page 9
 
 
  337              		.loc 1 118 5 view .LVU98
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  383              		.loc 1 128 5 view .LVU104
  384 0002 0120     		movs	r0, #1
  385 0004 FFF7FEFF 		bl	spi_unselect
-ARM GAS  /tmp/ccWkXMve.s 			page 10
+ARM GAS  /tmp/cc7iCoSG.s 			page 10
 
 
  386              	.LVL19:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  430 0054 00380040 		.word	1073756160
  431              		.cfi_endproc
  432              	.LFE127:
-ARM GAS  /tmp/ccWkXMve.s 			page 11
+ARM GAS  /tmp/cc7iCoSG.s 			page 11
 
 
  434              		.section	.text.spi_dma_rxpdo_start,"ax",%progbits
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  481              		.syntax unified
  482              		.thumb
  483              		.thumb_func
-ARM GAS  /tmp/ccWkXMve.s 			page 12
+ARM GAS  /tmp/cc7iCoSG.s 			page 12
 
 
  485              	spi_dma_txpdo_start:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  529              		.cfi_offset 3, -8
  530              		.cfi_offset 14, -4
  160:Core/Src/pdo_override.c ****     spi_dma_setup();
-ARM GAS  /tmp/ccWkXMve.s 			page 13
+ARM GAS  /tmp/cc7iCoSG.s 			page 13
 
 
  531              		.loc 1 160 5 view .LVU122
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  566 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
  567              		.loc 1 181 20 view .LVU129
  568 000c 064B     		ldr	r3, .L38+4
-ARM GAS  /tmp/ccWkXMve.s 			page 14
+ARM GAS  /tmp/cc7iCoSG.s 			page 14
 
 
  569 000e C3F8E420 		str	r2, [r3, #228]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  173:Core/Src/pdo_override.c ****     on_rxpdo_transfer_finished();
  614              		.loc 1 173 33 is_stmt 0 discriminator 1 view .LVU138
  615 0006 044B     		ldr	r3, .L43
-ARM GAS  /tmp/ccWkXMve.s 			page 15
+ARM GAS  /tmp/cc7iCoSG.s 			page 15
 
 
  616 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  651 0002 FFF7FEFF 		bl	spi_dma_stop
  652              	.LVL37:
  206:Core/Src/pdo_override.c ****     ESCvar.ALevent = etohs ((uint16_t)*pdo_spi_rxbuf);
-ARM GAS  /tmp/ccWkXMve.s 			page 16
+ARM GAS  /tmp/cc7iCoSG.s 			page 16
 
 
  653              		.loc 1 206 5 view .LVU144
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  702              		.loc 1 198 51 discriminator 1 view .LVU153
  198:Core/Src/pdo_override.c ****     while (pdi_dma_transmission == IN_PROGRESS) { } /* polling to end of transfer flag */
  703              		.loc 1 198 11 discriminator 1 view .LVU154
-ARM GAS  /tmp/ccWkXMve.s 			page 17
+ARM GAS  /tmp/cc7iCoSG.s 			page 17
 
 
  198:Core/Src/pdo_override.c ****     while (pdi_dma_transmission == IN_PROGRESS) { } /* polling to end of transfer flag */
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  755              	pdo_coe_rxbuf:
  756 0000 08000000 		.word	pdo_rxbuf+8
  757              		.section	.data.pdo_coe_txbuf,"aw"
-ARM GAS  /tmp/ccWkXMve.s 			page 18
+ARM GAS  /tmp/cc7iCoSG.s 			page 18
 
 
  758              		.align	2
@@ -1050,59 +1050,59 @@ ARM GAS  /tmp/ccWkXMve.s 			page 1
  790              		.file 12 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h"
  791              		.file 13 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
  792              		.file 14 "<built-in>"
-ARM GAS  /tmp/ccWkXMve.s 			page 19
+ARM GAS  /tmp/cc7iCoSG.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 pdo_override.c
-     /tmp/ccWkXMve.s:20     .text.spi_dma_prepare_transmission:0000000000000000 $t
-     /tmp/ccWkXMve.s:26     .text.spi_dma_prepare_transmission:0000000000000000 spi_dma_prepare_transmission
-     /tmp/ccWkXMve.s:76     .text.DMA1_Stream3_IRQHandler:0000000000000000 $t
-     /tmp/ccWkXMve.s:82     .text.DMA1_Stream3_IRQHandler:0000000000000000 DMA1_Stream3_IRQHandler
-     /tmp/ccWkXMve.s:119    .text.DMA1_Stream3_IRQHandler:0000000000000020 $d
-     /tmp/ccWkXMve.s:126    .text.spi_dma_setup:0000000000000000 $t
-     /tmp/ccWkXMve.s:132    .text.spi_dma_setup:0000000000000000 spi_dma_setup
-     /tmp/ccWkXMve.s:286    .text.spi_dma_setup:00000000000000a0 $d
-     /tmp/ccWkXMve.s:295    .text.spi_dma_start:0000000000000000 $t
-     /tmp/ccWkXMve.s:301    .text.spi_dma_start:0000000000000000 spi_dma_start
-     /tmp/ccWkXMve.s:357    .text.spi_dma_start:0000000000000044 $d
-     /tmp/ccWkXMve.s:365    .text.spi_dma_stop:0000000000000000 $t
-     /tmp/ccWkXMve.s:371    .text.spi_dma_stop:0000000000000000 spi_dma_stop
-     /tmp/ccWkXMve.s:427    .text.spi_dma_stop:0000000000000048 $d
-     /tmp/ccWkXMve.s:435    .text.spi_dma_rxpdo_start:0000000000000000 $t
-     /tmp/ccWkXMve.s:441    .text.spi_dma_rxpdo_start:0000000000000000 spi_dma_rxpdo_start
-     /tmp/ccWkXMve.s:473    .text.spi_dma_rxpdo_start:0000000000000024 $d
-     /tmp/ccWkXMve.s:479    .text.spi_dma_txpdo_start:0000000000000000 $t
-     /tmp/ccWkXMve.s:485    .text.spi_dma_txpdo_start:0000000000000000 spi_dma_txpdo_start
-     /tmp/ccWkXMve.s:510    .text.spi_dma_txpdo_start:0000000000000018 $d
-     /tmp/ccWkXMve.s:515    .text.init_override:0000000000000000 $t
-     /tmp/ccWkXMve.s:521    .text.init_override:0000000000000000 init_override
-     /tmp/ccWkXMve.s:543    .text.on_rxpdo_transfer_finished:0000000000000000 $t
-     /tmp/ccWkXMve.s:549    .text.on_rxpdo_transfer_finished:0000000000000000 on_rxpdo_transfer_finished
-     /tmp/ccWkXMve.s:583    .text.on_rxpdo_transfer_finished:0000000000000024 $d
-     /tmp/ccWkXMve.s:591    .text.rxpdo_override:0000000000000000 $t
-     /tmp/ccWkXMve.s:597    .text.rxpdo_override:0000000000000000 rxpdo_override
-     /tmp/ccWkXMve.s:629    .text.rxpdo_override:0000000000000018 $d
-     /tmp/ccWkXMve.s:634    .text.on_txpdo_transfer_finished:0000000000000000 $t
-     /tmp/ccWkXMve.s:640    .text.on_txpdo_transfer_finished:0000000000000000 on_txpdo_transfer_finished
-     /tmp/ccWkXMve.s:666    .text.on_txpdo_transfer_finished:0000000000000014 $d
-     /tmp/ccWkXMve.s:672    .text.txpdo_override:0000000000000000 $t
-     /tmp/ccWkXMve.s:678    .text.txpdo_override:0000000000000000 txpdo_override
-     /tmp/ccWkXMve.s:719    .text.txpdo_override:0000000000000028 $d
-     /tmp/ccWkXMve.s:762    .data.pdo_coe_txbuf:0000000000000000 pdo_coe_txbuf
-     /tmp/ccWkXMve.s:776    .data.pdo_spi_txbuf:0000000000000000 pdo_spi_txbuf
-     /tmp/ccWkXMve.s:748    .bss.pdo_txbuf:0000000000000000 pdo_txbuf
-     /tmp/ccWkXMve.s:755    .data.pdo_coe_rxbuf:0000000000000000 pdo_coe_rxbuf
-     /tmp/ccWkXMve.s:769    .data.pdo_spi_rxbuf:0000000000000000 pdo_spi_rxbuf
-     /tmp/ccWkXMve.s:742    .bss.pdo_rxbuf:0000000000000000 pdo_rxbuf
-     /tmp/ccWkXMve.s:736    .bss.pdi_dma_transmission:0000000000000000 pdi_dma_transmission
-     /tmp/ccWkXMve.s:737    .bss.pdi_dma_transmission:0000000000000000 $d
-     /tmp/ccWkXMve.s:739    .bss.pdo_rxbuf:0000000000000000 $d
-     /tmp/ccWkXMve.s:745    .bss.pdo_txbuf:0000000000000000 $d
-     /tmp/ccWkXMve.s:751    .data.pdo_coe_rxbuf:0000000000000000 $d
-     /tmp/ccWkXMve.s:758    .data.pdo_coe_txbuf:0000000000000000 $d
-     /tmp/ccWkXMve.s:765    .data.pdo_spi_rxbuf:0000000000000000 $d
-     /tmp/ccWkXMve.s:772    .data.pdo_spi_txbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:20     .text.spi_dma_prepare_transmission:0000000000000000 $t
+     /tmp/cc7iCoSG.s:26     .text.spi_dma_prepare_transmission:0000000000000000 spi_dma_prepare_transmission
+     /tmp/cc7iCoSG.s:76     .text.DMA1_Stream3_IRQHandler:0000000000000000 $t
+     /tmp/cc7iCoSG.s:82     .text.DMA1_Stream3_IRQHandler:0000000000000000 DMA1_Stream3_IRQHandler
+     /tmp/cc7iCoSG.s:119    .text.DMA1_Stream3_IRQHandler:0000000000000020 $d
+     /tmp/cc7iCoSG.s:126    .text.spi_dma_setup:0000000000000000 $t
+     /tmp/cc7iCoSG.s:132    .text.spi_dma_setup:0000000000000000 spi_dma_setup
+     /tmp/cc7iCoSG.s:286    .text.spi_dma_setup:00000000000000a0 $d
+     /tmp/cc7iCoSG.s:295    .text.spi_dma_start:0000000000000000 $t
+     /tmp/cc7iCoSG.s:301    .text.spi_dma_start:0000000000000000 spi_dma_start
+     /tmp/cc7iCoSG.s:357    .text.spi_dma_start:0000000000000044 $d
+     /tmp/cc7iCoSG.s:365    .text.spi_dma_stop:0000000000000000 $t
+     /tmp/cc7iCoSG.s:371    .text.spi_dma_stop:0000000000000000 spi_dma_stop
+     /tmp/cc7iCoSG.s:427    .text.spi_dma_stop:0000000000000048 $d
+     /tmp/cc7iCoSG.s:435    .text.spi_dma_rxpdo_start:0000000000000000 $t
+     /tmp/cc7iCoSG.s:441    .text.spi_dma_rxpdo_start:0000000000000000 spi_dma_rxpdo_start
+     /tmp/cc7iCoSG.s:473    .text.spi_dma_rxpdo_start:0000000000000024 $d
+     /tmp/cc7iCoSG.s:479    .text.spi_dma_txpdo_start:0000000000000000 $t
+     /tmp/cc7iCoSG.s:485    .text.spi_dma_txpdo_start:0000000000000000 spi_dma_txpdo_start
+     /tmp/cc7iCoSG.s:510    .text.spi_dma_txpdo_start:0000000000000018 $d
+     /tmp/cc7iCoSG.s:515    .text.init_override:0000000000000000 $t
+     /tmp/cc7iCoSG.s:521    .text.init_override:0000000000000000 init_override
+     /tmp/cc7iCoSG.s:543    .text.on_rxpdo_transfer_finished:0000000000000000 $t
+     /tmp/cc7iCoSG.s:549    .text.on_rxpdo_transfer_finished:0000000000000000 on_rxpdo_transfer_finished
+     /tmp/cc7iCoSG.s:583    .text.on_rxpdo_transfer_finished:0000000000000024 $d
+     /tmp/cc7iCoSG.s:591    .text.rxpdo_override:0000000000000000 $t
+     /tmp/cc7iCoSG.s:597    .text.rxpdo_override:0000000000000000 rxpdo_override
+     /tmp/cc7iCoSG.s:629    .text.rxpdo_override:0000000000000018 $d
+     /tmp/cc7iCoSG.s:634    .text.on_txpdo_transfer_finished:0000000000000000 $t
+     /tmp/cc7iCoSG.s:640    .text.on_txpdo_transfer_finished:0000000000000000 on_txpdo_transfer_finished
+     /tmp/cc7iCoSG.s:666    .text.on_txpdo_transfer_finished:0000000000000014 $d
+     /tmp/cc7iCoSG.s:672    .text.txpdo_override:0000000000000000 $t
+     /tmp/cc7iCoSG.s:678    .text.txpdo_override:0000000000000000 txpdo_override
+     /tmp/cc7iCoSG.s:719    .text.txpdo_override:0000000000000028 $d
+     /tmp/cc7iCoSG.s:762    .data.pdo_coe_txbuf:0000000000000000 pdo_coe_txbuf
+     /tmp/cc7iCoSG.s:776    .data.pdo_spi_txbuf:0000000000000000 pdo_spi_txbuf
+     /tmp/cc7iCoSG.s:748    .bss.pdo_txbuf:0000000000000000 pdo_txbuf
+     /tmp/cc7iCoSG.s:755    .data.pdo_coe_rxbuf:0000000000000000 pdo_coe_rxbuf
+     /tmp/cc7iCoSG.s:769    .data.pdo_spi_rxbuf:0000000000000000 pdo_spi_rxbuf
+     /tmp/cc7iCoSG.s:742    .bss.pdo_rxbuf:0000000000000000 pdo_rxbuf
+     /tmp/cc7iCoSG.s:736    .bss.pdi_dma_transmission:0000000000000000 pdi_dma_transmission
+     /tmp/cc7iCoSG.s:737    .bss.pdi_dma_transmission:0000000000000000 $d
+     /tmp/cc7iCoSG.s:739    .bss.pdo_rxbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:745    .bss.pdo_txbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:751    .data.pdo_coe_rxbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:758    .data.pdo_coe_txbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:765    .data.pdo_spi_rxbuf:0000000000000000 $d
+     /tmp/cc7iCoSG.s:772    .data.pdo_spi_txbuf:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 DMA_GetITStatus
@@ -1110,7 +1110,7 @@ DMA_ClearITPendingBit
 RCC_AHB1PeriphClockCmd
 DMA_DeInit
 DMA_GetCmdStatus
-ARM GAS  /tmp/ccWkXMve.s 			page 20
+ARM GAS  /tmp/cc7iCoSG.s 			page 20
 
 
 DMA_StructInit

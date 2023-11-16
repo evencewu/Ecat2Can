@@ -1,23 +1,8 @@
-#ifndef __ECAT_BASE__
-#define __ECAT_BASE__
-
-#include <stdio.h>
-#include <string.h>
-#include <inttypes.h>
-
-#include "soem_ros2/soem.h"
-
-void EcatStart(char *ifname);
-void EcatSyncMsg(uint8_t *data);
-void EcatStop();
-
-#define EC_TIMEOUTMON 500
+#include "ecat_can_base/ecat_base.h"
 
 char IOmap[4096];
 volatile int wkc;
-uint8_t heart = 0;
-//
-#include "ethercat_to_can/ecat_typedef.h"
+int expectedWKC;
 
 void EcatStart(char *ifname)
 {
@@ -38,7 +23,7 @@ void EcatStart(char *ifname)
             ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE * 4);
 
             printf("Request operational state for all slaves\n");
-
+            //expectedWKC = (ec_group[0].outputsWKC * 2) + ec_group[0].inputsWKC;
             ec_slave[0].state = EC_STATE_OPERATIONAL;
             /* send one valid process data to make outputs in slaves happy*/
             ec_send_processdata();
@@ -66,51 +51,28 @@ void EcatStart(char *ifname)
     }
 }
 
-void EcatSyncMsg(uint8_t *data)
+void EcatSyncMsg(uint8_t *output_data, uint8_t *input_data)
 {
     if (ec_slave[0].state == EC_STATE_OPERATIONAL)
     {
-        //printf("Operational state reached for all slaves.\n");
+        // printf("Operational state reached for all slaves.\n");
 
-        ec_slave[0].outputs[0x0000] = *data;
-        ec_slave[0].outputs[0x0001] = *(data + 1);
-        ec_slave[0].outputs[0x0002] = *(data + 2);
-        ec_slave[0].outputs[0x0003] = *(data + 3);
-        ec_slave[0].outputs[0x0004] = *(data + 4);
-        ec_slave[0].outputs[0x0005] = *(data + 5);
-        ec_slave[0].outputs[0x0006] = *(data + 6);
-        ec_slave[0].outputs[0x0007] = *(data + 7);
-        ec_slave[0].outputs[0x0008] = *(data + 8);
-        ec_slave[0].outputs[0x0009] = *(data + 9);
-        ec_slave[0].outputs[0x000A] = *(data + 10);
-        ec_slave[0].outputs[0x000B] = *(data + 11);
-        ec_slave[0].outputs[0x000C] = *(data + 12);
-        ec_slave[0].outputs[0x000D] = *(data + 13);
-        ec_slave[0].outputs[0x000E] = *(data + 14);
-        ec_slave[0].outputs[0x000F] = *(data + 15);
-
-        ec_slave[0].outputs[0x0010] = *(data + 16);
-        ec_slave[0].outputs[0x0011] = *(data + 17);
-        ec_slave[0].outputs[0x0012] = *(data + 18);
-        ec_slave[0].outputs[0x0013] = *(data + 19);
-        ec_slave[0].outputs[0x0014] = *(data + 20);
-        ec_slave[0].outputs[0x0015] = *(data + 21);
-        ec_slave[0].outputs[0x0016] = *(data + 22);
-        ec_slave[0].outputs[0x0017] = *(data + 23);
-        ec_slave[0].outputs[0x0018] = *(data + 24);
-        ec_slave[0].outputs[0x0019] = *(data + 25);
-        ec_slave[0].outputs[0x001A] = *(data + 26);
-        ec_slave[0].outputs[0x001B] = *(data + 27);
-        ec_slave[0].outputs[0x001C] = *(data + 28);
-        ec_slave[0].outputs[0x001D] = *(data + 29);
-        ec_slave[0].outputs[0x001E] = *(data + 30);
-        ec_slave[0].outputs[0x001F] = *(data + 31);
-
-        ec_slave[0].outputs[0x0020] = *(data + 32);
+        for (int i = 0; i < PDO_OUTPUT_BYTE; i++)
+        {
+            ec_slave[0].outputs[i] = *(output_data + i);
+        }
 
         ec_send_processdata();
 
-        ec_receive_processdata(EC_TIMEOUTRET);
+        wkc = ec_receive_processdata(EC_TIMEOUTRET);
+
+        //if (wkc >= expectedWKC)
+        //{
+            for (int i = 0; i < PDO_INPUT_BYTE; i++)
+            {
+                *(input_data + i) = ec_slave[0].inputs[i];
+            }
+        //}
 
         osal_usleep(200);
     }
@@ -137,5 +99,3 @@ void EcatStop()
     /* request INIT state for all slaves */
     ec_writestate(0);
 }
-
-#endif

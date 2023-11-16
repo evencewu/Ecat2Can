@@ -1,8 +1,8 @@
 #ifndef __ECAT_GM6020__
 #define __ECAT_GM6020__
 
-#include "ethercat_to_can/ecat_base.h"
-#include "ethercat_to_can/ecat_typedef.h"
+#include "ecat_can_base/ecat_base.h"
+#include "ecat_can_base/ecat_typedef.h"
 
 #include <inttypes.h>
 
@@ -14,7 +14,7 @@
 #define GM6020_TAG2 0x2FF
 
 // GM6020_demo
-void GM6020_can_set(uint8_t canid, Ecat2Can_Pack *pack, uint32_t tag, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
+void GM6020_can_set(uint8_t canid, Ecat2Can_Outputs_Pack *pack, uint32_t tag, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
 
     pack->can[canid-1].StdId = tag;

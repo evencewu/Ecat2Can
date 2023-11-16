@@ -5,6 +5,8 @@ __IO uint32_t flag;
 CanTxMsg Can1_TxMessage; // 发送缓冲区
 CanRxMsg Can1_RxMessage; // 接收缓冲区
 
+uint8_t can1_rx_flag = 0;
+
 static void CAN1_GPIO_Config(void)
 {
 
@@ -44,8 +46,8 @@ static void CAN1_Mode_Config(void)
 
     /*CAN单元初始化*/
     CAN_InitStructure.CAN_TTCM = DISABLE;         // MCR-TTCM 关闭时间触发通信模式使能
-    CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
-    CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
+    CAN_InitStructure.CAN_ABOM = DISABLE;         // MCR-ABOM 使能自动离线管理
+    CAN_InitStructure.CAN_AWUM = DISABLE;         // MCR-AWUM 使用自动唤醒模式
     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
                                                   //  溢出时新报文会覆盖原有报文
@@ -112,8 +114,9 @@ void CAN1_Config(void)
 {
     CAN1_GPIO_Config();
     CAN1_Mode_Config();
-    CAN1_Filter_Config();
+
     CAN1_NVIC_Config();
+    CAN1_Filter_Config();
 }
 
 // CAN2 ============================================
@@ -152,6 +155,8 @@ static void CAN2_Mode_Config(void)
     CAN_InitTypeDef CAN_InitStructure;
     /************************CAN通信参数设置************************/
     /* Enable CAN clock */
+
+    RCC_APB1PeriphClockCmd(CAN1_CLK, ENABLE); // 再开启CAN2时钟
     RCC_APB1PeriphClockCmd(CAN2_CLK, ENABLE);
 
     /*CAN寄存器初始化*/
@@ -160,8 +165,8 @@ static void CAN2_Mode_Config(void)
 
     /*CAN单元初始化*/
     CAN_InitStructure.CAN_TTCM = DISABLE;         // MCR-TTCM 关闭时间触发通信模式使能
-    CAN_InitStructure.CAN_ABOM = DISABLE;          // MCR-ABOM 使能自动离线管理
-    CAN_InitStructure.CAN_AWUM = DISABLE;          // MCR-AWUM 使用自动唤醒模式
+    CAN_InitStructure.CAN_ABOM = DISABLE;         // MCR-ABOM 使能自动离线管理
+    CAN_InitStructure.CAN_AWUM = DISABLE;         // MCR-AWUM 使用自动唤醒模式
     CAN_InitStructure.CAN_NART = DISABLE;         // MCR-NART 禁止报文自动重传
     CAN_InitStructure.CAN_RFLM = DISABLE;         // MCR-RFLM 接收FIFO 不锁定
                                                   //  溢出时新报文会覆盖原有报文
@@ -184,7 +189,7 @@ static void CAN2_Filter_Config(void)
     CAN_FilterInitTypeDef CAN_FilterInitStructure;
 
     /*CAN筛选器初始化*/
-    CAN_FilterInitStructure.CAN_FilterNumber = 0; // 筛选器组0
+    CAN_FilterInitStructure.CAN_FilterNumber = 15; // 筛选器组0
     // 工作在掩码模式
     CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;
     // 筛选器位宽为单个32位。
@@ -228,15 +233,22 @@ void CAN2_Config(void)
 {
     CAN2_GPIO_Config();
     CAN2_Mode_Config();
-    CAN2_Filter_Config();
+
     CAN2_NVIC_Config();
+    CAN2_Filter_Config();
 }
 
 /********************************************************************/
 void CAN1_RX0_IRQHandler(void)
 {
+
     /*从邮箱中读出报文*/
     CAN_Receive(CAN1, CAN_FIFO0, &Can1_RxMessage);
+
+    //if (Can1_RxMessage.StdId == 0x205)
+    //{
+    //    can1_rx_flag = 1;
+    //}
 }
 
 void CAN2_RX0_IRQHandler(void)

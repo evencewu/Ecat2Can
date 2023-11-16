@@ -31,7 +31,7 @@ int main(void)
 
 	// TIMx_Configuration();
 
-	// CAN_FIFORelease(CAN1,CAN_FIFO0);
+	CAN_FIFORelease(CAN1, CAN_FIFO0);
 
 	while (1)
 	{
@@ -40,10 +40,9 @@ int main(void)
 		// GPIO_SetBits(GPIOB, GPIO_Pin_13);
 
 		ecat_slv();
-		
+
 		CAN_Transmit(CAN1, &Can1_TxMessage);
 		CAN_Transmit(CAN2, &Can2_TxMessage);
-
 		// ecatapp_benchmark_us();
 
 		// ecatapp_loop();
