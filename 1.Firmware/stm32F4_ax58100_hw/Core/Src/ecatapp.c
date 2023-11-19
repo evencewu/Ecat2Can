@@ -62,7 +62,6 @@ void EXTI0_IRQHandler(void)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
         sync0_irq_flag = 1;
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
     }
 }
 
@@ -70,11 +69,10 @@ static uint8_t pdi_irq_flag = 0;
 
 void EXTI9_5_IRQHandler(void)
 {
-    if (EXTI_GetITStatus(EXTI_Line5) != RESET)
+    if (EXTI_GetITStatus(EXTI_Line8) != RESET)
     {
-        EXTI_ClearITPendingBit(EXTI_Line5);
+        EXTI_ClearITPendingBit(EXTI_Line8);
         pdi_irq_flag = 1;
-        GPIO_SetBits(GPIOB, GPIO_Pin_14);
     }
 }
 // **************************************************************
@@ -147,10 +145,22 @@ void cb_get_inputs()
     Obj.can2_rx_data[5] = Can2_RxMessage.Data[5];
     Obj.can2_rx_data[6] = Can2_RxMessage.Data[6];
     Obj.can2_rx_data[7] = Can2_RxMessage.Data[7];
+
+     if (heart_tag == 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+        heart_tag = 1;
+    }
+     else
+    {
+        heart_tag = 0;
+        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    }
 }
 
 void cb_set_outputs()
 {
+
     Can1_TxMessage.StdId = Obj.can1_tx.StdId;
     Can1_TxMessage.ExtId = Obj.can1_tx.ExtId;
     Can1_TxMessage.IDE = Obj.can1_tx.IDE;
@@ -207,8 +217,6 @@ void cb_set_outputs()
     //{
     //    GPIO_ResetBits(GPIOB, GPIO_Pin_13);
     //}
-
-
 }
 
 void ecatapp_loop(void)

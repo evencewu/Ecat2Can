@@ -61,7 +61,7 @@ void EXTILine0_Disable(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-void EXTILine5_Config(void)
+void EXTILine8_Config(void)
 {
     EXTI_InitTypeDef   EXTI_InitStructure;
     GPIO_InitTypeDef   GPIO_InitStructure;
@@ -82,7 +82,7 @@ void EXTILine5_Config(void)
     SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource5);
 
     /* Configure EXTI Line3 */
-    EXTI_InitStructure.EXTI_Line = EXTI_Line5;
+    EXTI_InitStructure.EXTI_Line = EXTI_Line8;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
     EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
@@ -96,7 +96,7 @@ void EXTILine5_Config(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-void EXTILine5_Disable(void)
+void EXTILine8_Disable(void)
 {
     EXTI_InitTypeDef   EXTI_InitStructure;
     NVIC_InitTypeDef   NVIC_InitStructure;
@@ -105,7 +105,7 @@ void EXTILine5_Disable(void)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
     /* Configure EXTI Line3 */
-    EXTI_InitStructure.EXTI_Line = EXTI_Line5;
+    EXTI_InitStructure.EXTI_Line = EXTI_Line8;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
     EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
     EXTI_InitStructure.EXTI_LineCmd = DISABLE;
