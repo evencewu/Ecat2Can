@@ -17,6 +17,7 @@
 #include "spi.h"
 #include "rst.h"
 
+
 #define MAX_READ_SIZE   128
 
 #define ESC_CMD_READ    0x02
@@ -174,7 +175,7 @@ void ESC_init (const esc_cfg_t * config)
 void ESC_interrupt_enable (uint32_t mask)
 {
    // PDI interrupt
-   EXTILine5_Config();
+   EXTILine8_Config();
 
    if (ESCREG_ALEVENT_DC_SYNC0 & mask)
    {
@@ -199,7 +200,7 @@ void ESC_interrupt_enable (uint32_t mask)
  */
 void ESC_interrupt_disable (uint32_t mask)
 {
-   EXTILine5_Disable();
+   EXTILine8_Disable();
    if (ESCREG_ALEVENT_DC_SYNC0 & mask)
    {
       EXTILine0_Disable();

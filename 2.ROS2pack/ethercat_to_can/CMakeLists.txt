@@ -28,6 +28,9 @@ link_directories(lib)
 add_executable(test_demo src/test_demo.cpp src/ecat_can_base/ecat_base.cpp src/ecat_motor_dlc/ecat_DM4310.cpp)
 ament_target_dependencies(test_demo rclcpp soem_ros2)
 
+add_executable(test_simple src/test_simple.cpp)
+ament_target_dependencies(test_simple rclcpp soem_ros2)
+
 
 install(
   DIRECTORY include/
@@ -36,6 +39,7 @@ install(
 
 install(
   TARGETS 
+  test_simple
   test_demo
   DESTINATION lib/${PROJECT_NAME})
 

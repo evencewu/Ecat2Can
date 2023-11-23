@@ -48,8 +48,8 @@ void DMA1_Stream3_IRQHandler(void)
     if(DMA_GetITStatus(DMA1_Stream3, DMA_IT_TCIF3))
     {
         /* Clear DMA Stream Transfer Complete interrupt pending bit */
-        DMA_ClearITPendingBit(DMA1_Stream3, DMA_IT_TCIF3);
         pdi_dma_transmission = NOT_STARTED;
+        DMA_ClearITPendingBit(DMA1_Stream3, DMA_IT_TCIF3);
     }
 }
 

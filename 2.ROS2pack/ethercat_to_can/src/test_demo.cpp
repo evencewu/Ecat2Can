@@ -4,6 +4,7 @@
 #include "ecat_motor_dlc/ecat_GM6020.h"
 
 #include <signal.h>
+#include <unistd.h>
 
 bool app_stopped = false;
 Ecat2Can_Outputs_Pack packet_tx;
@@ -19,8 +20,10 @@ int main()
     char phy[] = "enp4s0";
     EcatStart(phy);
 
+    
     memset(&packet_tx, 0, sizeof(Ecat2Can_Outputs_Pack));
     EcatSyncMsg((uint8_t *)&packet_tx, (uint8_t *)&packet_rx);
+
 
     //-------------//
     // DM4310 demo //
@@ -64,13 +67,15 @@ int main()
         //-------------//
 
         GM6020_can_set(CAN1, &packet_tx, GM6020_TAG1, 10000, 10000, 0, 0);
-        //packet_tx.LED = 0x0F;
+        packet_tx.LED = 0x0F;
         EcatSyncMsg((uint8_t *)&packet_tx, (uint8_t *)&packet_rx);
+
+
         //printf("%x\n", packet_rx.can[0].StdId);
         //printf("%x\n", packet_rx.can[0].StdId);
 
         //-----END-----//
-        printf("%x\n", packet_rx.can[0].StdId);
+        //printf("%x\n", packet_rx.can[0].StdId);
         if (app_stopped)
         {
             break;

@@ -62,6 +62,8 @@ void EXTI0_IRQHandler(void)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
         sync0_irq_flag = 1;
+        GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
+        //GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
     }
 }
 
@@ -109,6 +111,7 @@ uint16_t check_dc_handler(void)
 
 void ecatapp()
 {
+    //GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
 }
 
 void cb_get_inputs()
@@ -116,98 +119,99 @@ void cb_get_inputs()
     // CAN_Receive(CAN1, CAN_FIFO0, &Can1_RxMessage);
     // CAN_Receive(CAN2, CAN_FIFO1, &Can2_RxMessage);
 
-    Obj.can1_rx.StdId = Can1_RxMessage.StdId;
-    Obj.can1_rx.ExtId = Can1_RxMessage.ExtId;
-    Obj.can1_rx.IDE = Can1_RxMessage.IDE;
-    Obj.can1_rx.RTR = Can1_RxMessage.RTR;
-    Obj.can1_rx.DLC = Can1_RxMessage.DLC;
+    //Obj.can1_rx.StdId = Can1_RxMessage.StdId;
+    //Obj.can1_rx.ExtId = Can1_RxMessage.ExtId;
+    //Obj.can1_rx.IDE = Can1_RxMessage.IDE;
+    //Obj.can1_rx.RTR = Can1_RxMessage.RTR;
+    //Obj.can1_rx.DLC = Can1_RxMessage.DLC;
+//
+    //Obj.can1_rx_data[0] = Can1_RxMessage.Data[0];
+    //Obj.can1_rx_data[1] = Can1_RxMessage.Data[1];
+    //Obj.can1_rx_data[2] = Can1_RxMessage.Data[2];
+    //Obj.can1_rx_data[3] = Can1_RxMessage.Data[3];
+    //Obj.can1_rx_data[4] = Can1_RxMessage.Data[4];
+    //Obj.can1_rx_data[5] = Can1_RxMessage.Data[5];
+    //Obj.can1_rx_data[6] = Can1_RxMessage.Data[6];
+    //Obj.can1_rx_data[7] = Can1_RxMessage.Data[7];
+//
+    //Obj.can2_rx.StdId = Can2_RxMessage.StdId;
+    //Obj.can2_rx.ExtId = Can2_RxMessage.ExtId;
+    //Obj.can2_rx.IDE = Can2_RxMessage.IDE;
+    //Obj.can2_rx.RTR = Can2_RxMessage.RTR;
+    //Obj.can2_rx.DLC = Can2_RxMessage.DLC;
+//
+    //Obj.can2_rx_data[0] = Can2_RxMessage.Data[0];
+    //Obj.can2_rx_data[1] = Can2_RxMessage.Data[1];
+    //Obj.can2_rx_data[2] = Can2_RxMessage.Data[2];
+    //Obj.can2_rx_data[3] = Can2_RxMessage.Data[3];
+    //Obj.can2_rx_data[4] = Can2_RxMessage.Data[4];
+    //Obj.can2_rx_data[5] = Can2_RxMessage.Data[5];
+    //Obj.can2_rx_data[6] = Can2_RxMessage.Data[6];
+    //Obj.can2_rx_data[7] = Can2_RxMessage.Data[7];
+//
+    // if (heart_tag == 0)
+    //{
+    //    GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    //    heart_tag = 1;
+    //}
+    // else
+    //{
+    //    heart_tag = 0;
+    //    GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    //}
 
-    Obj.can1_rx_data[0] = Can1_RxMessage.Data[0];
-    Obj.can1_rx_data[1] = Can1_RxMessage.Data[1];
-    Obj.can1_rx_data[2] = Can1_RxMessage.Data[2];
-    Obj.can1_rx_data[3] = Can1_RxMessage.Data[3];
-    Obj.can1_rx_data[4] = Can1_RxMessage.Data[4];
-    Obj.can1_rx_data[5] = Can1_RxMessage.Data[5];
-    Obj.can1_rx_data[6] = Can1_RxMessage.Data[6];
-    Obj.can1_rx_data[7] = Can1_RxMessage.Data[7];
-
-    Obj.can2_rx.StdId = Can2_RxMessage.StdId;
-    Obj.can2_rx.ExtId = Can2_RxMessage.ExtId;
-    Obj.can2_rx.IDE = Can2_RxMessage.IDE;
-    Obj.can2_rx.RTR = Can2_RxMessage.RTR;
-    Obj.can2_rx.DLC = Can2_RxMessage.DLC;
-
-    Obj.can2_rx_data[0] = Can2_RxMessage.Data[0];
-    Obj.can2_rx_data[1] = Can2_RxMessage.Data[1];
-    Obj.can2_rx_data[2] = Can2_RxMessage.Data[2];
-    Obj.can2_rx_data[3] = Can2_RxMessage.Data[3];
-    Obj.can2_rx_data[4] = Can2_RxMessage.Data[4];
-    Obj.can2_rx_data[5] = Can2_RxMessage.Data[5];
-    Obj.can2_rx_data[6] = Can2_RxMessage.Data[6];
-    Obj.can2_rx_data[7] = Can2_RxMessage.Data[7];
-
-     if (heart_tag == 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
-        heart_tag = 1;
-    }
-     else
-    {
-        heart_tag = 0;
-        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-    }
 }
 
 void cb_set_outputs()
 {
 
-    Can1_TxMessage.StdId = Obj.can1_tx.StdId;
-    Can1_TxMessage.ExtId = Obj.can1_tx.ExtId;
-    Can1_TxMessage.IDE = Obj.can1_tx.IDE;
-    Can1_TxMessage.RTR = Obj.can1_tx.RTR;
-    Can1_TxMessage.DLC = Obj.can1_tx.DLC;
+    //Can1_TxMessage.StdId = Obj.can1_tx.StdId;
+    //Can1_TxMessage.ExtId = Obj.can1_tx.ExtId;
+    //Can1_TxMessage.IDE = Obj.can1_tx.IDE;
+    //Can1_TxMessage.RTR = Obj.can1_tx.RTR;
+    //Can1_TxMessage.DLC = Obj.can1_tx.DLC;
+//
+    //Can1_TxMessage.Data[0] = Obj.can1_tx_data[0];
+    //Can1_TxMessage.Data[1] = Obj.can1_tx_data[1];
+    //Can1_TxMessage.Data[2] = Obj.can1_tx_data[2];
+    //Can1_TxMessage.Data[3] = Obj.can1_tx_data[3];
+    //Can1_TxMessage.Data[4] = Obj.can1_tx_data[4];
+    //Can1_TxMessage.Data[5] = Obj.can1_tx_data[5];
+    //Can1_TxMessage.Data[6] = Obj.can1_tx_data[6];
+    //Can1_TxMessage.Data[7] = Obj.can1_tx_data[7];
+//
+    //Can2_TxMessage.StdId = Obj.can2_tx.StdId;
+    //Can2_TxMessage.ExtId = Obj.can2_tx.ExtId;
+    //Can2_TxMessage.IDE = Obj.can2_tx.IDE;
+    //Can2_TxMessage.RTR = Obj.can2_tx.RTR;
+    //Can2_TxMessage.DLC = Obj.can2_tx.DLC;
+//
+    //Can2_TxMessage.Data[0] = Obj.can2_tx_data[0];
+    //Can2_TxMessage.Data[1] = Obj.can2_tx_data[1];
+    //Can2_TxMessage.Data[2] = Obj.can2_tx_data[2];
+    //Can2_TxMessage.Data[3] = Obj.can2_tx_data[3];
+    //Can2_TxMessage.Data[4] = Obj.can2_tx_data[4];
+    //Can2_TxMessage.Data[5] = Obj.can2_tx_data[5];
+    //Can2_TxMessage.Data[6] = Obj.can2_tx_data[6];
+    //Can2_TxMessage.Data[7] = Obj.can2_tx_data[7];
 
-    Can1_TxMessage.Data[0] = Obj.can1_tx_data[0];
-    Can1_TxMessage.Data[1] = Obj.can1_tx_data[1];
-    Can1_TxMessage.Data[2] = Obj.can1_tx_data[2];
-    Can1_TxMessage.Data[3] = Obj.can1_tx_data[3];
-    Can1_TxMessage.Data[4] = Obj.can1_tx_data[4];
-    Can1_TxMessage.Data[5] = Obj.can1_tx_data[5];
-    Can1_TxMessage.Data[6] = Obj.can1_tx_data[6];
-    Can1_TxMessage.Data[7] = Obj.can1_tx_data[7];
+    if (Obj.led[0] != 0)
+    {
+         GPIO_SetBits(GPIOB, GPIO_Pin_15);
+     }
+     else
+    {
+         GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+     }
 
-    Can2_TxMessage.StdId = Obj.can2_tx.StdId;
-    Can2_TxMessage.ExtId = Obj.can2_tx.ExtId;
-    Can2_TxMessage.IDE = Obj.can2_tx.IDE;
-    Can2_TxMessage.RTR = Obj.can2_tx.RTR;
-    Can2_TxMessage.DLC = Obj.can2_tx.DLC;
-
-    Can2_TxMessage.Data[0] = Obj.can2_tx_data[0];
-    Can2_TxMessage.Data[1] = Obj.can2_tx_data[1];
-    Can2_TxMessage.Data[2] = Obj.can2_tx_data[2];
-    Can2_TxMessage.Data[3] = Obj.can2_tx_data[3];
-    Can2_TxMessage.Data[4] = Obj.can2_tx_data[4];
-    Can2_TxMessage.Data[5] = Obj.can2_tx_data[5];
-    Can2_TxMessage.Data[6] = Obj.can2_tx_data[6];
-    Can2_TxMessage.Data[7] = Obj.can2_tx_data[7];
-
-    // if (Obj.led[0] != 0)
-    //{
-    //     GPIO_SetBits(GPIOB, GPIO_Pin_15);
-    // }
-    // else
-    //{
-    //     GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-    // }
-    //
-    // if (Obj.led[1] != 0)
-    //{
-    //    GPIO_SetBits(GPIOB, GPIO_Pin_14);
-    //}
-    // else
-    //{
-    //    GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-    //}
+     if (Obj.led[1] != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_14);
+    }
+     else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+    }
     //
     // if (Obj.led[2] != 0)
     //{

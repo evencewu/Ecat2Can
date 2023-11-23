@@ -1,5 +1,8 @@
 #include "ecat_can_base/ecat_base.h"
 
+#include <unistd.h>
+#define EC_VER1
+
 char IOmap[4096];
 volatile int wkc;
 int expectedWKC;
@@ -7,6 +10,7 @@ int expectedWKC;
 void EcatStart(char *ifname)
 {
     int chk;
+    int oloop,iloop;
     if (ec_init(ifname))
     {
         printf("ec_init on %s succeeded.\n", ifname);
@@ -16,16 +20,22 @@ void EcatStart(char *ifname)
 
             ec_config_map(&IOmap);
 
-            ec_configdc();
-
             printf("Slaves mapped, state to SAFE_OP.\n");
             /* wait for all slaves to reach SAFE_OP state */
             ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE * 4);
 
+            ec_configdc();
+
+            ec_dcsync0(1, TRUE, 10000, 250000);
+            //
+            sleep(1);
+
             printf("Request operational state for all slaves\n");
-            //expectedWKC = (ec_group[0].outputsWKC * 2) + ec_group[0].inputsWKC;
+
+            // expectedWKC = (ec_group[0].outputsWKC * 2) + ec_group[0].inputsWKC;
             ec_slave[0].state = EC_STATE_OPERATIONAL;
             /* send one valid process data to make outputs in slaves happy*/
+
             ec_send_processdata();
             ec_receive_processdata(EC_TIMEOUTRET);
             /* request OP state for all slaves */
@@ -74,7 +84,7 @@ void EcatSyncMsg(uint8_t *output_data, uint8_t *input_data)
             }
         }
 
-        osal_usleep(200);
+        osal_usleep(1000);
     }
     else
     {

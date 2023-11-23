@@ -79,7 +79,7 @@ void EXTILine8_Config(void)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     /* Connect EXTI Line5 to PA8 pin */
-    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource5);
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource8);
 
     /* Configure EXTI Line3 */
     EXTI_InitStructure.EXTI_Line = EXTI_Line8;

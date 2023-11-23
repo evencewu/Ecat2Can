@@ -8,6 +8,7 @@
 #include "esc_foe.h"
 #include "esc_eoe.h"
 #include "ecat_slv.h"
+#include "stm32f4xx_conf.h"
 
 #define IS_RXPDO(index) ((index) >= 0x1600 && (index) < 0x1800)
 #define IS_TXPDO(index) ((index) >= 0x1A00 && (index) < 0x1C00)
@@ -358,6 +359,8 @@ void ecat_slv_init (esc_cfg_t * config)
    ESC_config (config);
    /* Call HW init */
    ESC_init (config);
+
+   GPIO_ResetBits(GPIOA, GPIO_Pin_2);
 
    /*  wait until ESC is started up */
    while ((ESCvar.DLstatus & 0x0001) == 0)

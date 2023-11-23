@@ -21,13 +21,11 @@ extern CanRxMsg Can2_RxMessage; // 接收缓冲区
 int main(void)
 {
 	SysTick_Config(SystemCoreClock / 1000);
-	delay_init();
+	//delay_init();
 
 	led_setup();
-	CAN1_Config();
-	CAN2_Config();
-	EXTILine0_Config();
-	EXTILine8_Config();
+	//CAN1_Config();
+	//CAN2_Config();
 
 	ecatapp_init();
 

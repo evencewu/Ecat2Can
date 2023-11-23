@@ -39,13 +39,13 @@ int main(void)
 		// GPIO_SetBits(GPIOB, GPIO_Pin_14);
 		// GPIO_SetBits(GPIOB, GPIO_Pin_13);
 
-		ecat_slv();
-
+		//ecat_slv();
+		
 		//CAN_Transmit(CAN1, &Can1_TxMessage);
 		//CAN_Transmit(CAN2, &Can2_TxMessage);
 		// ecatapp_benchmark_us();
 
-		// ecatapp_loop();
+		ecatapp_loop();
 	}
 }
 
