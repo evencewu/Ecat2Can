@@ -111,7 +111,7 @@ void ESC_write (uint16_t address, void *buf, uint16_t len)
 
 static void task_delay(uint32_t time_us)
 {
-   #define DELAY_1_uS      84   // todo tweak to used clock speed
+   #define DELAY_1_uS      168   // todo tweak to used clock speed
    uint32_t delay_ticks = DELAY_1_uS * time_us;
 
    for (int32_t i = 0; i < delay_ticks; ++i)

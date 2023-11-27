@@ -62,8 +62,7 @@ void EXTI0_IRQHandler(void)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
         sync0_irq_flag = 1;
-        GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
-        //GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
+        
     }
 }
 
@@ -73,8 +72,9 @@ void EXTI9_5_IRQHandler(void)
 {
     if (EXTI_GetITStatus(EXTI_Line8) != RESET)
     {
-        EXTI_ClearITPendingBit(EXTI_Line8);
+        GPIO_ToggleBits(GPIOB, GPIO_Pin_15);
         pdi_irq_flag = 1;
+        EXTI_ClearITPendingBit(EXTI_Line8);
     }
 }
 // **************************************************************
@@ -88,7 +88,7 @@ void ecatapp_init(void)
 uint16_t check_dc_handler(void)
 {
 // minimum watchdog value is 1 ms, in nanoseconds
-#define MIN_WATCHDOG_VALUE_NS 1000000
+#define MIN_WATCHDOG_VALUE_NS 10000
 
     /* Indicate we run DC */
     ESCvar.dcsync = 1;
@@ -212,7 +212,7 @@ void cb_set_outputs()
     {
         GPIO_ResetBits(GPIOB, GPIO_Pin_14);
     }
-    //
+    
     // if (Obj.led[2] != 0)
     //{
     //    GPIO_SetBits(GPIOB, GPIO_Pin_13);
@@ -229,7 +229,7 @@ void ecatapp_loop(void)
     if (sync0_irq_flag)
     {
         ESC_updateALevent();
-        DIG_process(DIG_PROCESS_APP_HOOK_FLAG | DIG_PROCESS_INPUTS_FLAG);
+        DIG_process(DIG_PROCESS_APP_HOOK_FLAG | DIG_PROCESS_INPUTS_FLAG); 
         sync0_irq_flag = 0;
     }
     if (pdi_irq_flag)

@@ -2968,7 +2968,7 @@
             <SubIndex>#x3</SubIndex>
             <BitLen>8</BitLen>
             <Name>IDE</Name>
-            <DataType>USINT</DataType>
+            <DataType>U</DataType>
           </Entry>
           <Entry>
             <Index>#x7002</Index>
@@ -3085,7 +3085,7 @@
             <SubIndex>#x2</SubIndex>
             <BitLen>8</BitLen>
             <Name>ExtId</Name>
-            <DataType>USINT</DataType>
+            <DataType>U</DataType>
           </Entry>
           <Entry>
             <Index>#x6000</Index>
@@ -3152,7 +3152,7 @@
             <SubIndex>#x6</SubIndex>
             <BitLen>8</BitLen>
             <Name>d6</Name>
-            <DataType>USINT</DataType>
+            <DataType>U</DataType>
           </Entry>
           <Entry>
             <Index>#x6001</Index>
