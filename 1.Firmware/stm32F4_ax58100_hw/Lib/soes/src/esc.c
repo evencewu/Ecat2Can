@@ -1066,7 +1066,6 @@ static char * ESC_state_to_string (uint8_t ESC_state)
  * events in the Al Event Request register 0x220.
  *
  */
-uint8_t as_all = 0x00;
 void ESC_state (void)
 {
    uint8_t ac, an, as;
@@ -1112,10 +1111,6 @@ void ESC_state (void)
    /* Switch through the state change requested via AlControl from
     * current state read in AL status
     */
-
-   //
-      as_all = as;
-   //
    switch (as)
    {
       case INIT_TO_INIT:
