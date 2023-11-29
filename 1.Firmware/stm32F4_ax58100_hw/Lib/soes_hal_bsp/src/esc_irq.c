@@ -33,8 +33,8 @@ void EXTILine0_Config(void)
     /* Enable and set EXTI Line0 Interrupt to the lowest priority */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); 
     NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -57,8 +57,8 @@ void EXTILine0_Disable(void)
     /* Enable and set EXTI Line1 Interrupt to the lowest priority */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); 
     NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
     NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -90,13 +90,13 @@ void EXTILine8_Config(void)
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
-    EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
+    //EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 
     /* Enable and set EXTI Line3 Interrupt to the lowest priority */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); 
     NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -116,13 +116,13 @@ void EXTILine8_Disable(void)
     EXTI_InitStructure.EXTI_LineCmd = DISABLE;
     EXTI_Init(&EXTI_InitStructure);
 
-    EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
+    //EXTI_ClearITPendingBit(EXTI_Line8);     //清除中断标志位
 
     /* Enable and set EXTI Line3 Interrupt to the lowest priority */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); 
     NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
     NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
     NVIC_Init(&NVIC_InitStructure);
 }

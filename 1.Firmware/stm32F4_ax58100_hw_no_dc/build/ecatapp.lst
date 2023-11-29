@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvGOA69.s 			page 1
+ARM GAS  /tmp/ccKiBm4z.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
   28:Core/Src/ecatapp.c **** 
   29:Core/Src/ecatapp.c **** /* CANopen Object Dictionary */
   30:Core/Src/ecatapp.c **** _Objects Obj;
-ARM GAS  /tmp/ccvGOA69.s 			page 2
+ARM GAS  /tmp/ccKiBm4z.s 			page 2
 
 
   31:Core/Src/ecatapp.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
   85:Core/Src/ecatapp.c **** {
   86:Core/Src/ecatapp.c ****     ecat_slv_init(&config);
   87:Core/Src/ecatapp.c ****     init_override();
-ARM GAS  /tmp/ccvGOA69.s 			page 3
+ARM GAS  /tmp/ccKiBm4z.s 			page 3
 
 
   88:Core/Src/ecatapp.c **** }
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
   55              		.cfi_offset 14, -4
   96:Core/Src/ecatapp.c ****     /* Fetch the sync counter limit (SDO10F1) */
   56              		.loc 1 96 5 view .LVU3
-ARM GAS  /tmp/ccvGOA69.s 			page 4
+ARM GAS  /tmp/ccKiBm4z.s 			page 4
 
 
   96:Core/Src/ecatapp.c ****     /* Fetch the sync counter limit (SDO10F1) */
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
   95 002c 10BD     		pop	{r4, pc}
   96              	.L7:
   97 002e 00BF     		.align	2
-ARM GAS  /tmp/ccvGOA69.s 			page 5
+ARM GAS  /tmp/ccKiBm4z.s 			page 5
 
 
   98              	.L6:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  145              	.L13:
  146 001a 00BF     		.align	2
  147              	.L12:
-ARM GAS  /tmp/ccvGOA69.s 			page 6
+ARM GAS  /tmp/ccKiBm4z.s 			page 6
 
 
  148 001c 00000000 		.word	.LANCHOR1
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  195              		.cfi_endproc
  196              	.LFE124:
  198              		.section	.text.ecatapp_init,"ax",%progbits
-ARM GAS  /tmp/ccvGOA69.s 			page 7
+ARM GAS  /tmp/ccKiBm4z.s 			page 7
 
 
  199              		.align	1
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  248              		.loc 1 120 5 view .LVU43
  249              		.loc 1 120 39 is_stmt 0 view .LVU44
  250 0002 3E4B     		ldr	r3, .L32
-ARM GAS  /tmp/ccvGOA69.s 			page 8
+ARM GAS  /tmp/ccKiBm4z.s 			page 8
 
 
  251 0004 596A     		ldr	r1, [r3, #36]
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  295              		.loc 1 130 5 is_stmt 1 view .LVU70
  296              		.loc 1 130 46 is_stmt 0 view .LVU71
  297 003a 93F83010 		ldrb	r1, [r3, #48]	@ zero_extendqisi2
-ARM GAS  /tmp/ccvGOA69.s 			page 9
+ARM GAS  /tmp/ccKiBm4z.s 			page 9
 
 
  298              		.loc 1 130 28 view .LVU72
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  341              		.loc 1 141 5 is_stmt 1 view .LVU97
  342              		.loc 1 141 46 is_stmt 0 view .LVU98
  343 0070 93F83C10 		ldrb	r1, [r3, #60]	@ zero_extendqisi2
-ARM GAS  /tmp/ccvGOA69.s 			page 10
+ARM GAS  /tmp/ccKiBm4z.s 			page 10
 
 
  344              		.loc 1 141 28 view .LVU99
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  387 00a6 4FF40041 		mov	r1, #32768
  388 00aa 1748     		ldr	r0, .L32+12
  389 00ac FFF7FEFF 		bl	GPIO_SetBits
-ARM GAS  /tmp/ccvGOA69.s 			page 11
+ARM GAS  /tmp/ccKiBm4z.s 			page 11
 
 
  390              	.LVL11:
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  419              		.loc 1 156 10 is_stmt 1 view .LVU134
  420 00d6 4FF40041 		mov	r1, #32768
  421 00da 0B48     		ldr	r0, .L32+12
-ARM GAS  /tmp/ccvGOA69.s 			page 12
+ARM GAS  /tmp/ccKiBm4z.s 			page 12
 
 
  422 00dc FFF7FEFF 		bl	GPIO_ResetBits
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  471              		.loc 1 181 5 is_stmt 1 view .LVU142
  472              		.loc 1 181 39 is_stmt 0 view .LVU143
  473 0008 5168     		ldr	r1, [r2, #4]
-ARM GAS  /tmp/ccvGOA69.s 			page 13
+ARM GAS  /tmp/ccKiBm4z.s 			page 13
 
 
  474              		.loc 1 181 23 view .LVU144
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  518 002c 117C     		ldrb	r1, [r2, #16]	@ zero_extendqisi2
  519              		.loc 1 191 25 view .LVU171
  520 002e 5974     		strb	r1, [r3, #17]
-ARM GAS  /tmp/ccvGOA69.s 			page 14
+ARM GAS  /tmp/ccKiBm4z.s 			page 14
 
 
  192:Core/Src/ecatapp.c ****     Obj.can1_rx_data[6] = Can1_RxMessage.Data[6];
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  564 0052 117B     		ldrb	r1, [r2, #12]	@ zero_extendqisi2
  565              		.loc 1 202 25 view .LVU198
  566 0054 5977     		strb	r1, [r3, #29]
-ARM GAS  /tmp/ccvGOA69.s 			page 15
+ARM GAS  /tmp/ccKiBm4z.s 			page 15
 
 
  203:Core/Src/ecatapp.c ****     Obj.can2_rx_data[2] = Can2_RxMessage.Data[2];
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  616              	.LFB130:
  210:Core/Src/ecatapp.c **** 
  211:Core/Src/ecatapp.c **** void ecatapp_loop(void)
-ARM GAS  /tmp/ccvGOA69.s 			page 16
+ARM GAS  /tmp/ccKiBm4z.s 			page 16
 
 
  212:Core/Src/ecatapp.c **** {
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  227:Core/Src/ecatapp.c ****         else
  228:Core/Src/ecatapp.c ****         {
  229:Core/Src/ecatapp.c ****             DIG_process(DIG_PROCESS_OUTPUTS_FLAG | DIG_PROCESS_APP_HOOK_FLAG | DIG_PROCESS_INPUTS_F
-ARM GAS  /tmp/ccvGOA69.s 			page 17
+ARM GAS  /tmp/ccKiBm4z.s 			page 17
 
 
  230:Core/Src/ecatapp.c ****         }
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  238:Core/Src/ecatapp.c ****         DIG_process(DIG_PROCESS_WD_FLAG);
  692              		.loc 1 238 9 view .LVU241
  693 0056 0420     		movs	r0, #4
-ARM GAS  /tmp/ccvGOA69.s 			page 18
+ARM GAS  /tmp/ccKiBm4z.s 			page 18
 
 
  694 0058 FFF7FEFF 		bl	DIG_process
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  752              		.align	2
  753              		.set	.LANCHOR3,. + 0
  756              	config:
-ARM GAS  /tmp/ccvGOA69.s 			page 19
+ARM GAS  /tmp/ccKiBm4z.s 			page 19
 
 
  757 0000 00000000 		.word	.LC0
@@ -1115,49 +1115,49 @@ ARM GAS  /tmp/ccvGOA69.s 			page 1
  787              		.file 11 "Lib/soes_hal_bsp/inc/esc_irq.h"
  788              		.file 12 "Core/Inc/pdo_override.h"
  789              		.file 13 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_exti.h"
-ARM GAS  /tmp/ccvGOA69.s 			page 20
+ARM GAS  /tmp/ccKiBm4z.s 			page 20
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ecatapp.c
-     /tmp/ccvGOA69.s:20     .text.ecatapp:0000000000000000 $t
-     /tmp/ccvGOA69.s:26     .text.ecatapp:0000000000000000 ecatapp
-     /tmp/ccvGOA69.s:40     .text.check_dc_handler:0000000000000000 $t
-     /tmp/ccvGOA69.s:46     .text.check_dc_handler:0000000000000000 check_dc_handler
-     /tmp/ccvGOA69.s:99     .text.check_dc_handler:0000000000000030 $d
-     /tmp/ccvGOA69.s:107    .text.EXTI0_IRQHandler:0000000000000000 $t
-     /tmp/ccvGOA69.s:113    .text.EXTI0_IRQHandler:0000000000000000 EXTI0_IRQHandler
-     /tmp/ccvGOA69.s:148    .text.EXTI0_IRQHandler:000000000000001c $d
-     /tmp/ccvGOA69.s:153    .text.EXTI9_5_IRQHandler:0000000000000000 $t
-     /tmp/ccvGOA69.s:159    .text.EXTI9_5_IRQHandler:0000000000000000 EXTI9_5_IRQHandler
-     /tmp/ccvGOA69.s:194    .text.EXTI9_5_IRQHandler:0000000000000020 $d
-     /tmp/ccvGOA69.s:199    .text.ecatapp_init:0000000000000000 $t
-     /tmp/ccvGOA69.s:205    .text.ecatapp_init:0000000000000000 ecatapp_init
-     /tmp/ccvGOA69.s:227    .text.ecatapp_init:0000000000000010 $d
-     /tmp/ccvGOA69.s:232    .text.cb_get_inputs:0000000000000000 $t
-     /tmp/ccvGOA69.s:238    .text.cb_get_inputs:0000000000000000 cb_get_inputs
-     /tmp/ccvGOA69.s:443    .text.cb_get_inputs:00000000000000fc $d
-     /tmp/ccvGOA69.s:451    .text.cb_set_outputs:0000000000000000 $t
-     /tmp/ccvGOA69.s:457    .text.cb_set_outputs:0000000000000000 cb_set_outputs
-     /tmp/ccvGOA69.s:602    .text.cb_set_outputs:0000000000000078 $d
-     /tmp/ccvGOA69.s:609    .text.ecatapp_loop:0000000000000000 $t
-     /tmp/ccvGOA69.s:615    .text.ecatapp_loop:0000000000000000 ecatapp_loop
-     /tmp/ccvGOA69.s:701    .text.ecatapp_loop:0000000000000060 $d
-     /tmp/ccvGOA69.s:708    .rodata.str1.4:0000000000000000 $d
-     /tmp/ccvGOA69.s:720    .bss.Obj:0000000000000000 Obj
-     /tmp/ccvGOA69.s:731    .bss.heart_tag:0000000000000000 heart_tag
-     /tmp/ccvGOA69.s:726    .bss.heart:0000000000000000 heart
-     /tmp/ccvGOA69.s:737    .bss.last_heart:0000000000000000 last_heart
-     /tmp/ccvGOA69.s:716    .bss.Obj:0000000000000000 $d
-     /tmp/ccvGOA69.s:723    .bss.heart:0000000000000000 $d
-     /tmp/ccvGOA69.s:732    .bss.heart_tag:0000000000000000 $d
-     /tmp/ccvGOA69.s:734    .bss.last_heart:0000000000000000 $d
-     /tmp/ccvGOA69.s:743    .bss.pdi_irq_flag:0000000000000000 pdi_irq_flag
-     /tmp/ccvGOA69.s:744    .bss.pdi_irq_flag:0000000000000000 $d
-     /tmp/ccvGOA69.s:749    .bss.sync0_irq_flag:0000000000000000 sync0_irq_flag
-     /tmp/ccvGOA69.s:750    .bss.sync0_irq_flag:0000000000000000 $d
-     /tmp/ccvGOA69.s:752    .data.config:0000000000000000 $d
-     /tmp/ccvGOA69.s:756    .data.config:0000000000000000 config
+     /tmp/ccKiBm4z.s:20     .text.ecatapp:0000000000000000 $t
+     /tmp/ccKiBm4z.s:26     .text.ecatapp:0000000000000000 ecatapp
+     /tmp/ccKiBm4z.s:40     .text.check_dc_handler:0000000000000000 $t
+     /tmp/ccKiBm4z.s:46     .text.check_dc_handler:0000000000000000 check_dc_handler
+     /tmp/ccKiBm4z.s:99     .text.check_dc_handler:0000000000000030 $d
+     /tmp/ccKiBm4z.s:107    .text.EXTI0_IRQHandler:0000000000000000 $t
+     /tmp/ccKiBm4z.s:113    .text.EXTI0_IRQHandler:0000000000000000 EXTI0_IRQHandler
+     /tmp/ccKiBm4z.s:148    .text.EXTI0_IRQHandler:000000000000001c $d
+     /tmp/ccKiBm4z.s:153    .text.EXTI9_5_IRQHandler:0000000000000000 $t
+     /tmp/ccKiBm4z.s:159    .text.EXTI9_5_IRQHandler:0000000000000000 EXTI9_5_IRQHandler
+     /tmp/ccKiBm4z.s:194    .text.EXTI9_5_IRQHandler:0000000000000020 $d
+     /tmp/ccKiBm4z.s:199    .text.ecatapp_init:0000000000000000 $t
+     /tmp/ccKiBm4z.s:205    .text.ecatapp_init:0000000000000000 ecatapp_init
+     /tmp/ccKiBm4z.s:227    .text.ecatapp_init:0000000000000010 $d
+     /tmp/ccKiBm4z.s:232    .text.cb_get_inputs:0000000000000000 $t
+     /tmp/ccKiBm4z.s:238    .text.cb_get_inputs:0000000000000000 cb_get_inputs
+     /tmp/ccKiBm4z.s:443    .text.cb_get_inputs:00000000000000fc $d
+     /tmp/ccKiBm4z.s:451    .text.cb_set_outputs:0000000000000000 $t
+     /tmp/ccKiBm4z.s:457    .text.cb_set_outputs:0000000000000000 cb_set_outputs
+     /tmp/ccKiBm4z.s:602    .text.cb_set_outputs:0000000000000078 $d
+     /tmp/ccKiBm4z.s:609    .text.ecatapp_loop:0000000000000000 $t
+     /tmp/ccKiBm4z.s:615    .text.ecatapp_loop:0000000000000000 ecatapp_loop
+     /tmp/ccKiBm4z.s:701    .text.ecatapp_loop:0000000000000060 $d
+     /tmp/ccKiBm4z.s:708    .rodata.str1.4:0000000000000000 $d
+     /tmp/ccKiBm4z.s:720    .bss.Obj:0000000000000000 Obj
+     /tmp/ccKiBm4z.s:731    .bss.heart_tag:0000000000000000 heart_tag
+     /tmp/ccKiBm4z.s:726    .bss.heart:0000000000000000 heart
+     /tmp/ccKiBm4z.s:737    .bss.last_heart:0000000000000000 last_heart
+     /tmp/ccKiBm4z.s:716    .bss.Obj:0000000000000000 $d
+     /tmp/ccKiBm4z.s:723    .bss.heart:0000000000000000 $d
+     /tmp/ccKiBm4z.s:732    .bss.heart_tag:0000000000000000 $d
+     /tmp/ccKiBm4z.s:734    .bss.last_heart:0000000000000000 $d
+     /tmp/ccKiBm4z.s:743    .bss.pdi_irq_flag:0000000000000000 pdi_irq_flag
+     /tmp/ccKiBm4z.s:744    .bss.pdi_irq_flag:0000000000000000 $d
+     /tmp/ccKiBm4z.s:749    .bss.sync0_irq_flag:0000000000000000 sync0_irq_flag
+     /tmp/ccKiBm4z.s:750    .bss.sync0_irq_flag:0000000000000000 $d
+     /tmp/ccKiBm4z.s:752    .data.config:0000000000000000 $d
+     /tmp/ccKiBm4z.s:756    .data.config:0000000000000000 config
 
 UNDEFINED SYMBOLS
 ESC_enable_DC
@@ -1175,7 +1175,7 @@ Can1_RxMessage
 Can2_RxMessage
 ESC_read
 DIG_process
-ARM GAS  /tmp/ccvGOA69.s 			page 21
+ARM GAS  /tmp/ccKiBm4z.s 			page 21
 
 
 ecat_slv_poll

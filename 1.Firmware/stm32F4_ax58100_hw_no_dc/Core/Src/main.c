@@ -25,8 +25,8 @@ int main(void)
 	// delay_init();
 
 	led_setup();
-	//CAN1_Config();
-	//CAN2_Config();
+	CAN1_Config();
+	CAN2_Config();
 
 	ecatapp_init();
 
