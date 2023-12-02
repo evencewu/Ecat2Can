@@ -1,0 +1,631 @@
+{
+  "form": {},
+  "od": {
+    "sdo": {
+      "1001": {
+        "otype": "VAR",
+        "name": "Error register",
+        "access": "RO",
+        "dtype": "UNSIGNED8",
+        "value": "0",
+        "isSDOitem": true,
+        "data": "&Obj.Error_register"
+      },
+      "6060": {
+        "otype": "VAR",
+        "name": "Modes of operation",
+        "access": "RO",
+        "dtype": "INTEGER8",
+        "value": "0",
+        "isSDOitem": true,
+        "data": "&Obj.Modes_of_operation"
+      },
+      "6061": {
+        "otype": "VAR",
+        "name": "Mode of operation display",
+        "access": "RO",
+        "dtype": "INTEGER8",
+        "value": "0",
+        "isSDOitem": true,
+        "data": "&Obj.Mode_of_operation_display"
+      },
+      "6502": {
+        "otype": "VAR",
+        "name": "Supported drive modes",
+        "access": "RO",
+        "dtype": "UNSIGNED32",
+        "value": "0",
+        "isSDOitem": true,
+        "data": "&Obj.Supported_drive_modes"
+      },
+      "1C32": {
+        "otype": "RECORD",
+        "name": "Sync Manager 2 Parameters",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "Sync mode",
+            "dtype": "UNSIGNED16",
+            "value": "1",
+            "access": "RWpre",
+            "data": "&Obj.Sync_Manager_2_Parameters.Sync_mode"
+          },
+          {
+            "name": "CycleTime",
+            "dtype": "UNSIGNED32",
+            "value": "0",
+            "data": "&Obj.Sync_Manager_2_Parameters.CycleTime"
+          },
+          {
+            "name": "ShiftTime",
+            "dtype": "UNSIGNED32",
+            "value": "0",
+            "data": "&Obj.Sync_Manager_2_Parameters.ShiftTime"
+          },
+          {
+            "name": "Sync modes supported",
+            "dtype": "UNSIGNED16",
+            "value": "6",
+            "data": "&Obj.Sync_Manager_2_Parameters.Sync_modes_supported"
+          },
+          {
+            "name": "Minimum Cycle Time",
+            "dtype": "UNSIGNED32",
+            "value": "125000",
+            "data": "&Obj.Sync_Manager_2_Parameters.Minimum_Cycle_Time"
+          }
+        ],
+        "isSDOitem": true
+      },
+      "A": {
+        "otype": "RECORD",
+        "name": "Error Settings",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "New record subitem",
+            "dtype": "UNSIGNED8"
+          }
+        ]
+      },
+      "10F1": {
+        "otype": "RECORD",
+        "name": "Error Settings",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "Local Error Reaction",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.Error_Settings.Local_Error_Reaction",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "SyncErrorCounterLimit",
+            "dtype": "UNSIGNED32",
+            "value": "200",
+            "access": "RO",
+            "data": "&Obj.Error_Settings.SyncErrorCounterLimit"
+          }
+        ],
+        "isSDOitem": true
+      },
+      "1C33": {
+        "otype": "RECORD",
+        "name": "Sync Manager 3 Parameters",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "Sync mode",
+            "dtype": "UNSIGNED16",
+            "data": "&Obj.Sync_Manager_3_Parameters.Sync_mode",
+            "value": "1",
+            "access": "RWpre"
+          },
+          {
+            "name": "CycleTime",
+            "dtype": "UNSIGNED32",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.Sync_Manager_3_Parameters.CycleTime"
+          },
+          {
+            "name": "ShiftTime",
+            "dtype": "UNSIGNED32",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.Sync_Manager_3_Parameters.ShiftTime"
+          },
+          {
+            "name": "Sync modes supported",
+            "dtype": "UNSIGNED16",
+            "value": "6",
+            "access": "RO",
+            "data": "&Obj.Sync_Manager_3_Parameters.Sync_modes_supported"
+          },
+          {
+            "name": "Minimum Cycle Time",
+            "dtype": "UNSIGNED32",
+            "value": "125000",
+            "access": "RO",
+            "data": "&Obj.Sync_Manager_3_Parameters.Minimum_Cycle_Time"
+          }
+        ],
+        "isSDOitem": true
+      }
+    },
+    "txpdo": {
+      "6000": {
+        "otype": "RECORD",
+        "name": "can1_rx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can1_rx.StdId",
+            "value": "0",
+            "access": "RW"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "data": "&Obj.can1_rx.ExtId",
+            "value": "0",
+            "access": "RW"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_rx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_rx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "data": "&Obj.can1_rx.DLC",
+            "value": "0",
+            "access": "RO"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ]
+      },
+      "6001": {
+        "otype": "ARRAY",
+        "name": "can1_rx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can1_rx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[5]"
+          },
+          {
+            "name": "d7",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[6]"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can1_rx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ],
+        "dtype": "UNSIGNED8"
+      },
+      "6002": {
+        "otype": "RECORD",
+        "name": "can2_rx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can2_rx.StdId",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.ExtId"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_rx.DLC"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ]
+      },
+      "6003": {
+        "otype": "ARRAY",
+        "name": "can2_rx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can2_rx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[5]"
+          },
+          {
+            "name": "d7",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[6]"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can2_rx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "txpdo"
+        ],
+        "dtype": "UNSIGNED8"
+      }
+    },
+    "rxpdo": {
+      "7000": {
+        "otype": "RECORD",
+        "name": "can1_tx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can1_tx.StdId",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_tx.ExtId"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_tx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_tx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can1_tx.DLC"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ]
+      },
+      "7001": {
+        "otype": "ARRAY",
+        "name": "can1_tx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can1_tx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[5]"
+          },
+          {
+            "name": "d7",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[6]"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can1_tx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ],
+        "dtype": "UNSIGNED8"
+      },
+      "7002": {
+        "otype": "RECORD",
+        "name": "can2_tx",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "StdId",
+            "dtype": "UNSIGNED32",
+            "data": "&Obj.can2_tx.StdId",
+            "value": "0",
+            "access": "RO"
+          },
+          {
+            "name": "ExtId",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.ExtId"
+          },
+          {
+            "name": "IDE",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.IDE"
+          },
+          {
+            "name": "RTR",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.RTR"
+          },
+          {
+            "name": "DLC",
+            "dtype": "UNSIGNED8",
+            "value": "0",
+            "access": "RO",
+            "data": "&Obj.can2_tx.DLC"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ]
+      },
+      "7003": {
+        "otype": "ARRAY",
+        "name": "can2_tx_data",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "d1",
+            "data": "&Obj.can2_tx_data[0]",
+            "value": "0"
+          },
+          {
+            "name": "d2",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[1]"
+          },
+          {
+            "name": "d3",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[2]"
+          },
+          {
+            "name": "d4",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[3]"
+          },
+          {
+            "name": "d5",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[4]"
+          },
+          {
+            "name": "d6",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[5]"
+          },
+          {
+            "name": "d7",
+            "data": "&Obj.can2_tx_data[6]",
+            "value": "0"
+          },
+          {
+            "name": "d8",
+            "value": "0",
+            "data": "&Obj.can2_tx_data[7]"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ],
+        "dtype": "UNSIGNED8"
+      },
+      "7004": {
+        "otype": "ARRAY",
+        "name": "led",
+        "access": "RO",
+        "items": [
+          {
+            "name": "Max SubIndex"
+          },
+          {
+            "name": "L0",
+            "data": "&Obj.led[0]",
+            "value": "0"
+          },
+          {
+            "name": "L1",
+            "value": "0",
+            "data": "&Obj.led[1]"
+          },
+          {
+            "name": "L3",
+            "value": "0",
+            "data": "&Obj.led[2]"
+          }
+        ],
+        "pdo_mappings": [
+          "rxpdo"
+        ],
+        "dtype": "BOOLEAN"
+      }
+    }
+  },
+  "dc": [
+    {
+      "Name": "SM-Synchron",
+      "Description": "SM-Synchron",
+      "AssignActivate": "#x000",
+      "Sync0cycleTime": "0",
+      "Sync0shiftTime": "0",
+      "Sync1cycleTime": "0",
+      "Sync1shiftTime": "0"
+    },
+    {
+      "Name": "DC",
+      "Description": "DC-Synchron",
+      "AssignActivate": "#x300",
+      "Sync0cycleTime": "0",
+      "Sync0shiftTime": "0",
+      "Sync1cycleTime": "0",
+      "Sync1shiftTime": "0"
+    }
+  ]
+}

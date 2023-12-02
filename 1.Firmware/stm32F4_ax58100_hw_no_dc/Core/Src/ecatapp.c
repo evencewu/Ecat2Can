@@ -165,14 +165,14 @@ void cb_get_inputs()
         GPIO_ResetBits(GPIOB, GPIO_Pin_14);
     }
     
-     if (Obj.led[2] != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_13);
-    }
-     else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
-    }
+    // if (Obj.led[2] != 0)
+    //{
+    //    GPIO_SetBits(GPIOB, GPIO_Pin_13);
+    //}
+    // else
+    //{
+    //    GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+    //}
 }
 
 void cb_set_outputs()

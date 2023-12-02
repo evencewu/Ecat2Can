@@ -1,0 +1,1025 @@
+ARM GAS  /tmp/ccuGgExS.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"esc_hw.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.esc_address,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	esc_address:
+  26              	.LVL0:
+  27              	.LFB123:
+  28              		.file 1 "Lib/soes/hal/ax58100/esc_hw.c"
+   1:Lib/soes/hal/ax58100/esc_hw.c **** /*
+   2:Lib/soes/hal/ax58100/esc_hw.c ****  * Licensed under the GNU General Public License version 2 with exceptions. See
+   3:Lib/soes/hal/ax58100/esc_hw.c ****  * LICENSE file in the project root for full license information
+   4:Lib/soes/hal/ax58100/esc_hw.c ****  */
+   5:Lib/soes/hal/ax58100/esc_hw.c **** 
+   6:Lib/soes/hal/ax58100/esc_hw.c ****  /** \file
+   7:Lib/soes/hal/ax58100/esc_hw.c ****  * \brief
+   8:Lib/soes/hal/ax58100/esc_hw.c ****  * ESC hardware layer functions.
+   9:Lib/soes/hal/ax58100/esc_hw.c ****  *
+  10:Lib/soes/hal/ax58100/esc_hw.c ****  * Function to read and write commands to the ESC. Used to read/write ESC
+  11:Lib/soes/hal/ax58100/esc_hw.c ****  * registers and memory.
+  12:Lib/soes/hal/ax58100/esc_hw.c ****  */
+  13:Lib/soes/hal/ax58100/esc_hw.c **** 
+  14:Lib/soes/hal/ax58100/esc_hw.c **** #include <string.h>
+  15:Lib/soes/hal/ax58100/esc_hw.c **** #include "esc.h"
+  16:Lib/soes/hal/ax58100/esc_hw.c **** #include "esc_irq.h"
+  17:Lib/soes/hal/ax58100/esc_hw.c **** #include "spi.h"
+  18:Lib/soes/hal/ax58100/esc_hw.c **** #include "rst.h"
+  19:Lib/soes/hal/ax58100/esc_hw.c **** 
+  20:Lib/soes/hal/ax58100/esc_hw.c **** #define MAX_READ_SIZE   128
+  21:Lib/soes/hal/ax58100/esc_hw.c **** 
+  22:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_CMD_READ    0x02
+  23:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_CMD_READWS  0x03
+  24:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_CMD_WRITE   0x04
+  25:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_CMD_NOP     0x00
+  26:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_TERM        0xff
+  27:Lib/soes/hal/ax58100/esc_hw.c **** #define ESC_NEXT        0x00
+  28:Lib/soes/hal/ax58100/esc_hw.c **** 
+  29:Lib/soes/hal/ax58100/esc_hw.c **** #define ESCREG_PDI_CONTROL         0x0140
+  30:Lib/soes/hal/ax58100/esc_hw.c **** #define ESCREG_ESC_CONFIG          0x0141
+ARM GAS  /tmp/ccuGgExS.s 			page 2
+
+
+  31:Lib/soes/hal/ax58100/esc_hw.c **** #define DC_SYNC_OUT                0x04 
+  32:Lib/soes/hal/ax58100/esc_hw.c **** #define ESCREG_CYCLIC_UNIT_CONTROL 0x0980
+  33:Lib/soes/hal/ax58100/esc_hw.c **** #define SYNC_OUT_UNIT_CONTROL_MASK 0x01
+  34:Lib/soes/hal/ax58100/esc_hw.c **** #define SYNC_OUT_ECAT_CONTROL      0x00
+  35:Lib/soes/hal/ax58100/esc_hw.c **** #define SYNC_OUT_PDI_CONTROL       0x01
+  36:Lib/soes/hal/ax58100/esc_hw.c **** #define ESCREG_SYNC0_CYCLE_TIME    0x09A0
+  37:Lib/soes/hal/ax58100/esc_hw.c **** #define ESCREG_SYNC_START_TIME     0x0990
+  38:Lib/soes/hal/ax58100/esc_hw.c **** // measured with 21MHz SPI PDI
+  39:Lib/soes/hal/ax58100/esc_hw.c **** #define SYNC_START_OFFSET     2342840 
+  40:Lib/soes/hal/ax58100/esc_hw.c ****    
+  41:Lib/soes/hal/ax58100/esc_hw.c **** 
+  42:Lib/soes/hal/ax58100/esc_hw.c **** static int et1100 = -1;
+  43:Lib/soes/hal/ax58100/esc_hw.c **** static uint8_t read_termination[MAX_READ_SIZE] = { 0 };
+  44:Lib/soes/hal/ax58100/esc_hw.c **** 
+  45:Lib/soes/hal/ax58100/esc_hw.c **** #define GPIO_ECAT_RESET    1 /* specific function to hold ESC reset on startup
+  46:Lib/soes/hal/ax58100/esc_hw.c ****                               * when emulating EEPROM
+  47:Lib/soes/hal/ax58100/esc_hw.c ****                               */
+  48:Lib/soes/hal/ax58100/esc_hw.c **** 
+  49:Lib/soes/hal/ax58100/esc_hw.c **** static void esc_address (uint16_t address, uint8_t command)
+  50:Lib/soes/hal/ax58100/esc_hw.c **** {
+  29              		.loc 1 50 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 50 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              		.cfi_def_cfa_offset 16
+  51:Lib/soes/hal/ax58100/esc_hw.c ****    /* Device is selected already.
+  52:Lib/soes/hal/ax58100/esc_hw.c ****     * We use 2 bytes addressing.
+  53:Lib/soes/hal/ax58100/esc_hw.c ****     */
+  54:Lib/soes/hal/ax58100/esc_hw.c ****    uint8_t data[2];
+  40              		.loc 1 54 4 is_stmt 1 view .LVU2
+  55:Lib/soes/hal/ax58100/esc_hw.c **** 
+  56:Lib/soes/hal/ax58100/esc_hw.c ****    /* address 12:5 */
+  57:Lib/soes/hal/ax58100/esc_hw.c ****    data[0] = (address >> 5);
+  41              		.loc 1 57 4 view .LVU3
+  42              		.loc 1 57 12 is_stmt 0 view .LVU4
+  43 0004 4309     		lsrs	r3, r0, #5
+  44 0006 8DF80430 		strb	r3, [sp, #4]
+  58:Lib/soes/hal/ax58100/esc_hw.c ****    /* address 4:0 and cmd 2:0 */
+  59:Lib/soes/hal/ax58100/esc_hw.c ****    data[1] = ((address & 0x1F) << 3) | command;
+  45              		.loc 1 59 4 is_stmt 1 view .LVU5
+  46              		.loc 1 59 38 is_stmt 0 view .LVU6
+  47 000a 41EAC000 		orr	r0, r1, r0, lsl #3
+  48              	.LVL1:
+  49              		.loc 1 59 12 view .LVU7
+  50 000e 8DF80500 		strb	r0, [sp, #5]
+  60:Lib/soes/hal/ax58100/esc_hw.c **** 
+  61:Lib/soes/hal/ax58100/esc_hw.c ****    /* Write (and read AL interrupt register) */
+  62:Lib/soes/hal/ax58100/esc_hw.c ****    spi_bidirectionally_transfer (et1100, (uint8_t *) &ESCvar.ALevent,
+  51              		.loc 1 62 4 is_stmt 1 view .LVU8
+  52 0012 084C     		ldr	r4, .L3
+  53 0014 0223     		movs	r3, #2
+ARM GAS  /tmp/ccuGgExS.s 			page 3
+
+
+  54 0016 01AA     		add	r2, sp, #4
+  55 0018 2146     		mov	r1, r4
+  56              	.LVL2:
+  57              		.loc 1 62 4 is_stmt 0 view .LVU9
+  58 001a 0748     		ldr	r0, .L3+4
+  59 001c 90F90000 		ldrsb	r0, [r0]
+  60 0020 FFF7FEFF 		bl	spi_bidirectionally_transfer
+  61              	.LVL3:
+  63:Lib/soes/hal/ax58100/esc_hw.c ****                                  data, sizeof (data));
+  64:Lib/soes/hal/ax58100/esc_hw.c ****    ESCvar.ALevent = etohs (ESCvar.ALevent);
+  62              		.loc 1 64 4 is_stmt 1 view .LVU10
+  63              		.loc 1 64 21 is_stmt 0 view .LVU11
+  64 0024 2146     		mov	r1, r4
+  65 0026 51F8E439 		ldr	r3, [r1], #-228
+  66 002a 9BB2     		uxth	r3, r3
+  67              		.loc 1 64 19 view .LVU12
+  68 002c C1F8E430 		str	r3, [r1, #228]
+  65:Lib/soes/hal/ax58100/esc_hw.c **** }
+  69              		.loc 1 65 1 view .LVU13
+  70 0030 02B0     		add	sp, sp, #8
+  71              		.cfi_def_cfa_offset 8
+  72              		@ sp needed
+  73 0032 10BD     		pop	{r4, pc}
+  74              	.L4:
+  75              		.align	2
+  76              	.L3:
+  77 0034 E4000000 		.word	ESCvar+228
+  78 0038 00000000 		.word	.LANCHOR0
+  79              		.cfi_endproc
+  80              	.LFE123:
+  82              		.section	.text.ESC_read,"ax",%progbits
+  83              		.align	1
+  84              		.global	ESC_read
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  89              	ESC_read:
+  90              	.LVL4:
+  91              	.LFB124:
+  66:Lib/soes/hal/ax58100/esc_hw.c **** 
+  67:Lib/soes/hal/ax58100/esc_hw.c **** /** ESC read function used by the Slave stack.
+  68:Lib/soes/hal/ax58100/esc_hw.c ****  *
+  69:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   address     = address of ESC register to read
+  70:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[out]  buf         = pointer to buffer to read in
+  71:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   len         = number of bytes to read
+  72:Lib/soes/hal/ax58100/esc_hw.c ****  */
+  73:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_read (uint16_t address, void *buf, uint16_t len)
+  74:Lib/soes/hal/ax58100/esc_hw.c **** {
+  92              		.loc 1 74 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  75:Lib/soes/hal/ax58100/esc_hw.c ****    if (len > MAX_READ_SIZE) { return; }
+  96              		.loc 1 75 4 view .LVU15
+  97              		.loc 1 75 7 is_stmt 0 view .LVU16
+  98 0000 802A     		cmp	r2, #128
+  99 0002 00D9     		bls	.L11
+ARM GAS  /tmp/ccuGgExS.s 			page 4
+
+
+ 100 0004 7047     		bx	lr
+ 101              	.L11:
+  74:Lib/soes/hal/ax58100/esc_hw.c ****    if (len > MAX_READ_SIZE) { return; }
+ 102              		.loc 1 74 1 view .LVU17
+ 103 0006 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 104              		.cfi_def_cfa_offset 24
+ 105              		.cfi_offset 3, -24
+ 106              		.cfi_offset 4, -20
+ 107              		.cfi_offset 5, -16
+ 108              		.cfi_offset 6, -12
+ 109              		.cfi_offset 7, -8
+ 110              		.cfi_offset 14, -4
+ 111 0008 0646     		mov	r6, r0
+ 112 000a 0D46     		mov	r5, r1
+ 113 000c 1446     		mov	r4, r2
+  76:Lib/soes/hal/ax58100/esc_hw.c **** 
+  77:Lib/soes/hal/ax58100/esc_hw.c ****    /* Select device. */
+  78:Lib/soes/hal/ax58100/esc_hw.c ****    spi_select (et1100);
+ 114              		.loc 1 78 4 is_stmt 1 view .LVU18
+ 115 000e 0C4F     		ldr	r7, .L12
+ 116 0010 97F90000 		ldrsb	r0, [r7]
+ 117              	.LVL5:
+ 118              		.loc 1 78 4 is_stmt 0 view .LVU19
+ 119 0014 FFF7FEFF 		bl	spi_select
+ 120              	.LVL6:
+  79:Lib/soes/hal/ax58100/esc_hw.c **** 
+  80:Lib/soes/hal/ax58100/esc_hw.c ****    /* Write address and command to device. */
+  81:Lib/soes/hal/ax58100/esc_hw.c ****    esc_address (address, ESC_CMD_READ);
+ 121              		.loc 1 81 4 is_stmt 1 view .LVU20
+ 122 0018 0221     		movs	r1, #2
+ 123 001a 3046     		mov	r0, r6
+ 124 001c FFF7FEFF 		bl	esc_address
+ 125              	.LVL7:
+  82:Lib/soes/hal/ax58100/esc_hw.c **** 
+  83:Lib/soes/hal/ax58100/esc_hw.c ****    /* Here we want to read data and keep MOSI low (0x00) during
+  84:Lib/soes/hal/ax58100/esc_hw.c ****     * all bytes except the last one where we want to pull it high (0xFF).
+  85:Lib/soes/hal/ax58100/esc_hw.c ****     * Read (and write termination bytes).
+  86:Lib/soes/hal/ax58100/esc_hw.c ****     */
+  87:Lib/soes/hal/ax58100/esc_hw.c ****    spi_bidirectionally_transfer (et1100, buf, read_termination +
+ 126              		.loc 1 87 4 view .LVU21
+  88:Lib/soes/hal/ax58100/esc_hw.c ****                                  (MAX_READ_SIZE - len), len);
+ 127              		.loc 1 88 49 is_stmt 0 view .LVU22
+ 128 0020 C4F18002 		rsb	r2, r4, #128
+  87:Lib/soes/hal/ax58100/esc_hw.c ****                                  (MAX_READ_SIZE - len), len);
+ 129              		.loc 1 87 4 view .LVU23
+ 130 0024 E3B2     		uxtb	r3, r4
+ 131 0026 0749     		ldr	r1, .L12+4
+ 132 0028 0A44     		add	r2, r2, r1
+ 133 002a 2946     		mov	r1, r5
+ 134 002c 97F90000 		ldrsb	r0, [r7]
+ 135 0030 FFF7FEFF 		bl	spi_bidirectionally_transfer
+ 136              	.LVL8:
+  89:Lib/soes/hal/ax58100/esc_hw.c **** 
+  90:Lib/soes/hal/ax58100/esc_hw.c ****    /* Un-select device. */
+  91:Lib/soes/hal/ax58100/esc_hw.c ****    spi_unselect (et1100);
+ 137              		.loc 1 91 4 is_stmt 1 view .LVU24
+ 138 0034 97F90000 		ldrsb	r0, [r7]
+ARM GAS  /tmp/ccuGgExS.s 			page 5
+
+
+ 139 0038 FFF7FEFF 		bl	spi_unselect
+ 140              	.LVL9:
+  92:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 141              		.loc 1 92 1 is_stmt 0 view .LVU25
+ 142 003c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 143              	.LVL10:
+ 144              	.L13:
+ 145              		.loc 1 92 1 view .LVU26
+ 146 003e 00BF     		.align	2
+ 147              	.L12:
+ 148 0040 00000000 		.word	.LANCHOR0
+ 149 0044 00000000 		.word	.LANCHOR1
+ 150              		.cfi_endproc
+ 151              	.LFE124:
+ 153              		.section	.text.ESC_write,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	ESC_write
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	ESC_write:
+ 161              	.LVL11:
+ 162              	.LFB125:
+  93:Lib/soes/hal/ax58100/esc_hw.c **** 
+  94:Lib/soes/hal/ax58100/esc_hw.c **** /** ESC write function used by the Slave stack.
+  95:Lib/soes/hal/ax58100/esc_hw.c ****  *
+  96:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   address     = address of ESC register to write
+  97:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[out]  buf         = pointer to buffer to write from
+  98:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   len         = number of bytes to write
+  99:Lib/soes/hal/ax58100/esc_hw.c ****  */
+ 100:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_write (uint16_t address, void *buf, uint16_t len)
+ 101:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 163              		.loc 1 101 1 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              		.loc 1 101 1 is_stmt 0 view .LVU28
+ 168 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 169              		.cfi_def_cfa_offset 24
+ 170              		.cfi_offset 3, -24
+ 171              		.cfi_offset 4, -20
+ 172              		.cfi_offset 5, -16
+ 173              		.cfi_offset 6, -12
+ 174              		.cfi_offset 7, -8
+ 175              		.cfi_offset 14, -4
+ 176 0002 0746     		mov	r7, r0
+ 177 0004 0D46     		mov	r5, r1
+ 178 0006 1646     		mov	r6, r2
+ 102:Lib/soes/hal/ax58100/esc_hw.c ****    /* Select device. */
+ 103:Lib/soes/hal/ax58100/esc_hw.c ****    spi_select (et1100);
+ 179              		.loc 1 103 4 is_stmt 1 view .LVU29
+ 180 0008 094C     		ldr	r4, .L16
+ 181 000a 94F90000 		ldrsb	r0, [r4]
+ 182              	.LVL12:
+ 183              		.loc 1 103 4 is_stmt 0 view .LVU30
+ 184 000e FFF7FEFF 		bl	spi_select
+ 185              	.LVL13:
+ARM GAS  /tmp/ccuGgExS.s 			page 6
+
+
+ 104:Lib/soes/hal/ax58100/esc_hw.c ****    /* Write address and command to device. */
+ 105:Lib/soes/hal/ax58100/esc_hw.c ****    esc_address (address, ESC_CMD_WRITE);
+ 186              		.loc 1 105 4 is_stmt 1 view .LVU31
+ 187 0012 0421     		movs	r1, #4
+ 188 0014 3846     		mov	r0, r7
+ 189 0016 FFF7FEFF 		bl	esc_address
+ 190              	.LVL14:
+ 106:Lib/soes/hal/ax58100/esc_hw.c ****    /* Write data. */
+ 107:Lib/soes/hal/ax58100/esc_hw.c ****    spi_write (et1100, buf, len);
+ 191              		.loc 1 107 4 view .LVU32
+ 192 001a F2B2     		uxtb	r2, r6
+ 193 001c 2946     		mov	r1, r5
+ 194 001e 94F90000 		ldrsb	r0, [r4]
+ 195 0022 FFF7FEFF 		bl	spi_write
+ 196              	.LVL15:
+ 108:Lib/soes/hal/ax58100/esc_hw.c ****    /* Un-select device. */
+ 109:Lib/soes/hal/ax58100/esc_hw.c ****    spi_unselect (et1100);
+ 197              		.loc 1 109 4 view .LVU33
+ 198 0026 94F90000 		ldrsb	r0, [r4]
+ 199 002a FFF7FEFF 		bl	spi_unselect
+ 200              	.LVL16:
+ 110:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 201              		.loc 1 110 1 is_stmt 0 view .LVU34
+ 202 002e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 203              	.LVL17:
+ 204              	.L17:
+ 205              		.loc 1 110 1 view .LVU35
+ 206              		.align	2
+ 207              	.L16:
+ 208 0030 00000000 		.word	.LANCHOR0
+ 209              		.cfi_endproc
+ 210              	.LFE125:
+ 212              		.section	.text.ESC_reset,"ax",%progbits
+ 213              		.align	1
+ 214              		.global	ESC_reset
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 219              	ESC_reset:
+ 220              	.LFB127:
+ 111:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 112:Lib/soes/hal/ax58100/esc_hw.c **** static void task_delay(uint32_t time_us)
+ 113:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 114:Lib/soes/hal/ax58100/esc_hw.c ****    #define DELAY_1_uS      168   // todo tweak to used clock speed
+ 115:Lib/soes/hal/ax58100/esc_hw.c ****    uint32_t delay_ticks = DELAY_1_uS * time_us;
+ 116:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 117:Lib/soes/hal/ax58100/esc_hw.c ****    for (int32_t i = 0; i < delay_ticks; ++i)
+ 118:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 119:Lib/soes/hal/ax58100/esc_hw.c ****       // do nothing
+ 120:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 121:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 122:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 123:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_reset (void)
+ 124:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 221              		.loc 1 124 1 is_stmt 1 view -0
+ 222              		.cfi_startproc
+ 223              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  /tmp/ccuGgExS.s 			page 7
+
+
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225 0000 00B5     		push	{lr}
+ 226              		.cfi_def_cfa_offset 4
+ 227              		.cfi_offset 14, -4
+ 228 0002 83B0     		sub	sp, sp, #12
+ 229              		.cfi_def_cfa_offset 16
+ 125:Lib/soes/hal/ax58100/esc_hw.c ****    volatile uint32_t timeout;
+ 230              		.loc 1 125 4 view .LVU37
+ 126:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 127:Lib/soes/hal/ax58100/esc_hw.c ****    DPRINT("esc_reset_started\n");
+ 231              		.loc 1 127 33 view .LVU38
+ 128:Lib/soes/hal/ax58100/esc_hw.c ****    
+ 129:Lib/soes/hal/ax58100/esc_hw.c ****    rst_low();
+ 232              		.loc 1 129 4 view .LVU39
+ 233 0004 FFF7FEFF 		bl	rst_low
+ 234              	.LVL18:
+ 130:Lib/soes/hal/ax58100/esc_hw.c ****    task_delay(1000);
+ 235              		.loc 1 130 4 view .LVU40
+ 131:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 132:Lib/soes/hal/ax58100/esc_hw.c ****    rst_check_start();
+ 236              		.loc 1 132 4 view .LVU41
+ 237 0008 FFF7FEFF 		bl	rst_check_start
+ 238              	.LVL19:
+ 133:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 134:Lib/soes/hal/ax58100/esc_hw.c ****    while(timeout < 10000000)
+ 239              		.loc 1 134 4 view .LVU42
+ 240              		.loc 1 134 9 is_stmt 0 view .LVU43
+ 241 000c 02E0     		b	.L19
+ 242              	.L20:
+ 135:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 136:Lib/soes/hal/ax58100/esc_hw.c ****       /* ECAT releases resetpin, typically takes 40 us
+ 137:Lib/soes/hal/ax58100/esc_hw.c ****          Reset to operational PDI is max 70 ms */
+ 138:Lib/soes/hal/ax58100/esc_hw.c ****       if (is_esc_reset())
+ 139:Lib/soes/hal/ax58100/esc_hw.c ****       {
+ 140:Lib/soes/hal/ax58100/esc_hw.c ****          rst_high();
+ 141:Lib/soes/hal/ax58100/esc_hw.c ****          break; // OK
+ 142:Lib/soes/hal/ax58100/esc_hw.c ****       }
+ 143:Lib/soes/hal/ax58100/esc_hw.c ****       timeout++;
+ 243              		.loc 1 143 7 is_stmt 1 view .LVU44
+ 244              		.loc 1 143 14 is_stmt 0 view .LVU45
+ 245 000e 019B     		ldr	r3, [sp, #4]
+ 246 0010 0133     		adds	r3, r3, #1
+ 247 0012 0193     		str	r3, [sp, #4]
+ 144:Lib/soes/hal/ax58100/esc_hw.c ****       task_delay (30);
+ 248              		.loc 1 144 7 is_stmt 1 view .LVU46
+ 249              	.L19:
+ 134:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 250              		.loc 1 134 9 view .LVU47
+ 134:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 251              		.loc 1 134 18 is_stmt 0 view .LVU48
+ 252 0014 019A     		ldr	r2, [sp, #4]
+ 134:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 253              		.loc 1 134 9 view .LVU49
+ 254 0016 064B     		ldr	r3, .L24
+ 255 0018 9A42     		cmp	r2, r3
+ 256 001a 05D2     		bcs	.L18
+ 138:Lib/soes/hal/ax58100/esc_hw.c ****       {
+ARM GAS  /tmp/ccuGgExS.s 			page 8
+
+
+ 257              		.loc 1 138 7 is_stmt 1 view .LVU50
+ 138:Lib/soes/hal/ax58100/esc_hw.c ****       {
+ 258              		.loc 1 138 11 is_stmt 0 view .LVU51
+ 259 001c FFF7FEFF 		bl	is_esc_reset
+ 260              	.LVL20:
+ 138:Lib/soes/hal/ax58100/esc_hw.c ****       {
+ 261              		.loc 1 138 10 view .LVU52
+ 262 0020 0028     		cmp	r0, #0
+ 263 0022 F4D0     		beq	.L20
+ 140:Lib/soes/hal/ax58100/esc_hw.c ****          break; // OK
+ 264              		.loc 1 140 10 is_stmt 1 view .LVU53
+ 265 0024 FFF7FEFF 		bl	rst_high
+ 266              	.LVL21:
+ 141:Lib/soes/hal/ax58100/esc_hw.c ****       }
+ 267              		.loc 1 141 10 view .LVU54
+ 268              	.L18:
+ 145:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 146:Lib/soes/hal/ax58100/esc_hw.c ****    DPRINT("esc_reset_ended\n");
+ 147:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 269              		.loc 1 147 1 is_stmt 0 view .LVU55
+ 270 0028 03B0     		add	sp, sp, #12
+ 271              		.cfi_def_cfa_offset 4
+ 272              		@ sp needed
+ 273 002a 5DF804FB 		ldr	pc, [sp], #4
+ 274              	.L25:
+ 275 002e 00BF     		.align	2
+ 276              	.L24:
+ 277 0030 80969800 		.word	10000000
+ 278              		.cfi_endproc
+ 279              	.LFE127:
+ 281              		.section	.text.ESC_init,"ax",%progbits
+ 282              		.align	1
+ 283              		.global	ESC_init
+ 284              		.syntax unified
+ 285              		.thumb
+ 286              		.thumb_func
+ 288              	ESC_init:
+ 289              	.LVL22:
+ 290              	.LFB128:
+ 148:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 149:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_init (const esc_cfg_t * config)
+ 150:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 291              		.loc 1 150 1 is_stmt 1 view -0
+ 292              		.cfi_startproc
+ 293              		@ args = 0, pretend = 0, frame = 0
+ 294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 295              		.loc 1 150 1 is_stmt 0 view .LVU57
+ 296 0000 08B5     		push	{r3, lr}
+ 297              		.cfi_def_cfa_offset 8
+ 298              		.cfi_offset 3, -8
+ 299              		.cfi_offset 14, -4
+ 151:Lib/soes/hal/ax58100/esc_hw.c ****    rst_setup();
+ 300              		.loc 1 151 4 is_stmt 1 view .LVU58
+ 301 0002 FFF7FEFF 		bl	rst_setup
+ 302              	.LVL23:
+ 152:Lib/soes/hal/ax58100/esc_hw.c ****    rst_high();
+ 303              		.loc 1 152 4 view .LVU59
+ARM GAS  /tmp/ccuGgExS.s 			page 9
+
+
+ 304 0006 FFF7FEFF 		bl	rst_high
+ 305              	.LVL24:
+ 153:Lib/soes/hal/ax58100/esc_hw.c ****    spi_setup();
+ 306              		.loc 1 153 4 view .LVU60
+ 307 000a FFF7FEFF 		bl	spi_setup
+ 308              	.LVL25:
+ 154:Lib/soes/hal/ax58100/esc_hw.c ****    et1100 = 1;
+ 309              		.loc 1 154 4 view .LVU61
+ 310              		.loc 1 154 11 is_stmt 0 view .LVU62
+ 311 000e 044B     		ldr	r3, .L28
+ 312 0010 0122     		movs	r2, #1
+ 313 0012 1A60     		str	r2, [r3]
+ 155:Lib/soes/hal/ax58100/esc_hw.c ****    read_termination[MAX_READ_SIZE - 1] = 0xFF;
+ 314              		.loc 1 155 4 is_stmt 1 view .LVU63
+ 315              		.loc 1 155 40 is_stmt 0 view .LVU64
+ 316 0014 034B     		ldr	r3, .L28+4
+ 317 0016 FF22     		movs	r2, #255
+ 318 0018 83F87F20 		strb	r2, [r3, #127]
+ 156:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 157:Lib/soes/hal/ax58100/esc_hw.c ****    // uint8_t device_symbol = 0;
+ 158:Lib/soes/hal/ax58100/esc_hw.c ****    // while (device_symbol == 0)
+ 159:Lib/soes/hal/ax58100/esc_hw.c ****    // {
+ 160:Lib/soes/hal/ax58100/esc_hw.c ****    //    ESC_read(et1100, (void *)&device_symbol, sizeof(uint8_t));
+ 161:Lib/soes/hal/ax58100/esc_hw.c ****    //    if ((device_symbol != 0) || (device_symbol != 0xFF)) 
+ 162:Lib/soes/hal/ax58100/esc_hw.c ****    //    {
+ 163:Lib/soes/hal/ax58100/esc_hw.c ****    //       DPRINT("ESC init successful");
+ 164:Lib/soes/hal/ax58100/esc_hw.c ****    //    }
+ 165:Lib/soes/hal/ax58100/esc_hw.c ****    // }
+ 166:Lib/soes/hal/ax58100/esc_hw.c ****    // task_delay(1000); // allow ESC to load EEPROM, or if EEP_DONE can be read
+ 167:Lib/soes/hal/ax58100/esc_hw.c ****    // then wait while EEP_DONE is low.
+ 168:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 319              		.loc 1 168 1 view .LVU65
+ 320 001c 08BD     		pop	{r3, pc}
+ 321              	.L29:
+ 322 001e 00BF     		.align	2
+ 323              	.L28:
+ 324 0020 00000000 		.word	.LANCHOR0
+ 325 0024 00000000 		.word	.LANCHOR1
+ 326              		.cfi_endproc
+ 327              	.LFE128:
+ 329              		.section	.text.ESC_interrupt_enable,"ax",%progbits
+ 330              		.align	1
+ 331              		.global	ESC_interrupt_enable
+ 332              		.syntax unified
+ 333              		.thumb
+ 334              		.thumb_func
+ 336              	ESC_interrupt_enable:
+ 337              	.LVL26:
+ 338              	.LFB129:
+ 169:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 170:Lib/soes/hal/ax58100/esc_hw.c **** /** ESC interrupt enable function by the Slave stack in IRQ mode.
+ 171:Lib/soes/hal/ax58100/esc_hw.c ****  *
+ 172:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   mask     = of interrupts to enable
+ 173:Lib/soes/hal/ax58100/esc_hw.c ****  */
+ 174:Lib/soes/hal/ax58100/esc_hw.c **** #include "bsp_tim3.h"
+ 175:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 176:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_interrupt_enable (uint32_t mask)
+ARM GAS  /tmp/ccuGgExS.s 			page 10
+
+
+ 177:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 339              		.loc 1 177 1 is_stmt 1 view -0
+ 340              		.cfi_startproc
+ 341              		@ args = 0, pretend = 0, frame = 0
+ 342              		@ frame_needed = 0, uses_anonymous_args = 0
+ 343              		.loc 1 177 1 is_stmt 0 view .LVU67
+ 344 0000 10B5     		push	{r4, lr}
+ 345              		.cfi_def_cfa_offset 8
+ 346              		.cfi_offset 4, -8
+ 347              		.cfi_offset 14, -4
+ 348 0002 0446     		mov	r4, r0
+ 178:Lib/soes/hal/ax58100/esc_hw.c ****    // PDI interrupt
+ 179:Lib/soes/hal/ax58100/esc_hw.c ****    EXTILine8_Config();
+ 349              		.loc 1 179 4 is_stmt 1 view .LVU68
+ 350 0004 FFF7FEFF 		bl	EXTILine8_Config
+ 351              	.LVL27:
+ 180:Lib/soes/hal/ax58100/esc_hw.c ****    TIM3_NVIC_Enable();
+ 352              		.loc 1 180 4 view .LVU69
+ 353 0008 FFF7FEFF 		bl	TIM3_NVIC_Enable
+ 354              	.LVL28:
+ 181:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_SYNC0 & mask)
+ 355              		.loc 1 181 4 view .LVU70
+ 356              		.loc 1 181 7 is_stmt 0 view .LVU71
+ 357 000c 14F0040F 		tst	r4, #4
+ 358 0010 05D1     		bne	.L33
+ 359              	.L31:
+ 182:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 183:Lib/soes/hal/ax58100/esc_hw.c ****       EXTILine0_Config();
+ 184:Lib/soes/hal/ax58100/esc_hw.c ****       mask &= ~ESCREG_ALEVENT_DC_SYNC0;
+ 185:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 186:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_SYNC1 & mask)
+ 360              		.loc 1 186 4 is_stmt 1 view .LVU72
+ 187:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 188:Lib/soes/hal/ax58100/esc_hw.c ****    //    mask &= ~ESCREG_ALEVENT_DC_SYNC1;
+ 189:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 361              		.loc 1 189 4 view .LVU73
+ 190:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_LATCH & mask)
+ 362              		.loc 1 190 4 view .LVU74
+ 191:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 192:Lib/soes/hal/ax58100/esc_hw.c ****       // mask &= ~ESCREG_ALEVENT_DC_LATCH;
+ 193:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 363              		.loc 1 193 4 view .LVU75
+ 194:Lib/soes/hal/ax58100/esc_hw.c ****    
+ 195:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_ALeventmaskwrite(ESC_ALeventmaskread() | mask);
+ 364              		.loc 1 195 4 view .LVU76
+ 365              		.loc 1 195 25 is_stmt 0 view .LVU77
+ 366 0012 FFF7FEFF 		bl	ESC_ALeventmaskread
+ 367              	.LVL29:
+ 368              		.loc 1 195 4 view .LVU78
+ 369 0016 2043     		orrs	r0, r0, r4
+ 370 0018 FFF7FEFF 		bl	ESC_ALeventmaskwrite
+ 371              	.LVL30:
+ 196:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 372              		.loc 1 196 1 view .LVU79
+ 373 001c 10BD     		pop	{r4, pc}
+ 374              	.LVL31:
+ 375              	.L33:
+ARM GAS  /tmp/ccuGgExS.s 			page 11
+
+
+ 183:Lib/soes/hal/ax58100/esc_hw.c ****       mask &= ~ESCREG_ALEVENT_DC_SYNC0;
+ 376              		.loc 1 183 7 is_stmt 1 view .LVU80
+ 377 001e FFF7FEFF 		bl	EXTILine0_Config
+ 378              	.LVL32:
+ 184:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 379              		.loc 1 184 7 view .LVU81
+ 184:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 380              		.loc 1 184 12 is_stmt 0 view .LVU82
+ 381 0022 24F00404 		bic	r4, r4, #4
+ 382              	.LVL33:
+ 184:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 383              		.loc 1 184 12 view .LVU83
+ 384 0026 F4E7     		b	.L31
+ 385              		.cfi_endproc
+ 386              	.LFE129:
+ 388              		.section	.text.ESC_interrupt_disable,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	ESC_interrupt_disable
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 395              	ESC_interrupt_disable:
+ 396              	.LVL34:
+ 397              	.LFB130:
+ 197:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 198:Lib/soes/hal/ax58100/esc_hw.c **** /** ESC interrupt disable function by the Slave stack in IRQ mode.
+ 199:Lib/soes/hal/ax58100/esc_hw.c ****  *
+ 200:Lib/soes/hal/ax58100/esc_hw.c ****  * @param[in]   mask     = interrupts to disable
+ 201:Lib/soes/hal/ax58100/esc_hw.c ****  */
+ 202:Lib/soes/hal/ax58100/esc_hw.c **** void ESC_interrupt_disable (uint32_t mask)
+ 203:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 398              		.loc 1 203 1 is_stmt 1 view -0
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402              		.loc 1 203 1 is_stmt 0 view .LVU85
+ 403 0000 10B5     		push	{r4, lr}
+ 404              		.cfi_def_cfa_offset 8
+ 405              		.cfi_offset 4, -8
+ 406              		.cfi_offset 14, -4
+ 407 0002 0446     		mov	r4, r0
+ 204:Lib/soes/hal/ax58100/esc_hw.c ****    EXTILine8_Disable();
+ 408              		.loc 1 204 4 is_stmt 1 view .LVU86
+ 409 0004 FFF7FEFF 		bl	EXTILine8_Disable
+ 410              	.LVL35:
+ 205:Lib/soes/hal/ax58100/esc_hw.c ****    TIM3_NVIC_Disable();
+ 411              		.loc 1 205 4 view .LVU87
+ 412 0008 FFF7FEFF 		bl	TIM3_NVIC_Disable
+ 413              	.LVL36:
+ 206:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_SYNC0 & mask)
+ 414              		.loc 1 206 4 view .LVU88
+ 415              		.loc 1 206 7 is_stmt 0 view .LVU89
+ 416 000c 14F0040F 		tst	r4, #4
+ 417 0010 06D1     		bne	.L37
+ 418              	.L35:
+ 207:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 208:Lib/soes/hal/ax58100/esc_hw.c ****       EXTILine0_Disable();
+ARM GAS  /tmp/ccuGgExS.s 			page 12
+
+
+ 209:Lib/soes/hal/ax58100/esc_hw.c ****       mask &= ~ESCREG_ALEVENT_DC_SYNC0;
+ 210:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 211:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_SYNC1 & mask)
+ 419              		.loc 1 211 4 is_stmt 1 view .LVU90
+ 212:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 213:Lib/soes/hal/ax58100/esc_hw.c ****    //    mask &= ~ESCREG_ALEVENT_DC_SYNC1;
+ 214:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 420              		.loc 1 214 4 view .LVU91
+ 215:Lib/soes/hal/ax58100/esc_hw.c ****    if (ESCREG_ALEVENT_DC_LATCH & mask)
+ 421              		.loc 1 215 4 view .LVU92
+ 216:Lib/soes/hal/ax58100/esc_hw.c ****    {
+ 217:Lib/soes/hal/ax58100/esc_hw.c ****    //    mask &= ~ESCREG_ALEVENT_DC_LATCH;
+ 218:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 422              		.loc 1 218 4 view .LVU93
+ 219:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 220:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_ALeventmaskwrite(~mask & ESC_ALeventmaskread());
+ 423              		.loc 1 220 4 view .LVU94
+ 424              		.loc 1 220 25 is_stmt 0 view .LVU95
+ 425 0012 E443     		mvns	r4, r4
+ 426              	.LVL37:
+ 427              		.loc 1 220 33 view .LVU96
+ 428 0014 FFF7FEFF 		bl	ESC_ALeventmaskread
+ 429              	.LVL38:
+ 430              		.loc 1 220 4 view .LVU97
+ 431 0018 2040     		ands	r0, r0, r4
+ 432 001a FFF7FEFF 		bl	ESC_ALeventmaskwrite
+ 433              	.LVL39:
+ 221:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 434              		.loc 1 221 1 view .LVU98
+ 435 001e 10BD     		pop	{r4, pc}
+ 436              	.LVL40:
+ 437              	.L37:
+ 208:Lib/soes/hal/ax58100/esc_hw.c ****       mask &= ~ESCREG_ALEVENT_DC_SYNC0;
+ 438              		.loc 1 208 7 is_stmt 1 view .LVU99
+ 439 0020 FFF7FEFF 		bl	EXTILine0_Disable
+ 440              	.LVL41:
+ 209:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 441              		.loc 1 209 7 view .LVU100
+ 209:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 442              		.loc 1 209 12 is_stmt 0 view .LVU101
+ 443 0024 24F00404 		bic	r4, r4, #4
+ 444              	.LVL42:
+ 209:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 445              		.loc 1 209 12 view .LVU102
+ 446 0028 F3E7     		b	.L35
+ 447              		.cfi_endproc
+ 448              	.LFE130:
+ 450              		.section	.text.ESC_enable_DC,"ax",%progbits
+ 451              		.align	1
+ 452              		.global	ESC_enable_DC
+ 453              		.syntax unified
+ 454              		.thumb
+ 455              		.thumb_func
+ 457              	ESC_enable_DC:
+ 458              	.LFB131:
+ 222:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 223:Lib/soes/hal/ax58100/esc_hw.c **** /** ESC enable Distributed Clocks (DC)
+ARM GAS  /tmp/ccuGgExS.s 			page 13
+
+
+ 224:Lib/soes/hal/ax58100/esc_hw.c ****  *
+ 225:Lib/soes/hal/ax58100/esc_hw.c ****  * @return  SYNC0 cycle time
+ 226:Lib/soes/hal/ax58100/esc_hw.c ****  */
+ 227:Lib/soes/hal/ax58100/esc_hw.c **** uint32_t ESC_enable_DC ()
+ 228:Lib/soes/hal/ax58100/esc_hw.c **** {
+ 459              		.loc 1 228 1 is_stmt 1 view -0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 16
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463 0000 10B5     		push	{r4, lr}
+ 464              		.cfi_def_cfa_offset 8
+ 465              		.cfi_offset 4, -8
+ 466              		.cfi_offset 14, -4
+ 467 0002 84B0     		sub	sp, sp, #16
+ 468              		.cfi_def_cfa_offset 24
+ 229:Lib/soes/hal/ax58100/esc_hw.c ****    uint8_t data = 0x00;
+ 469              		.loc 1 229 4 view .LVU104
+ 470              		.loc 1 229 12 is_stmt 0 view .LVU105
+ 471 0004 0023     		movs	r3, #0
+ 472 0006 8DF80F30 		strb	r3, [sp, #15]
+ 230:Lib/soes/hal/ax58100/esc_hw.c ****    
+ 231:Lib/soes/hal/ax58100/esc_hw.c ****    // check DC Sync Out bit: 0x140:10
+ 232:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_read (ESCREG_ESC_CONFIG, &data, sizeof(data));
+ 473              		.loc 1 232 4 is_stmt 1 view .LVU106
+ 474 000a 0122     		movs	r2, #1
+ 475 000c 0DF10F01 		add	r1, sp, #15
+ 476 0010 40F24110 		movw	r0, #321
+ 477 0014 FFF7FEFF 		bl	ESC_read
+ 478              	.LVL43:
+ 233:Lib/soes/hal/ax58100/esc_hw.c ****    if (!(data & DC_SYNC_OUT)) {
+ 479              		.loc 1 233 4 view .LVU107
+ 480              		.loc 1 233 15 is_stmt 0 view .LVU108
+ 481 0018 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 482              		.loc 1 233 7 view .LVU109
+ 483 001c 13F0040F 		tst	r3, #4
+ 484 0020 02D1     		bne	.L45
+ 234:Lib/soes/hal/ax58100/esc_hw.c ****       return 0; // DC sync is not enabled in ESI
+ 485              		.loc 1 234 14 view .LVU110
+ 486 0022 0020     		movs	r0, #0
+ 487              	.L38:
+ 235:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 236:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 237:Lib/soes/hal/ax58100/esc_hw.c ****    // read set SYNC0 Cycle Time from 0x09A0
+ 238:Lib/soes/hal/ax58100/esc_hw.c ****    uint32_t setsync0cycleTime = 0;
+ 239:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_read (ESCREG_SYNC0_CYCLE_TIME, &setsync0cycleTime, sizeof(uint32_t));
+ 240:Lib/soes/hal/ax58100/esc_hw.c ****    setsync0cycleTime = etohl (setsync0cycleTime);
+ 241:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 242:Lib/soes/hal/ax58100/esc_hw.c ****    // check Sync Unit assign 0x0980:0 ( 0 for ECAT, 1 for PDI )
+ 243:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_read (ESCREG_CYCLIC_UNIT_CONTROL, &data, sizeof(data));
+ 244:Lib/soes/hal/ax58100/esc_hw.c ****    if (data == SYNC_OUT_PDI_CONTROL) {
+ 245:Lib/soes/hal/ax58100/esc_hw.c ****       // Sync Unit assigned to PDI, configuration needs to be finished by slave
+ 246:Lib/soes/hal/ax58100/esc_hw.c ****    
+ 247:Lib/soes/hal/ax58100/esc_hw.c ****       // set sync start time: read system time, add offset for writing start time and activation
+ 248:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_read (ESCREG_LOCALTIME, (void *) &ESCvar.Time, sizeof (ESCvar.Time));
+ 249:Lib/soes/hal/ax58100/esc_hw.c ****       ESCvar.Time = etohl (ESCvar.Time);
+ 250:Lib/soes/hal/ax58100/esc_hw.c ****       uint32_t startTime = ESCvar.Time + SYNC_START_OFFSET;
+ 251:Lib/soes/hal/ax58100/esc_hw.c **** 
+ARM GAS  /tmp/ccuGgExS.s 			page 14
+
+
+ 252:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_write (ESCREG_SYNC_START_TIME, &startTime, sizeof(startTime)); 
+ 253:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 254:Lib/soes/hal/ax58100/esc_hw.c ****       // activate cyclic operation and SYNC0
+ 255:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 256:Lib/soes/hal/ax58100/esc_hw.c ****       data = data | ESCREG_SYNC_ACT_ACTIVATED | ESCREG_SYNC_SYNC0_EN;
+ 257:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_write (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 258:Lib/soes/hal/ax58100/esc_hw.c ****       data = 0x00;
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****       while (! (data & (ESCREG_SYNC_ACT_ACTIVATED | ESCREG_SYNC_SYNC0_EN))) {
+ 260:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 261:Lib/soes/hal/ax58100/esc_hw.c ****       }
+ 262:Lib/soes/hal/ax58100/esc_hw.c ****    }
+ 263:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 264:Lib/soes/hal/ax58100/esc_hw.c ****    return setsync0cycleTime;
+ 265:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 488              		.loc 1 265 1 view .LVU111
+ 489 0024 04B0     		add	sp, sp, #16
+ 490              		.cfi_remember_state
+ 491              		.cfi_def_cfa_offset 8
+ 492              		@ sp needed
+ 493 0026 10BD     		pop	{r4, pc}
+ 494              	.L45:
+ 495              		.cfi_restore_state
+ 238:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_read (ESCREG_SYNC0_CYCLE_TIME, &setsync0cycleTime, sizeof(uint32_t));
+ 496              		.loc 1 238 4 is_stmt 1 view .LVU112
+ 238:Lib/soes/hal/ax58100/esc_hw.c ****    ESC_read (ESCREG_SYNC0_CYCLE_TIME, &setsync0cycleTime, sizeof(uint32_t));
+ 497              		.loc 1 238 13 is_stmt 0 view .LVU113
+ 498 0028 0023     		movs	r3, #0
+ 499 002a 0293     		str	r3, [sp, #8]
+ 239:Lib/soes/hal/ax58100/esc_hw.c ****    setsync0cycleTime = etohl (setsync0cycleTime);
+ 500              		.loc 1 239 4 is_stmt 1 view .LVU114
+ 501 002c 0422     		movs	r2, #4
+ 502 002e 02A9     		add	r1, sp, #8
+ 503 0030 4FF41A60 		mov	r0, #2464
+ 504 0034 FFF7FEFF 		bl	ESC_read
+ 505              	.LVL44:
+ 240:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 506              		.loc 1 240 4 view .LVU115
+ 243:Lib/soes/hal/ax58100/esc_hw.c ****    if (data == SYNC_OUT_PDI_CONTROL) {
+ 507              		.loc 1 243 4 view .LVU116
+ 508 0038 0122     		movs	r2, #1
+ 509 003a 0DF10F01 		add	r1, sp, #15
+ 510 003e 4FF41860 		mov	r0, #2432
+ 511 0042 FFF7FEFF 		bl	ESC_read
+ 512              	.LVL45:
+ 244:Lib/soes/hal/ax58100/esc_hw.c ****       // Sync Unit assigned to PDI, configuration needs to be finished by slave
+ 513              		.loc 1 244 4 view .LVU117
+ 244:Lib/soes/hal/ax58100/esc_hw.c ****       // Sync Unit assigned to PDI, configuration needs to be finished by slave
+ 514              		.loc 1 244 13 is_stmt 0 view .LVU118
+ 515 0046 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 244:Lib/soes/hal/ax58100/esc_hw.c ****       // Sync Unit assigned to PDI, configuration needs to be finished by slave
+ 516              		.loc 1 244 7 view .LVU119
+ 517 004a 012B     		cmp	r3, #1
+ 518 004c 01D0     		beq	.L46
+ 519              	.L40:
+ 264:Lib/soes/hal/ax58100/esc_hw.c **** }
+ 520              		.loc 1 264 4 is_stmt 1 view .LVU120
+ 264:Lib/soes/hal/ax58100/esc_hw.c **** }
+ARM GAS  /tmp/ccuGgExS.s 			page 15
+
+
+ 521              		.loc 1 264 11 is_stmt 0 view .LVU121
+ 522 004e 0298     		ldr	r0, [sp, #8]
+ 523 0050 E8E7     		b	.L38
+ 524              	.L46:
+ 525              	.LBB2:
+ 248:Lib/soes/hal/ax58100/esc_hw.c ****       ESCvar.Time = etohl (ESCvar.Time);
+ 526              		.loc 1 248 7 is_stmt 1 view .LVU122
+ 527 0052 1E4C     		ldr	r4, .L47
+ 528 0054 0422     		movs	r2, #4
+ 529 0056 2146     		mov	r1, r4
+ 530 0058 4FF41160 		mov	r0, #2320
+ 531 005c FFF7FEFF 		bl	ESC_read
+ 532              	.LVL46:
+ 249:Lib/soes/hal/ax58100/esc_hw.c ****       uint32_t startTime = ESCvar.Time + SYNC_START_OFFSET;
+ 533              		.loc 1 249 7 view .LVU123
+ 249:Lib/soes/hal/ax58100/esc_hw.c ****       uint32_t startTime = ESCvar.Time + SYNC_START_OFFSET;
+ 534              		.loc 1 249 21 is_stmt 0 view .LVU124
+ 535 0060 2146     		mov	r1, r4
+ 536 0062 51F8E039 		ldr	r3, [r1], #-224
+ 249:Lib/soes/hal/ax58100/esc_hw.c ****       uint32_t startTime = ESCvar.Time + SYNC_START_OFFSET;
+ 537              		.loc 1 249 19 view .LVU125
+ 538 0066 C1F8E030 		str	r3, [r1, #224]
+ 250:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 539              		.loc 1 250 7 is_stmt 1 view .LVU126
+ 250:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 540              		.loc 1 250 34 is_stmt 0 view .LVU127
+ 541 006a D1F8E020 		ldr	r2, [r1, #224]
+ 250:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 542              		.loc 1 250 40 view .LVU128
+ 543 006e 184B     		ldr	r3, .L47+4
+ 544 0070 1344     		add	r3, r3, r2
+ 250:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 545              		.loc 1 250 16 view .LVU129
+ 546 0072 0193     		str	r3, [sp, #4]
+ 252:Lib/soes/hal/ax58100/esc_hw.c **** 
+ 547              		.loc 1 252 7 is_stmt 1 view .LVU130
+ 548 0074 0422     		movs	r2, #4
+ 549 0076 0DEB0201 		add	r1, sp, r2
+ 550 007a 4FF41960 		mov	r0, #2448
+ 551 007e FFF7FEFF 		bl	ESC_write
+ 552              	.LVL47:
+ 255:Lib/soes/hal/ax58100/esc_hw.c ****       data = data | ESCREG_SYNC_ACT_ACTIVATED | ESCREG_SYNC_SYNC0_EN;
+ 553              		.loc 1 255 7 view .LVU131
+ 554 0082 0122     		movs	r2, #1
+ 555 0084 0DF10F01 		add	r1, sp, #15
+ 556 0088 40F68110 		movw	r0, #2433
+ 557 008c FFF7FEFF 		bl	ESC_read
+ 558              	.LVL48:
+ 256:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_write (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 559              		.loc 1 256 7 view .LVU132
+ 256:Lib/soes/hal/ax58100/esc_hw.c ****       ESC_write (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 560              		.loc 1 256 12 is_stmt 0 view .LVU133
+ 561 0090 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 562 0094 43F00303 		orr	r3, r3, #3
+ 563 0098 8DF80F30 		strb	r3, [sp, #15]
+ 257:Lib/soes/hal/ax58100/esc_hw.c ****       data = 0x00;
+ 564              		.loc 1 257 7 is_stmt 1 view .LVU134
+ARM GAS  /tmp/ccuGgExS.s 			page 16
+
+
+ 565 009c 0122     		movs	r2, #1
+ 566 009e 0DF10F01 		add	r1, sp, #15
+ 567 00a2 40F68110 		movw	r0, #2433
+ 568 00a6 FFF7FEFF 		bl	ESC_write
+ 569              	.LVL49:
+ 258:Lib/soes/hal/ax58100/esc_hw.c ****       while (! (data & (ESCREG_SYNC_ACT_ACTIVATED | ESCREG_SYNC_SYNC0_EN))) {
+ 570              		.loc 1 258 7 view .LVU135
+ 258:Lib/soes/hal/ax58100/esc_hw.c ****       while (! (data & (ESCREG_SYNC_ACT_ACTIVATED | ESCREG_SYNC_SYNC0_EN))) {
+ 571              		.loc 1 258 12 is_stmt 0 view .LVU136
+ 572 00aa 0023     		movs	r3, #0
+ 573 00ac 8DF80F30 		strb	r3, [sp, #15]
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 574              		.loc 1 259 7 is_stmt 1 view .LVU137
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 575              		.loc 1 259 13 is_stmt 0 view .LVU138
+ 576 00b0 06E0     		b	.L41
+ 577              	.L42:
+ 260:Lib/soes/hal/ax58100/esc_hw.c ****       }
+ 578              		.loc 1 260 10 is_stmt 1 view .LVU139
+ 579 00b2 0122     		movs	r2, #1
+ 580 00b4 0DF10F01 		add	r1, sp, #15
+ 581 00b8 40F68110 		movw	r0, #2433
+ 582 00bc FFF7FEFF 		bl	ESC_read
+ 583              	.LVL50:
+ 584              	.L41:
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 585              		.loc 1 259 13 view .LVU140
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 586              		.loc 1 259 22 is_stmt 0 view .LVU141
+ 587 00c0 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 259:Lib/soes/hal/ax58100/esc_hw.c ****          ESC_read (ESCREG_SYNC_ACT, &data, sizeof(data));
+ 588              		.loc 1 259 13 view .LVU142
+ 589 00c4 13F0030F 		tst	r3, #3
+ 590 00c8 F3D0     		beq	.L42
+ 591 00ca C0E7     		b	.L40
+ 592              	.L48:
+ 593              		.align	2
+ 594              	.L47:
+ 595 00cc E0000000 		.word	ESCvar+224
+ 596 00d0 B8BF2300 		.word	2342840
+ 597              	.LBE2:
+ 598              		.cfi_endproc
+ 599              	.LFE131:
+ 601              		.section	.bss.read_termination,"aw",%nobits
+ 602              		.align	2
+ 603              		.set	.LANCHOR1,. + 0
+ 606              	read_termination:
+ 607 0000 00000000 		.space	128
+ 607      00000000 
+ 607      00000000 
+ 607      00000000 
+ 607      00000000 
+ 608              		.section	.data.et1100,"aw"
+ 609              		.align	2
+ 610              		.set	.LANCHOR0,. + 0
+ 613              	et1100:
+ 614 0000 FFFFFFFF 		.word	-1
+ARM GAS  /tmp/ccuGgExS.s 			page 17
+
+
+ 615              		.text
+ 616              	.Letext0:
+ 617              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3.1/include/stddef.h"
+ 618              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 619              		.file 4 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 620              		.file 5 "Lib/soes/inc/esc.h"
+ 621              		.file 6 "Lib/soes_hal_bsp/inc/esc_irq.h"
+ 622              		.file 7 "Lib/bsp/Inc/bsp_tim3.h"
+ 623              		.file 8 "Lib/soes_hal_bsp/inc/rst.h"
+ 624              		.file 9 "Lib/soes_hal_bsp/inc/spi.h"
+ARM GAS  /tmp/ccuGgExS.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 esc_hw.c
+     /tmp/ccuGgExS.s:20     .text.esc_address:0000000000000000 $t
+     /tmp/ccuGgExS.s:25     .text.esc_address:0000000000000000 esc_address
+     /tmp/ccuGgExS.s:77     .text.esc_address:0000000000000034 $d
+     /tmp/ccuGgExS.s:83     .text.ESC_read:0000000000000000 $t
+     /tmp/ccuGgExS.s:89     .text.ESC_read:0000000000000000 ESC_read
+     /tmp/ccuGgExS.s:148    .text.ESC_read:0000000000000040 $d
+     /tmp/ccuGgExS.s:154    .text.ESC_write:0000000000000000 $t
+     /tmp/ccuGgExS.s:160    .text.ESC_write:0000000000000000 ESC_write
+     /tmp/ccuGgExS.s:208    .text.ESC_write:0000000000000030 $d
+     /tmp/ccuGgExS.s:213    .text.ESC_reset:0000000000000000 $t
+     /tmp/ccuGgExS.s:219    .text.ESC_reset:0000000000000000 ESC_reset
+     /tmp/ccuGgExS.s:277    .text.ESC_reset:0000000000000030 $d
+     /tmp/ccuGgExS.s:282    .text.ESC_init:0000000000000000 $t
+     /tmp/ccuGgExS.s:288    .text.ESC_init:0000000000000000 ESC_init
+     /tmp/ccuGgExS.s:324    .text.ESC_init:0000000000000020 $d
+     /tmp/ccuGgExS.s:330    .text.ESC_interrupt_enable:0000000000000000 $t
+     /tmp/ccuGgExS.s:336    .text.ESC_interrupt_enable:0000000000000000 ESC_interrupt_enable
+     /tmp/ccuGgExS.s:389    .text.ESC_interrupt_disable:0000000000000000 $t
+     /tmp/ccuGgExS.s:395    .text.ESC_interrupt_disable:0000000000000000 ESC_interrupt_disable
+     /tmp/ccuGgExS.s:451    .text.ESC_enable_DC:0000000000000000 $t
+     /tmp/ccuGgExS.s:457    .text.ESC_enable_DC:0000000000000000 ESC_enable_DC
+     /tmp/ccuGgExS.s:595    .text.ESC_enable_DC:00000000000000cc $d
+     /tmp/ccuGgExS.s:602    .bss.read_termination:0000000000000000 $d
+     /tmp/ccuGgExS.s:606    .bss.read_termination:0000000000000000 read_termination
+     /tmp/ccuGgExS.s:609    .data.et1100:0000000000000000 $d
+     /tmp/ccuGgExS.s:613    .data.et1100:0000000000000000 et1100
+
+UNDEFINED SYMBOLS
+spi_bidirectionally_transfer
+ESCvar
+spi_select
+spi_unselect
+spi_write
+rst_low
+rst_check_start
+is_esc_reset
+rst_high
+rst_setup
+spi_setup
+EXTILine8_Config
+TIM3_NVIC_Enable
+ESC_ALeventmaskread
+ESC_ALeventmaskwrite
+EXTILine0_Config
+EXTILine8_Disable
+TIM3_NVIC_Disable
+EXTILine0_Disable
