@@ -1,0 +1,2014 @@
+ARM GAS  /tmp/ccNNgH0Y.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"el9800appl.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.APPL_AckErrorInd,"ax",%progbits
+  20              		.align	1
+  21              		.global	APPL_AckErrorInd
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	APPL_AckErrorInd:
+  27              	.LVL0:
+  28              	.LFB123:
+  29              		.file 1 "Lib/ssc_app/src/el9800appl.c"
+   1:Lib/ssc_app/src/el9800appl.c **** //############################################################
+   2:Lib/ssc_app/src/el9800appl.c **** //������ֻ��ѧϰʹ�ã�δ���������ɣ���������
+   3:Lib/ssc_app/src/el9800appl.c **** //��Ȩ���У�����ؾ�
+   4:Lib/ssc_app/src/el9800appl.c **** //EtherCAT��վѧϰ��
+   5:Lib/ssc_app/src/el9800appl.c **** //Author��͢���������
+   6:Lib/ssc_app/src/el9800appl.c **** //�Ա�����: https://shop461235811.taobao.com/
+   7:Lib/ssc_app/src/el9800appl.c **** //�ҵĲ��ͣ�https://blog.csdn.net/zhandouhu/article/category/9455918
+   8:Lib/ssc_app/src/el9800appl.c **** //############################################################
+   9:Lib/ssc_app/src/el9800appl.c **** /**
+  10:Lib/ssc_app/src/el9800appl.c **** \addtogroup EL9800Appl EL9800 application
+  11:Lib/ssc_app/src/el9800appl.c **** @{
+  12:Lib/ssc_app/src/el9800appl.c **** */
+  13:Lib/ssc_app/src/el9800appl.c **** 
+  14:Lib/ssc_app/src/el9800appl.c **** /**
+  15:Lib/ssc_app/src/el9800appl.c **** \file el9800appl.c
+  16:Lib/ssc_app/src/el9800appl.c **** \author EthercatSSC@beckhoff.com
+  17:Lib/ssc_app/src/el9800appl.c **** \brief Implementation
+  18:Lib/ssc_app/src/el9800appl.c **** 
+  19:Lib/ssc_app/src/el9800appl.c **** \version 5.11
+  20:Lib/ssc_app/src/el9800appl.c **** 
+  21:Lib/ssc_app/src/el9800appl.c **** <br>Changes to version V5.10:<br>
+  22:Lib/ssc_app/src/el9800appl.c **** V5.11 ECAT11: create application interface function pointer, add eeprom emulation interface functio
+  23:Lib/ssc_app/src/el9800appl.c **** V5.11 EL9800 1: reset outputs on fallback from OP state<br>
+  24:Lib/ssc_app/src/el9800appl.c **** <br>Changes to version V5.01:<br>
+  25:Lib/ssc_app/src/el9800appl.c **** V5.10 ECAT6: Add "USE_DEFAULT_MAIN" to enable or disable the main function<br>
+  26:Lib/ssc_app/src/el9800appl.c **** <br>Changes to version V5.0:<br>
+  27:Lib/ssc_app/src/el9800appl.c **** V5.01 EL9800 2: Add TxPdo Parameter object 0x1802<br>
+  28:Lib/ssc_app/src/el9800appl.c **** <br>Changes to version V4.30:<br>
+  29:Lib/ssc_app/src/el9800appl.c **** V4.50 ECAT2: Create generic application interface functions. Documentation in Application Note ET93
+ARM GAS  /tmp/ccNNgH0Y.s 			page 2
+
+
+  30:Lib/ssc_app/src/el9800appl.c **** V4.50 COE2: Handle invalid PDO assign values.<br>
+  31:Lib/ssc_app/src/el9800appl.c **** V4.30 : create file
+  32:Lib/ssc_app/src/el9800appl.c **** */
+  33:Lib/ssc_app/src/el9800appl.c **** 
+  34:Lib/ssc_app/src/el9800appl.c **** 
+  35:Lib/ssc_app/src/el9800appl.c **** /*-----------------------------------------------------------------------------------------
+  36:Lib/ssc_app/src/el9800appl.c **** ------
+  37:Lib/ssc_app/src/el9800appl.c **** ------    Includes
+  38:Lib/ssc_app/src/el9800appl.c **** ------
+  39:Lib/ssc_app/src/el9800appl.c **** -----------------------------------------------------------------------------------------*/
+  40:Lib/ssc_app/src/el9800appl.c **** #include "ecat_def.h"
+  41:Lib/ssc_app/src/el9800appl.c **** 
+  42:Lib/ssc_app/src/el9800appl.c **** #if EL9800_APPLICATION
+  43:Lib/ssc_app/src/el9800appl.c **** 
+  44:Lib/ssc_app/src/el9800appl.c **** /* ECATCHANGE_START(V5.11) ECAT11*/
+  45:Lib/ssc_app/src/el9800appl.c **** #include "applInterface.h"
+  46:Lib/ssc_app/src/el9800appl.c **** /* ECATCHANGE_END(V5.11) ECAT11*/
+  47:Lib/ssc_app/src/el9800appl.c **** 
+  48:Lib/ssc_app/src/el9800appl.c **** //#include "el9800hw.h"
+  49:Lib/ssc_app/src/el9800appl.c **** 
+  50:Lib/ssc_app/src/el9800appl.c **** #define _EVALBOARD_
+  51:Lib/ssc_app/src/el9800appl.c **** #include "el9800appl.h"
+  52:Lib/ssc_app/src/el9800appl.c **** #undef _EVALBOARD_
+  53:Lib/ssc_app/src/el9800appl.c **** 
+  54:Lib/ssc_app/src/el9800appl.c **** #if MCI_HW
+  55:Lib/ssc_app/src/el9800appl.c **** #include "mcihw.h"
+  56:Lib/ssc_app/src/el9800appl.c **** #endif
+  57:Lib/ssc_app/src/el9800appl.c **** #if EL9800_HW
+  58:Lib/ssc_app/src/el9800appl.c **** #include "el9800hw.h"
+  59:Lib/ssc_app/src/el9800appl.c **** #endif
+  60:Lib/ssc_app/src/el9800appl.c **** /*--------------------------------------------------------------------------------------
+  61:Lib/ssc_app/src/el9800appl.c **** ------
+  62:Lib/ssc_app/src/el9800appl.c **** ------    local types and defines
+  63:Lib/ssc_app/src/el9800appl.c **** ------
+  64:Lib/ssc_app/src/el9800appl.c **** --------------------------------------------------------------------------------------*/
+  65:Lib/ssc_app/src/el9800appl.c **** 
+  66:Lib/ssc_app/src/el9800appl.c **** /*-----------------------------------------------------------------------------------------
+  67:Lib/ssc_app/src/el9800appl.c **** ------
+  68:Lib/ssc_app/src/el9800appl.c **** ------    local variables and constants
+  69:Lib/ssc_app/src/el9800appl.c **** ------
+  70:Lib/ssc_app/src/el9800appl.c **** -----------------------------------------------------------------------------------------*/
+  71:Lib/ssc_app/src/el9800appl.c **** 
+  72:Lib/ssc_app/src/el9800appl.c **** /*-----------------------------------------------------------------------------------------
+  73:Lib/ssc_app/src/el9800appl.c **** ------
+  74:Lib/ssc_app/src/el9800appl.c **** ------    application specific functions
+  75:Lib/ssc_app/src/el9800appl.c **** ------
+  76:Lib/ssc_app/src/el9800appl.c **** -----------------------------------------------------------------------------------------*/
+  77:Lib/ssc_app/src/el9800appl.c **** 
+  78:Lib/ssc_app/src/el9800appl.c **** /*-----------------------------------------------------------------------------------------
+  79:Lib/ssc_app/src/el9800appl.c **** ------
+  80:Lib/ssc_app/src/el9800appl.c **** ------    generic functions
+  81:Lib/ssc_app/src/el9800appl.c **** ------
+  82:Lib/ssc_app/src/el9800appl.c **** -----------------------------------------------------------------------------------------*/
+  83:Lib/ssc_app/src/el9800appl.c **** 
+  84:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+  85:Lib/ssc_app/src/el9800appl.c **** /**
+  86:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called when an error state was acknowledged by the master
+ARM GAS  /tmp/ccNNgH0Y.s 			page 3
+
+
+  87:Lib/ssc_app/src/el9800appl.c **** 
+  88:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+  89:Lib/ssc_app/src/el9800appl.c **** 
+  90:Lib/ssc_app/src/el9800appl.c **** void    APPL_AckErrorInd(UINT16 stateTrans)
+  91:Lib/ssc_app/src/el9800appl.c **** { 
+  30              		.loc 1 91 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  92:Lib/ssc_app/src/el9800appl.c **** }
+  35              		.loc 1 92 1 view .LVU1
+  36 0000 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE123:
+  40              		.section	.text.APPL_StartMailboxHandler,"ax",%progbits
+  41              		.align	1
+  42              		.global	APPL_StartMailboxHandler
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  47              	APPL_StartMailboxHandler:
+  48              	.LFB124:
+  93:Lib/ssc_app/src/el9800appl.c **** 
+  94:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+  95:Lib/ssc_app/src/el9800appl.c **** /**
+  96:Lib/ssc_app/src/el9800appl.c ****  \return    AL Status Code (see ecatslv.h ALSTATUSCODE_....)
+  97:Lib/ssc_app/src/el9800appl.c **** 
+  98:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from INIT to PREOP when
+  99:Lib/ssc_app/src/el9800appl.c ****            all general settings were checked to start the mailbox handler. This function
+ 100:Lib/ssc_app/src/el9800appl.c ****            informs the application about the state transition, the application can refuse
+ 101:Lib/ssc_app/src/el9800appl.c ****            the state transition when returning an AL Status error code.
+ 102:Lib/ssc_app/src/el9800appl.c ****            The return code NOERROR_INWORK can be used, if the application cannot confirm
+ 103:Lib/ssc_app/src/el9800appl.c ****            the state transition immediately, in that case the application need to be complete 
+ 104:Lib/ssc_app/src/el9800appl.c ****            the transition by calling ECAT_StateChange.
+ 105:Lib/ssc_app/src/el9800appl.c **** 
+ 106:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 107:Lib/ssc_app/src/el9800appl.c **** 
+ 108:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StartMailboxHandler(void)
+ 109:Lib/ssc_app/src/el9800appl.c **** {
+  49              		.loc 1 109 1 view -0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              		@ link register save eliminated.
+ 110:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+  54              		.loc 1 110 5 view .LVU3
+ 111:Lib/ssc_app/src/el9800appl.c **** }
+  55              		.loc 1 111 1 is_stmt 0 view .LVU4
+  56 0000 0020     		movs	r0, #0
+  57 0002 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE124:
+  61              		.section	.text.APPL_StopMailboxHandler,"ax",%progbits
+  62              		.align	1
+  63              		.global	APPL_StopMailboxHandler
+  64              		.syntax unified
+ARM GAS  /tmp/ccNNgH0Y.s 			page 4
+
+
+  65              		.thumb
+  66              		.thumb_func
+  68              	APPL_StopMailboxHandler:
+  69              	.LFB125:
+ 112:Lib/ssc_app/src/el9800appl.c **** 
+ 113:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 114:Lib/ssc_app/src/el9800appl.c **** /**
+ 115:Lib/ssc_app/src/el9800appl.c ****  \return     0, NOERROR_INWORK
+ 116:Lib/ssc_app/src/el9800appl.c **** 
+ 117:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from PREEOP to INIT
+ 118:Lib/ssc_app/src/el9800appl.c ****              to stop the mailbox handler. This functions informs the application
+ 119:Lib/ssc_app/src/el9800appl.c ****              about the state transition, the application cannot refuse
+ 120:Lib/ssc_app/src/el9800appl.c ****              the state transition.
+ 121:Lib/ssc_app/src/el9800appl.c **** 
+ 122:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 123:Lib/ssc_app/src/el9800appl.c **** 
+ 124:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StopMailboxHandler(void)
+ 125:Lib/ssc_app/src/el9800appl.c **** {
+  70              		.loc 1 125 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+ 126:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+  75              		.loc 1 126 5 view .LVU6
+ 127:Lib/ssc_app/src/el9800appl.c **** }
+  76              		.loc 1 127 1 is_stmt 0 view .LVU7
+  77 0000 0020     		movs	r0, #0
+  78 0002 7047     		bx	lr
+  79              		.cfi_endproc
+  80              	.LFE125:
+  82              		.section	.text.APPL_StartInputHandler,"ax",%progbits
+  83              		.align	1
+  84              		.global	APPL_StartInputHandler
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  89              	APPL_StartInputHandler:
+  90              	.LVL1:
+  91              	.LFB126:
+ 128:Lib/ssc_app/src/el9800appl.c **** 
+ 129:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 130:Lib/ssc_app/src/el9800appl.c **** /**
+ 131:Lib/ssc_app/src/el9800appl.c ****  \param    pIntMask    pointer to the AL Event Mask which will be written to the AL event Mask
+ 132:Lib/ssc_app/src/el9800appl.c ****                         register (0x204) when this function is succeeded. The event mask can be ada
+ 133:Lib/ssc_app/src/el9800appl.c ****                         in this function
+ 134:Lib/ssc_app/src/el9800appl.c ****  \return    AL Status Code (see ecatslv.h ALSTATUSCODE_....)
+ 135:Lib/ssc_app/src/el9800appl.c **** 
+ 136:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from PREOP to SAFEOP when
+ 137:Lib/ssc_app/src/el9800appl.c ****              all general settings were checked to start the input handler. This function
+ 138:Lib/ssc_app/src/el9800appl.c ****              informs the application about the state transition, the application can refuse
+ 139:Lib/ssc_app/src/el9800appl.c ****              the state transition when returning an AL Status error code.
+ 140:Lib/ssc_app/src/el9800appl.c ****             The return code NOERROR_INWORK can be used, if the application cannot confirm
+ 141:Lib/ssc_app/src/el9800appl.c ****             the state transition immediately, in that case the application need to be complete 
+ 142:Lib/ssc_app/src/el9800appl.c ****             the transition by calling ECAT_StateChange.
+ 143:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 144:Lib/ssc_app/src/el9800appl.c **** 
+ARM GAS  /tmp/ccNNgH0Y.s 			page 5
+
+
+ 145:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StartInputHandler(UINT16 *pIntMask)
+ 146:Lib/ssc_app/src/el9800appl.c **** {
+  92              		.loc 1 146 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+ 147:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+  97              		.loc 1 147 5 view .LVU9
+ 148:Lib/ssc_app/src/el9800appl.c **** }
+  98              		.loc 1 148 1 is_stmt 0 view .LVU10
+  99 0000 0020     		movs	r0, #0
+ 100              	.LVL2:
+ 101              		.loc 1 148 1 view .LVU11
+ 102 0002 7047     		bx	lr
+ 103              		.cfi_endproc
+ 104              	.LFE126:
+ 106              		.section	.text.APPL_StopInputHandler,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	APPL_StopInputHandler
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	APPL_StopInputHandler:
+ 114              	.LFB127:
+ 149:Lib/ssc_app/src/el9800appl.c **** 
+ 150:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 151:Lib/ssc_app/src/el9800appl.c **** /**
+ 152:Lib/ssc_app/src/el9800appl.c ****  \return     0, NOERROR_INWORK
+ 153:Lib/ssc_app/src/el9800appl.c **** 
+ 154:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from SAFEOP to PREEOP
+ 155:Lib/ssc_app/src/el9800appl.c ****              to stop the input handler. This functions informs the application
+ 156:Lib/ssc_app/src/el9800appl.c ****              about the state transition, the application cannot refuse
+ 157:Lib/ssc_app/src/el9800appl.c ****              the state transition.
+ 158:Lib/ssc_app/src/el9800appl.c **** 
+ 159:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 160:Lib/ssc_app/src/el9800appl.c **** 
+ 161:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StopInputHandler(void)
+ 162:Lib/ssc_app/src/el9800appl.c **** {
+ 115              		.loc 1 162 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+ 163:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+ 120              		.loc 1 163 5 view .LVU13
+ 164:Lib/ssc_app/src/el9800appl.c **** }
+ 121              		.loc 1 164 1 is_stmt 0 view .LVU14
+ 122 0000 0020     		movs	r0, #0
+ 123 0002 7047     		bx	lr
+ 124              		.cfi_endproc
+ 125              	.LFE127:
+ 127              		.section	.text.APPL_StartOutputHandler,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	APPL_StartOutputHandler
+ 130              		.syntax unified
+ 131              		.thumb
+ARM GAS  /tmp/ccNNgH0Y.s 			page 6
+
+
+ 132              		.thumb_func
+ 134              	APPL_StartOutputHandler:
+ 135              	.LFB128:
+ 165:Lib/ssc_app/src/el9800appl.c **** 
+ 166:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 167:Lib/ssc_app/src/el9800appl.c **** /**
+ 168:Lib/ssc_app/src/el9800appl.c ****  \return    AL Status Code (see ecatslv.h ALSTATUSCODE_....)
+ 169:Lib/ssc_app/src/el9800appl.c **** 
+ 170:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from SAFEOP to OP when
+ 171:Lib/ssc_app/src/el9800appl.c ****              all general settings were checked to start the output handler. This function
+ 172:Lib/ssc_app/src/el9800appl.c ****              informs the application about the state transition, the application can refuse
+ 173:Lib/ssc_app/src/el9800appl.c ****              the state transition when returning an AL Status error code.
+ 174:Lib/ssc_app/src/el9800appl.c ****            The return code NOERROR_INWORK can be used, if the application cannot confirm
+ 175:Lib/ssc_app/src/el9800appl.c ****            the state transition immediately, in that case the application need to be complete 
+ 176:Lib/ssc_app/src/el9800appl.c ****            the transition by calling ECAT_StateChange.
+ 177:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 178:Lib/ssc_app/src/el9800appl.c **** 
+ 179:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StartOutputHandler(void)
+ 180:Lib/ssc_app/src/el9800appl.c **** {
+ 136              		.loc 1 180 1 is_stmt 1 view -0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		@ link register save eliminated.
+ 181:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+ 141              		.loc 1 181 5 view .LVU16
+ 182:Lib/ssc_app/src/el9800appl.c **** }
+ 142              		.loc 1 182 1 is_stmt 0 view .LVU17
+ 143 0000 0020     		movs	r0, #0
+ 144 0002 7047     		bx	lr
+ 145              		.cfi_endproc
+ 146              	.LFE128:
+ 148              		.section	.text.APPL_StopOutputHandler,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	APPL_StopOutputHandler
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	APPL_StopOutputHandler:
+ 156              	.LFB129:
+ 183:Lib/ssc_app/src/el9800appl.c **** 
+ 184:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 185:Lib/ssc_app/src/el9800appl.c **** /**
+ 186:Lib/ssc_app/src/el9800appl.c ****  \return     0, NOERROR_INWORK
+ 187:Lib/ssc_app/src/el9800appl.c **** 
+ 188:Lib/ssc_app/src/el9800appl.c ****  \brief    The function is called in the state transition from OP to SAFEOP
+ 189:Lib/ssc_app/src/el9800appl.c ****              to stop the output handler. This functions informs the application
+ 190:Lib/ssc_app/src/el9800appl.c ****              about the state transition, the application cannot refuse
+ 191:Lib/ssc_app/src/el9800appl.c ****              the state transition.
+ 192:Lib/ssc_app/src/el9800appl.c **** 
+ 193:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 194:Lib/ssc_app/src/el9800appl.c **** 
+ 195:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_StopOutputHandler(void)
+ 196:Lib/ssc_app/src/el9800appl.c **** {
+ 157              		.loc 1 196 1 is_stmt 1 view -0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccNNgH0Y.s 			page 7
+
+
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 162 0000 10B4     		push	{r4}
+ 163              		.cfi_def_cfa_offset 4
+ 164              		.cfi_offset 4, -4
+ 197:Lib/ssc_app/src/el9800appl.c **** /*ECATCHANGE_START(V5.11) EL9800 1*/
+ 198:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED1 = 0;
+ 165              		.loc 1 198 5 view .LVU19
+ 166              		.loc 1 198 22 is_stmt 0 view .LVU20
+ 167 0002 254B     		ldr	r3, .L9
+ 168 0004 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 169 0006 6FF30002 		bfc	r2, #0, #1
+ 170 000a 9A70     		strb	r2, [r3, #2]
+ 199:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED2 = 0;
+ 171              		.loc 1 199 5 is_stmt 1 view .LVU21
+ 172              		.loc 1 199 22 is_stmt 0 view .LVU22
+ 173 000c D2B2     		uxtb	r2, r2
+ 174 000e 6FF34102 		bfc	r2, #1, #1
+ 175 0012 9A70     		strb	r2, [r3, #2]
+ 200:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED3 = 0;
+ 176              		.loc 1 200 5 is_stmt 1 view .LVU23
+ 177              		.loc 1 200 22 is_stmt 0 view .LVU24
+ 178 0014 D2B2     		uxtb	r2, r2
+ 179 0016 6FF38202 		bfc	r2, #2, #1
+ 180 001a 9A70     		strb	r2, [r3, #2]
+ 201:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED4 = 0;
+ 181              		.loc 1 201 5 is_stmt 1 view .LVU25
+ 182              		.loc 1 201 22 is_stmt 0 view .LVU26
+ 183 001c D2B2     		uxtb	r2, r2
+ 184 001e 6FF3C302 		bfc	r2, #3, #1
+ 185 0022 9A70     		strb	r2, [r3, #2]
+ 202:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 203:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED5 = 0;
+ 186              		.loc 1 203 5 is_stmt 1 view .LVU27
+ 187              		.loc 1 203 22 is_stmt 0 view .LVU28
+ 188 0024 D2B2     		uxtb	r2, r2
+ 189 0026 6FF30412 		bfc	r2, #4, #1
+ 190 002a 9A70     		strb	r2, [r3, #2]
+ 204:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED7 = 0;
+ 191              		.loc 1 204 5 is_stmt 1 view .LVU29
+ 192              		.loc 1 204 22 is_stmt 0 view .LVU30
+ 193 002c D2B2     		uxtb	r2, r2
+ 194 002e 6FF38612 		bfc	r2, #6, #1
+ 195 0032 9A70     		strb	r2, [r3, #2]
+ 205:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED6 = 0;
+ 196              		.loc 1 205 5 is_stmt 1 view .LVU31
+ 197              		.loc 1 205 22 is_stmt 0 view .LVU32
+ 198 0034 D2B2     		uxtb	r2, r2
+ 199 0036 6FF34512 		bfc	r2, #5, #1
+ 200 003a 9A70     		strb	r2, [r3, #2]
+ 206:Lib/ssc_app/src/el9800appl.c ****     sDOOutputs.bLED8 = 0;
+ 201              		.loc 1 206 5 is_stmt 1 view .LVU33
+ 202              		.loc 1 206 22 is_stmt 0 view .LVU34
+ 203 003c D2B2     		uxtb	r2, r2
+ 204 003e 6FF3C712 		bfc	r2, #7, #1
+ 205 0042 9A70     		strb	r2, [r3, #2]
+ 207:Lib/ssc_app/src/el9800appl.c **** #endif
+ARM GAS  /tmp/ccNNgH0Y.s 			page 8
+
+
+ 208:Lib/ssc_app/src/el9800appl.c ****     
+ 209:Lib/ssc_app/src/el9800appl.c ****     LED_1                        = sDOOutputs.bLED1;
+ 206              		.loc 1 209 5 is_stmt 1 view .LVU35
+ 207              		.loc 1 209 34 is_stmt 0 view .LVU36
+ 208 0044 154A     		ldr	r2, .L9+4
+ 209 0046 0020     		movs	r0, #0
+ 210 0048 C2F8B802 		str	r0, [r2, #696]
+ 210:Lib/ssc_app/src/el9800appl.c ****     LED_2                        = sDOOutputs.bLED2;
+ 211              		.loc 1 210 5 is_stmt 1 view .LVU37
+ 212              		.loc 1 210 46 is_stmt 0 view .LVU38
+ 213 004c 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 214 004e C1F34001 		ubfx	r1, r1, #1, #1
+ 215              		.loc 1 210 34 view .LVU39
+ 216 0052 C2F8B412 		str	r1, [r2, #692]
+ 211:Lib/ssc_app/src/el9800appl.c ****     LED_3                        = sDOOutputs.bLED3;
+ 217              		.loc 1 211 5 is_stmt 1 view .LVU40
+ 218              		.loc 1 211 46 is_stmt 0 view .LVU41
+ 219 0056 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 220 0058 C1F38001 		ubfx	r1, r1, #2, #1
+ 221              		.loc 1 211 34 view .LVU42
+ 222 005c C2F8B012 		str	r1, [r2, #688]
+ 212:Lib/ssc_app/src/el9800appl.c ****     LED_4                        = sDOOutputs.bLED4;
+ 223              		.loc 1 212 5 is_stmt 1 view .LVU43
+ 224              		.loc 1 212 46 is_stmt 0 view .LVU44
+ 225 0060 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 226 0062 C1F3C001 		ubfx	r1, r1, #3, #1
+ 227              		.loc 1 212 34 view .LVU45
+ 228 0066 C2F8AC12 		str	r1, [r2, #684]
+ 213:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 214:Lib/ssc_app/src/el9800appl.c ****     LED_5                        = sDOOutputs.bLED5;
+ 229              		.loc 1 214 5 is_stmt 1 view .LVU46
+ 230              		.loc 1 214 46 is_stmt 0 view .LVU47
+ 231 006a 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 232 006c C1F30011 		ubfx	r1, r1, #4, #1
+ 233              		.loc 1 214 34 view .LVU48
+ 234 0070 C2F88412 		str	r1, [r2, #644]
+ 215:Lib/ssc_app/src/el9800appl.c ****     LED_7                        = sDOOutputs.bLED7;
+ 235              		.loc 1 215 5 is_stmt 1 view .LVU49
+ 236              		.loc 1 215 46 is_stmt 0 view .LVU50
+ 237 0074 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 238 0076 C1F38011 		ubfx	r1, r1, #6, #1
+ 239              		.loc 1 215 34 view .LVU51
+ 240 007a 094C     		ldr	r4, .L9+8
+ 241 007c C4F89412 		str	r1, [r4, #660]
+ 216:Lib/ssc_app/src/el9800appl.c ****     LED_6                        = sDOOutputs.bLED6;
+ 242              		.loc 1 216 5 is_stmt 1 view .LVU52
+ 243              		.loc 1 216 46 is_stmt 0 view .LVU53
+ 244 0080 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 245 0082 C1F34011 		ubfx	r1, r1, #5, #1
+ 246              		.loc 1 216 34 view .LVU54
+ 247 0086 C2F88012 		str	r1, [r2, #640]
+ 217:Lib/ssc_app/src/el9800appl.c ****     LED_8                        = sDOOutputs.bLED8;
+ 248              		.loc 1 217 5 is_stmt 1 view .LVU55
+ 249              		.loc 1 217 46 is_stmt 0 view .LVU56
+ 250 008a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 251 008c DB09     		lsrs	r3, r3, #7
+ 252              		.loc 1 217 34 view .LVU57
+ARM GAS  /tmp/ccNNgH0Y.s 			page 9
+
+
+ 253 008e C4F89032 		str	r3, [r4, #656]
+ 218:Lib/ssc_app/src/el9800appl.c **** #endif
+ 219:Lib/ssc_app/src/el9800appl.c **** /*ECATCHANGE_END(V5.11) EL9800 1*/
+ 220:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+ 254              		.loc 1 220 5 is_stmt 1 view .LVU58
+ 221:Lib/ssc_app/src/el9800appl.c **** }
+ 255              		.loc 1 221 1 is_stmt 0 view .LVU59
+ 256 0092 5DF8044B 		ldr	r4, [sp], #4
+ 257              		.cfi_restore 4
+ 258              		.cfi_def_cfa_offset 0
+ 259 0096 7047     		bx	lr
+ 260              	.L10:
+ 261              		.align	2
+ 262              	.L9:
+ 263 0098 00000000 		.word	.LANCHOR0
+ 264 009c 00804042 		.word	1111523328
+ 265 00a0 00004142 		.word	1111556096
+ 266              		.cfi_endproc
+ 267              	.LFE129:
+ 269              		.section	.text.APPL_GenerateMapping,"ax",%progbits
+ 270              		.align	1
+ 271              		.global	APPL_GenerateMapping
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 276              	APPL_GenerateMapping:
+ 277              	.LVL3:
+ 278              	.LFB130:
+ 222:Lib/ssc_app/src/el9800appl.c **** 
+ 223:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 224:Lib/ssc_app/src/el9800appl.c **** /**
+ 225:Lib/ssc_app/src/el9800appl.c **** \return     0(ALSTATUSCODE_NOERROR), NOERROR_INWORK
+ 226:Lib/ssc_app/src/el9800appl.c **** \param      pInputSize  pointer to save the input process data length
+ 227:Lib/ssc_app/src/el9800appl.c **** \param      pOutputSize  pointer to save the output process data length
+ 228:Lib/ssc_app/src/el9800appl.c **** 
+ 229:Lib/ssc_app/src/el9800appl.c **** \brief    This function calculates the process data sizes from the actual SM-PDO-Assign
+ 230:Lib/ssc_app/src/el9800appl.c ****             and PDO mapping
+ 231:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 232:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+ 233:Lib/ssc_app/src/el9800appl.c **** {
+ 279              		.loc 1 233 1 is_stmt 1 view -0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 8
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283              		.loc 1 233 1 is_stmt 0 view .LVU61
+ 284 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 285              		.cfi_def_cfa_offset 36
+ 286              		.cfi_offset 4, -36
+ 287              		.cfi_offset 5, -32
+ 288              		.cfi_offset 6, -28
+ 289              		.cfi_offset 7, -24
+ 290              		.cfi_offset 8, -20
+ 291              		.cfi_offset 9, -16
+ 292              		.cfi_offset 10, -12
+ 293              		.cfi_offset 11, -8
+ 294              		.cfi_offset 14, -4
+ 295 0004 83B0     		sub	sp, sp, #12
+ARM GAS  /tmp/ccNNgH0Y.s 			page 10
+
+
+ 296              		.cfi_def_cfa_offset 48
+ 297 0006 0090     		str	r0, [sp]
+ 298 0008 0191     		str	r1, [sp, #4]
+ 234:Lib/ssc_app/src/el9800appl.c **** #if COE_SUPPORTED
+ 235:Lib/ssc_app/src/el9800appl.c ****     UINT16 result = ALSTATUSCODE_NOERROR;
+ 299              		.loc 1 235 5 is_stmt 1 view .LVU62
+ 300              	.LVL4:
+ 236:Lib/ssc_app/src/el9800appl.c ****     UINT16 PDOAssignEntryCnt = 0;
+ 301              		.loc 1 236 5 view .LVU63
+ 237:Lib/ssc_app/src/el9800appl.c ****     OBJCONST TOBJECT OBJMEM * pPDO = NULL;
+ 302              		.loc 1 237 5 view .LVU64
+ 238:Lib/ssc_app/src/el9800appl.c ****     UINT16 PDOSubindex0 = 0;
+ 303              		.loc 1 238 5 view .LVU65
+ 239:Lib/ssc_app/src/el9800appl.c ****     UINT32 *pPDOEntry = NULL;
+ 304              		.loc 1 239 5 view .LVU66
+ 240:Lib/ssc_app/src/el9800appl.c ****     UINT16 PDOEntryCnt = 0;
+ 305              		.loc 1 240 5 view .LVU67
+ 241:Lib/ssc_app/src/el9800appl.c ****     UINT16 InputSize = 0;
+ 306              		.loc 1 241 5 view .LVU68
+ 242:Lib/ssc_app/src/el9800appl.c ****     UINT16 OutputSize = 0;
+ 307              		.loc 1 242 5 view .LVU69
+ 243:Lib/ssc_app/src/el9800appl.c **** 
+ 244:Lib/ssc_app/src/el9800appl.c ****     /*Scan object 0x1C12 RXPDO assign*/
+ 245:Lib/ssc_app/src/el9800appl.c ****     for(PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sRxPDOassign.u16SubIndex0; PDOAssignEntryCnt++)
+ 308              		.loc 1 245 5 view .LVU70
+ 242:Lib/ssc_app/src/el9800appl.c ****     UINT16 OutputSize = 0;
+ 309              		.loc 1 242 12 is_stmt 0 view .LVU71
+ 310 000a 0026     		movs	r6, #0
+ 311              		.loc 1 245 27 view .LVU72
+ 312 000c B046     		mov	r8, r6
+ 313              		.loc 1 245 5 view .LVU73
+ 314 000e 14E0     		b	.L12
+ 315              	.LVL5:
+ 316              	.L15:
+ 246:Lib/ssc_app/src/el9800appl.c ****     {
+ 247:Lib/ssc_app/src/el9800appl.c ****         pPDO = OBJ_GetObjectHandle(sRxPDOassign.aEntries[PDOAssignEntryCnt]);
+ 248:Lib/ssc_app/src/el9800appl.c ****         if(pPDO != NULL)
+ 249:Lib/ssc_app/src/el9800appl.c ****         {
+ 250:Lib/ssc_app/src/el9800appl.c ****             PDOSubindex0 = *((UINT16 *)pPDO->pVarPtr);
+ 251:Lib/ssc_app/src/el9800appl.c ****             for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 252:Lib/ssc_app/src/el9800appl.c ****             {
+ 253:Lib/ssc_app/src/el9800appl.c **** 			//				result = *(UINT8 *)pPDO->pVarPtr;
+ 254:Lib/ssc_app/src/el9800appl.c **** 			//				result=(OBJ_GetEntryOffset((PDOEntryCnt+1),pPDO)>>3);
+ 255:Lib/ssc_app/src/el9800appl.c ****                 pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCnt+1)
+ 317              		.loc 1 255 17 is_stmt 1 discriminator 3 view .LVU74
+ 318              		.loc 1 255 53 is_stmt 0 discriminator 3 view .LVU75
+ 319 0010 D5F81890 		ldr	r9, [r5, #24]
+ 320              		.loc 1 255 66 discriminator 3 view .LVU76
+ 321 0014 601C     		adds	r0, r4, #1
+ 322 0016 2946     		mov	r1, r5
+ 323 0018 C0B2     		uxtb	r0, r0
+ 324 001a FFF7FEFF 		bl	OBJ_GetEntryOffset
+ 325              	.LVL6:
+ 326              		.loc 1 255 106 discriminator 3 view .LVU77
+ 327 001e C0F3CF00 		ubfx	r0, r0, #3, #16
+ 328              	.LVL7:
+ 256:Lib/ssc_app/src/el9800appl.c ****                 // we increment the expected output size depending on the mapped Entry
+ARM GAS  /tmp/ccNNgH0Y.s 			page 11
+
+
+ 257:Lib/ssc_app/src/el9800appl.c ****                 OutputSize += (UINT16) ((*pPDOEntry) & 0xFF);
+ 329              		.loc 1 257 17 is_stmt 1 discriminator 3 view .LVU78
+ 330              		.loc 1 257 31 is_stmt 0 discriminator 3 view .LVU79
+ 331 0022 19F80030 		ldrb	r3, [r9, r0]	@ zero_extendqisi2
+ 332              		.loc 1 257 28 discriminator 3 view .LVU80
+ 333 0026 3344     		add	r3, r3, r6
+ 334 0028 9EB2     		uxth	r6, r3
+ 335              	.LVL8:
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 336              		.loc 1 251 62 is_stmt 1 discriminator 3 view .LVU81
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 337              		.loc 1 251 73 is_stmt 0 discriminator 3 view .LVU82
+ 338 002a 0134     		adds	r4, r4, #1
+ 339              	.LVL9:
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 340              		.loc 1 251 73 discriminator 3 view .LVU83
+ 341 002c A4B2     		uxth	r4, r4
+ 342              	.LVL10:
+ 343              	.L14:
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 344              		.loc 1 251 34 is_stmt 1 discriminator 1 view .LVU84
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 345              		.loc 1 251 13 is_stmt 0 discriminator 1 view .LVU85
+ 346 002e BC42     		cmp	r4, r7
+ 347 0030 EED3     		bcc	.L15
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 348              		.loc 1 245 79 is_stmt 1 discriminator 2 view .LVU86
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 349              		.loc 1 245 96 is_stmt 0 discriminator 2 view .LVU87
+ 350 0032 08F10108 		add	r8, r8, #1
+ 351              	.LVL11:
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 352              		.loc 1 245 96 discriminator 2 view .LVU88
+ 353 0036 1FFA88F8 		uxth	r8, r8
+ 354              	.LVL12:
+ 355              	.L12:
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 356              		.loc 1 245 32 is_stmt 1 discriminator 1 view .LVU89
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 357              		.loc 1 245 64 is_stmt 0 discriminator 1 view .LVU90
+ 358 003a 2A4B     		ldr	r3, .L27
+ 359 003c 1B88     		ldrh	r3, [r3]
+ 245:Lib/ssc_app/src/el9800appl.c ****     {
+ 360              		.loc 1 245 5 discriminator 1 view .LVU91
+ 361 003e 4345     		cmp	r3, r8
+ 362 0040 0BD9     		bls	.L26
+ 247:Lib/ssc_app/src/el9800appl.c ****         if(pPDO != NULL)
+ 363              		.loc 1 247 9 is_stmt 1 view .LVU92
+ 247:Lib/ssc_app/src/el9800appl.c ****         if(pPDO != NULL)
+ 364              		.loc 1 247 16 is_stmt 0 view .LVU93
+ 365 0042 284B     		ldr	r3, .L27
+ 366 0044 03EB4803 		add	r3, r3, r8, lsl #1
+ 367 0048 5888     		ldrh	r0, [r3, #2]
+ 368 004a FFF7FEFF 		bl	OBJ_GetObjectHandle
+ 369              	.LVL13:
+ 248:Lib/ssc_app/src/el9800appl.c ****         {
+ 370              		.loc 1 248 9 is_stmt 1 view .LVU94
+ARM GAS  /tmp/ccNNgH0Y.s 			page 12
+
+
+ 248:Lib/ssc_app/src/el9800appl.c ****         {
+ 371              		.loc 1 248 11 is_stmt 0 view .LVU95
+ 372 004e 0546     		mov	r5, r0
+ 373 0050 C0B1     		cbz	r0, .L22
+ 250:Lib/ssc_app/src/el9800appl.c ****             for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 374              		.loc 1 250 13 is_stmt 1 view .LVU96
+ 250:Lib/ssc_app/src/el9800appl.c ****             for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 375              		.loc 1 250 44 is_stmt 0 view .LVU97
+ 376 0052 8369     		ldr	r3, [r0, #24]
+ 250:Lib/ssc_app/src/el9800appl.c ****             for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 377              		.loc 1 250 26 view .LVU98
+ 378 0054 1F88     		ldrh	r7, [r3]
+ 379              	.LVL14:
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 380              		.loc 1 251 13 is_stmt 1 view .LVU99
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 381              		.loc 1 251 29 is_stmt 0 view .LVU100
+ 382 0056 0024     		movs	r4, #0
+ 251:Lib/ssc_app/src/el9800appl.c ****             {
+ 383              		.loc 1 251 13 view .LVU101
+ 384 0058 E9E7     		b	.L14
+ 385              	.LVL15:
+ 386              	.L26:
+ 235:Lib/ssc_app/src/el9800appl.c ****     UINT16 PDOAssignEntryCnt = 0;
+ 387              		.loc 1 235 12 view .LVU102
+ 388 005a 4FF0000B 		mov	fp, #0
+ 389              	.LVL16:
+ 390              	.L13:
+ 258:Lib/ssc_app/src/el9800appl.c ****             }
+ 259:Lib/ssc_app/src/el9800appl.c ****         }
+ 260:Lib/ssc_app/src/el9800appl.c ****         else
+ 261:Lib/ssc_app/src/el9800appl.c ****         {
+ 262:Lib/ssc_app/src/el9800appl.c ****             /*assigned PDO was not found in object dictionary. return invalid mapping*/
+ 263:Lib/ssc_app/src/el9800appl.c ****             OutputSize = 0;
+ 264:Lib/ssc_app/src/el9800appl.c ****             result = ALSTATUSCODE_INVALIDOUTPUTMAPPING;
+ 265:Lib/ssc_app/src/el9800appl.c ****             break;
+ 266:Lib/ssc_app/src/el9800appl.c ****         }
+ 267:Lib/ssc_app/src/el9800appl.c ****     }
+ 268:Lib/ssc_app/src/el9800appl.c **** 
+ 269:Lib/ssc_app/src/el9800appl.c ****     OutputSize = (OutputSize + 7) >> 3;
+ 391              		.loc 1 269 5 is_stmt 1 view .LVU103
+ 392              		.loc 1 269 30 is_stmt 0 view .LVU104
+ 393 005e F31D     		adds	r3, r6, #7
+ 394              		.loc 1 269 16 view .LVU105
+ 395 0060 C3F3CF08 		ubfx	r8, r3, #3, #16
+ 396              	.LVL17:
+ 270:Lib/ssc_app/src/el9800appl.c **** 
+ 271:Lib/ssc_app/src/el9800appl.c ****     if(result == 0)
+ 397              		.loc 1 271 5 is_stmt 1 view .LVU106
+ 398              		.loc 1 271 7 is_stmt 0 view .LVU107
+ 399 0064 BBF1000F 		cmp	fp, #0
+ 400 0068 34D0     		beq	.L23
+ 241:Lib/ssc_app/src/el9800appl.c ****     UINT16 OutputSize = 0;
+ 401              		.loc 1 241 12 view .LVU108
+ 402 006a 0027     		movs	r7, #0
+ 403              	.LVL18:
+ 404              	.L18:
+ARM GAS  /tmp/ccNNgH0Y.s 			page 13
+
+
+ 272:Lib/ssc_app/src/el9800appl.c ****     {
+ 273:Lib/ssc_app/src/el9800appl.c ****         /*Scan Object 0x1C13 TXPDO assign*/
+ 274:Lib/ssc_app/src/el9800appl.c ****         for(PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sTxPDOassign.u16SubIndex0; PDOAssignEntryCnt
+ 275:Lib/ssc_app/src/el9800appl.c ****         {
+ 276:Lib/ssc_app/src/el9800appl.c ****             pPDO = OBJ_GetObjectHandle(sTxPDOassign.aEntries[PDOAssignEntryCnt]);
+ 277:Lib/ssc_app/src/el9800appl.c ****             if(pPDO != NULL)
+ 278:Lib/ssc_app/src/el9800appl.c ****             {
+ 279:Lib/ssc_app/src/el9800appl.c ****                 PDOSubindex0 = *((UINT16 *)pPDO->pVarPtr);
+ 280:Lib/ssc_app/src/el9800appl.c ****                 for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 281:Lib/ssc_app/src/el9800appl.c ****                 {
+ 282:Lib/ssc_app/src/el9800appl.c ****                     pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCn
+ 283:Lib/ssc_app/src/el9800appl.c ****                     // we increment the expected output size depending on the mapped Entry
+ 284:Lib/ssc_app/src/el9800appl.c ****                     InputSize += (UINT16) ((*pPDOEntry) & 0xFF);
+ 285:Lib/ssc_app/src/el9800appl.c ****                 }
+ 286:Lib/ssc_app/src/el9800appl.c ****             }
+ 287:Lib/ssc_app/src/el9800appl.c ****             else
+ 288:Lib/ssc_app/src/el9800appl.c ****             {
+ 289:Lib/ssc_app/src/el9800appl.c ****                 /*assigned PDO was not found in object dictionary. return invalid mapping*/
+ 290:Lib/ssc_app/src/el9800appl.c ****                 InputSize = 0;
+ 291:Lib/ssc_app/src/el9800appl.c ****                 result = ALSTATUSCODE_INVALIDINPUTMAPPING;
+ 292:Lib/ssc_app/src/el9800appl.c ****                 break;
+ 293:Lib/ssc_app/src/el9800appl.c ****             }
+ 294:Lib/ssc_app/src/el9800appl.c ****         }
+ 295:Lib/ssc_app/src/el9800appl.c ****     }
+ 296:Lib/ssc_app/src/el9800appl.c ****     InputSize = (InputSize + 7) >> 3;
+ 405              		.loc 1 296 5 is_stmt 1 view .LVU109
+ 406              		.loc 1 296 28 is_stmt 0 view .LVU110
+ 407 006c FB1D     		adds	r3, r7, #7
+ 408              		.loc 1 296 15 view .LVU111
+ 409 006e C3F3CF03 		ubfx	r3, r3, #3, #16
+ 410              	.LVL19:
+ 297:Lib/ssc_app/src/el9800appl.c **** 
+ 298:Lib/ssc_app/src/el9800appl.c ****     *pInputSize = InputSize;
+ 411              		.loc 1 298 5 is_stmt 1 view .LVU112
+ 412              		.loc 1 298 17 is_stmt 0 view .LVU113
+ 413 0072 009A     		ldr	r2, [sp]
+ 414 0074 1380     		strh	r3, [r2]	@ movhi
+ 299:Lib/ssc_app/src/el9800appl.c ****     *pOutputSize = OutputSize;
+ 415              		.loc 1 299 5 is_stmt 1 view .LVU114
+ 416              		.loc 1 299 18 is_stmt 0 view .LVU115
+ 417 0076 019B     		ldr	r3, [sp, #4]
+ 418              	.LVL20:
+ 419              		.loc 1 299 18 view .LVU116
+ 420 0078 A3F80080 		strh	r8, [r3]	@ movhi
+ 421              	.LVL21:
+ 300:Lib/ssc_app/src/el9800appl.c ****     return result;
+ 422              		.loc 1 300 5 is_stmt 1 view .LVU117
+ 301:Lib/ssc_app/src/el9800appl.c **** #else
+ 302:Lib/ssc_app/src/el9800appl.c ****     *pInputSize = 6;
+ 303:Lib/ssc_app/src/el9800appl.c ****     *pOutputSize = 2;
+ 304:Lib/ssc_app/src/el9800appl.c ****     return ALSTATUSCODE_NOERROR;
+ 305:Lib/ssc_app/src/el9800appl.c **** #endif
+ 306:Lib/ssc_app/src/el9800appl.c **** 
+ 307:Lib/ssc_app/src/el9800appl.c **** }
+ 423              		.loc 1 307 1 is_stmt 0 view .LVU118
+ 424 007c 5846     		mov	r0, fp
+ 425 007e 03B0     		add	sp, sp, #12
+ARM GAS  /tmp/ccNNgH0Y.s 			page 14
+
+
+ 426              		.cfi_remember_state
+ 427              		.cfi_def_cfa_offset 36
+ 428              	.LVL22:
+ 429              		.loc 1 307 1 view .LVU119
+ 430              		@ sp needed
+ 431 0080 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 432              	.LVL23:
+ 433              	.L22:
+ 434              		.cfi_restore_state
+ 263:Lib/ssc_app/src/el9800appl.c ****             result = ALSTATUSCODE_INVALIDOUTPUTMAPPING;
+ 435              		.loc 1 263 24 view .LVU120
+ 436 0084 0026     		movs	r6, #0
+ 437              	.LVL24:
+ 264:Lib/ssc_app/src/el9800appl.c ****             break;
+ 438              		.loc 1 264 20 view .LVU121
+ 439 0086 4FF0250B 		mov	fp, #37
+ 440 008a E8E7     		b	.L13
+ 441              	.LVL25:
+ 442              	.L20:
+ 282:Lib/ssc_app/src/el9800appl.c ****                     // we increment the expected output size depending on the mapped Entry
+ 443              		.loc 1 282 21 is_stmt 1 discriminator 3 view .LVU122
+ 282:Lib/ssc_app/src/el9800appl.c ****                     // we increment the expected output size depending on the mapped Entry
+ 444              		.loc 1 282 57 is_stmt 0 discriminator 3 view .LVU123
+ 445 008c B569     		ldr	r5, [r6, #24]
+ 282:Lib/ssc_app/src/el9800appl.c ****                     // we increment the expected output size depending on the mapped Entry
+ 446              		.loc 1 282 70 discriminator 3 view .LVU124
+ 447 008e 601C     		adds	r0, r4, #1
+ 448 0090 3146     		mov	r1, r6
+ 449 0092 C0B2     		uxtb	r0, r0
+ 450 0094 FFF7FEFF 		bl	OBJ_GetEntryOffset
+ 451              	.LVL26:
+ 282:Lib/ssc_app/src/el9800appl.c ****                     // we increment the expected output size depending on the mapped Entry
+ 452              		.loc 1 282 110 discriminator 3 view .LVU125
+ 453 0098 C0F3CF00 		ubfx	r0, r0, #3, #16
+ 454              	.LVL27:
+ 284:Lib/ssc_app/src/el9800appl.c ****                 }
+ 455              		.loc 1 284 21 is_stmt 1 discriminator 3 view .LVU126
+ 284:Lib/ssc_app/src/el9800appl.c ****                 }
+ 456              		.loc 1 284 34 is_stmt 0 discriminator 3 view .LVU127
+ 457 009c 2B5C     		ldrb	r3, [r5, r0]	@ zero_extendqisi2
+ 284:Lib/ssc_app/src/el9800appl.c ****                 }
+ 458              		.loc 1 284 31 discriminator 3 view .LVU128
+ 459 009e 1F44     		add	r7, r7, r3
+ 460              	.LVL28:
+ 284:Lib/ssc_app/src/el9800appl.c ****                 }
+ 461              		.loc 1 284 31 discriminator 3 view .LVU129
+ 462 00a0 BFB2     		uxth	r7, r7
+ 463              	.LVL29:
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 464              		.loc 1 280 66 is_stmt 1 discriminator 3 view .LVU130
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 465              		.loc 1 280 77 is_stmt 0 discriminator 3 view .LVU131
+ 466 00a2 0134     		adds	r4, r4, #1
+ 467              	.LVL30:
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 468              		.loc 1 280 77 discriminator 3 view .LVU132
+ 469 00a4 A4B2     		uxth	r4, r4
+ARM GAS  /tmp/ccNNgH0Y.s 			page 15
+
+
+ 470              	.LVL31:
+ 471              	.L19:
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 472              		.loc 1 280 38 is_stmt 1 discriminator 1 view .LVU133
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 473              		.loc 1 280 17 is_stmt 0 discriminator 1 view .LVU134
+ 474 00a6 4C45     		cmp	r4, r9
+ 475 00a8 F0D3     		bcc	.L20
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 476              		.loc 1 274 83 is_stmt 1 discriminator 2 view .LVU135
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 477              		.loc 1 274 100 is_stmt 0 discriminator 2 view .LVU136
+ 478 00aa 0AF1010A 		add	r10, r10, #1
+ 479              	.LVL32:
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 480              		.loc 1 274 100 discriminator 2 view .LVU137
+ 481 00ae 1FFA8AFA 		uxth	r10, r10
+ 482              	.LVL33:
+ 483              	.L17:
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 484              		.loc 1 274 36 is_stmt 1 discriminator 1 view .LVU138
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 485              		.loc 1 274 68 is_stmt 0 discriminator 1 view .LVU139
+ 486 00b2 0D4B     		ldr	r3, .L27+4
+ 487 00b4 1B88     		ldrh	r3, [r3]
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 488              		.loc 1 274 9 discriminator 1 view .LVU140
+ 489 00b6 5345     		cmp	r3, r10
+ 490 00b8 D8D9     		bls	.L18
+ 276:Lib/ssc_app/src/el9800appl.c ****             if(pPDO != NULL)
+ 491              		.loc 1 276 13 is_stmt 1 view .LVU141
+ 276:Lib/ssc_app/src/el9800appl.c ****             if(pPDO != NULL)
+ 492              		.loc 1 276 20 is_stmt 0 view .LVU142
+ 493 00ba 0B4B     		ldr	r3, .L27+4
+ 494 00bc 03EB4A03 		add	r3, r3, r10, lsl #1
+ 495 00c0 5888     		ldrh	r0, [r3, #2]
+ 496 00c2 FFF7FEFF 		bl	OBJ_GetObjectHandle
+ 497              	.LVL34:
+ 277:Lib/ssc_app/src/el9800appl.c ****             {
+ 498              		.loc 1 277 13 is_stmt 1 view .LVU143
+ 277:Lib/ssc_app/src/el9800appl.c ****             {
+ 499              		.loc 1 277 15 is_stmt 0 view .LVU144
+ 500 00c6 0646     		mov	r6, r0
+ 501 00c8 38B1     		cbz	r0, .L24
+ 279:Lib/ssc_app/src/el9800appl.c ****                 for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 502              		.loc 1 279 17 is_stmt 1 view .LVU145
+ 279:Lib/ssc_app/src/el9800appl.c ****                 for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 503              		.loc 1 279 48 is_stmt 0 view .LVU146
+ 504 00ca 8369     		ldr	r3, [r0, #24]
+ 279:Lib/ssc_app/src/el9800appl.c ****                 for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+ 505              		.loc 1 279 30 view .LVU147
+ 506 00cc B3F80090 		ldrh	r9, [r3]
+ 507              	.LVL35:
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 508              		.loc 1 280 17 is_stmt 1 view .LVU148
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 509              		.loc 1 280 33 is_stmt 0 view .LVU149
+ARM GAS  /tmp/ccNNgH0Y.s 			page 16
+
+
+ 510 00d0 5C46     		mov	r4, fp
+ 280:Lib/ssc_app/src/el9800appl.c ****                 {
+ 511              		.loc 1 280 17 view .LVU150
+ 512 00d2 E8E7     		b	.L19
+ 513              	.LVL36:
+ 514              	.L23:
+ 241:Lib/ssc_app/src/el9800appl.c ****     UINT16 OutputSize = 0;
+ 515              		.loc 1 241 12 view .LVU151
+ 516 00d4 5F46     		mov	r7, fp
+ 274:Lib/ssc_app/src/el9800appl.c ****         {
+ 517              		.loc 1 274 31 view .LVU152
+ 518 00d6 DA46     		mov	r10, fp
+ 519 00d8 EBE7     		b	.L17
+ 520              	.LVL37:
+ 521              	.L24:
+ 290:Lib/ssc_app/src/el9800appl.c ****                 result = ALSTATUSCODE_INVALIDINPUTMAPPING;
+ 522              		.loc 1 290 27 view .LVU153
+ 523 00da 5F46     		mov	r7, fp
+ 524              	.LVL38:
+ 291:Lib/ssc_app/src/el9800appl.c ****                 break;
+ 525              		.loc 1 291 24 view .LVU154
+ 526 00dc 4FF0240B 		mov	fp, #36
+ 527              	.LVL39:
+ 291:Lib/ssc_app/src/el9800appl.c ****                 break;
+ 528              		.loc 1 291 24 view .LVU155
+ 529 00e0 C4E7     		b	.L18
+ 530              	.L28:
+ 531 00e2 00BF     		.align	2
+ 532              	.L27:
+ 533 00e4 00000000 		.word	.LANCHOR1
+ 534 00e8 00000000 		.word	.LANCHOR2
+ 535              		.cfi_endproc
+ 536              	.LFE130:
+ 538              		.section	.text.APPL_InputMapping,"ax",%progbits
+ 539              		.align	1
+ 540              		.global	APPL_InputMapping
+ 541              		.syntax unified
+ 542              		.thumb
+ 543              		.thumb_func
+ 545              	APPL_InputMapping:
+ 546              	.LVL40:
+ 547              	.LFB131:
+ 308:Lib/ssc_app/src/el9800appl.c **** 
+ 309:Lib/ssc_app/src/el9800appl.c **** 
+ 310:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 311:Lib/ssc_app/src/el9800appl.c **** /**
+ 312:Lib/ssc_app/src/el9800appl.c **** \param      pData  pointer to input process data
+ 313:Lib/ssc_app/src/el9800appl.c **** \brief      This function will copies the inputs from the local memory to the ESC memory
+ 314:Lib/ssc_app/src/el9800appl.c ****             to the hardware
+ 315:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 316:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO4 && AL_EVENT_ENABLED
+ 317:Lib/ssc_app/src/el9800appl.c **** /* the pragma interrupt_level is used to tell the compiler that these functions will not
+ 318:Lib/ssc_app/src/el9800appl.c ****    be called at the same time from the main function and the interrupt routine */
+ 319:Lib/ssc_app/src/el9800appl.c **** #pragma interrupt_level 1
+ 320:Lib/ssc_app/src/el9800appl.c **** #endif
+ 321:Lib/ssc_app/src/el9800appl.c **** void APPL_InputMapping(UINT16* pData)
+ 322:Lib/ssc_app/src/el9800appl.c **** {
+ARM GAS  /tmp/ccNNgH0Y.s 			page 17
+
+
+ 548              		.loc 1 322 1 is_stmt 1 view -0
+ 549              		.cfi_startproc
+ 550              		@ args = 0, pretend = 0, frame = 0
+ 551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 552              		@ link register save eliminated.
+ 323:Lib/ssc_app/src/el9800appl.c ****     UINT16 j = 0;
+ 553              		.loc 1 323 5 view .LVU157
+ 324:Lib/ssc_app/src/el9800appl.c ****     UINT16 *pTmpData = (UINT16 *)pData;
+ 554              		.loc 1 324 5 view .LVU158
+ 325:Lib/ssc_app/src/el9800appl.c **** 
+ 326:Lib/ssc_app/src/el9800appl.c ****     /* we go through all entries of the TxPDO Assign object to get the assigned TxPDOs */
+ 327:Lib/ssc_app/src/el9800appl.c ****    for (j = 0; j < sTxPDOassign.u16SubIndex0; j++)
+ 555              		.loc 1 327 4 view .LVU159
+ 556              		.loc 1 327 11 is_stmt 0 view .LVU160
+ 557 0000 0023     		movs	r3, #0
+ 558              		.loc 1 327 4 view .LVU161
+ 559 0002 05E0     		b	.L30
+ 560              	.LVL41:
+ 561              	.L31:
+ 328:Lib/ssc_app/src/el9800appl.c ****    {
+ 329:Lib/ssc_app/src/el9800appl.c ****       switch (sTxPDOassign.aEntries[j])
+ 330:Lib/ssc_app/src/el9800appl.c ****       {
+ 331:Lib/ssc_app/src/el9800appl.c ****       /* TxPDO 1 */
+ 332:Lib/ssc_app/src/el9800appl.c ****       case 0x1A00:
+ 333:Lib/ssc_app/src/el9800appl.c ****          *pTmpData++ = SWAPWORD(((UINT16 *) &sDIInputs)[1]);
+ 562              		.loc 1 333 10 is_stmt 1 view .LVU162
+ 563              		.loc 1 333 22 is_stmt 0 view .LVU163
+ 564 0004 0F4A     		ldr	r2, .L36
+ 565 0006 5288     		ldrh	r2, [r2, #2]
+ 566 0008 20F8022B 		strh	r2, [r0], #2	@ movhi
+ 567              	.LVL42:
+ 334:Lib/ssc_app/src/el9800appl.c ****          break;
+ 568              		.loc 1 334 10 is_stmt 1 view .LVU164
+ 569              	.L33:
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 570              		.loc 1 327 47 discriminator 2 view .LVU165
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 571              		.loc 1 327 48 is_stmt 0 discriminator 2 view .LVU166
+ 572 000c 0133     		adds	r3, r3, #1
+ 573              	.LVL43:
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 574              		.loc 1 327 48 discriminator 2 view .LVU167
+ 575 000e 9BB2     		uxth	r3, r3
+ 576              	.LVL44:
+ 577              	.L30:
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 578              		.loc 1 327 16 is_stmt 1 discriminator 1 view .LVU168
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 579              		.loc 1 327 32 is_stmt 0 discriminator 1 view .LVU169
+ 580 0010 0D4A     		ldr	r2, .L36+4
+ 581 0012 1288     		ldrh	r2, [r2]
+ 327:Lib/ssc_app/src/el9800appl.c ****    {
+ 582              		.loc 1 327 4 discriminator 1 view .LVU170
+ 583 0014 9A42     		cmp	r2, r3
+ 584 0016 14D9     		bls	.L35
+ 329:Lib/ssc_app/src/el9800appl.c ****       {
+ 585              		.loc 1 329 7 is_stmt 1 view .LVU171
+ARM GAS  /tmp/ccNNgH0Y.s 			page 18
+
+
+ 329:Lib/ssc_app/src/el9800appl.c ****       {
+ 586              		.loc 1 329 36 is_stmt 0 view .LVU172
+ 587 0018 0B4A     		ldr	r2, .L36+4
+ 588 001a 02EB4302 		add	r2, r2, r3, lsl #1
+ 589 001e 5288     		ldrh	r2, [r2, #2]
+ 329:Lib/ssc_app/src/el9800appl.c ****       {
+ 590              		.loc 1 329 7 view .LVU173
+ 591 0020 B2F5D05F 		cmp	r2, #6656
+ 592 0024 EED0     		beq	.L31
+ 593 0026 41F60221 		movw	r1, #6658
+ 594 002a 8A42     		cmp	r2, r1
+ 595 002c EED1     		bne	.L33
+ 335:Lib/ssc_app/src/el9800appl.c ****       /* TxPDO 3 */
+ 336:Lib/ssc_app/src/el9800appl.c ****       case 0x1A02:
+ 337:Lib/ssc_app/src/el9800appl.c ****          *pTmpData++ = SWAPWORD(((UINT16 *) &sAIInputs)[1]);
+ 596              		.loc 1 337 10 is_stmt 1 view .LVU174
+ 597              	.LVL45:
+ 598              		.loc 1 337 22 is_stmt 0 view .LVU175
+ 599 002e 0749     		ldr	r1, .L36+8
+ 600 0030 B1F802C0 		ldrh	ip, [r1, #2]
+ 601 0034 0246     		mov	r2, r0
+ 602 0036 22F804CB 		strh	ip, [r2], #4	@ movhi
+ 338:Lib/ssc_app/src/el9800appl.c ****          *pTmpData++ = SWAPWORD(((UINT16 *) &sAIInputs)[2]);
+ 603              		.loc 1 338 10 is_stmt 1 view .LVU176
+ 604              	.LVL46:
+ 605              		.loc 1 338 22 is_stmt 0 view .LVU177
+ 606 003a 8988     		ldrh	r1, [r1, #4]
+ 607 003c 4180     		strh	r1, [r0, #2]	@ movhi
+ 339:Lib/ssc_app/src/el9800appl.c ****          break;
+ 608              		.loc 1 339 10 is_stmt 1 view .LVU178
+ 338:Lib/ssc_app/src/el9800appl.c ****          *pTmpData++ = SWAPWORD(((UINT16 *) &sAIInputs)[2]);
+ 609              		.loc 1 338 19 is_stmt 0 view .LVU179
+ 610 003e 1046     		mov	r0, r2
+ 611              		.loc 1 339 10 view .LVU180
+ 612 0040 E4E7     		b	.L33
+ 613              	.LVL47:
+ 614              	.L35:
+ 340:Lib/ssc_app/src/el9800appl.c ****       }
+ 341:Lib/ssc_app/src/el9800appl.c ****    }
+ 342:Lib/ssc_app/src/el9800appl.c **** }
+ 615              		.loc 1 342 1 view .LVU181
+ 616 0042 7047     		bx	lr
+ 617              	.L37:
+ 618              		.align	2
+ 619              	.L36:
+ 620 0044 00000000 		.word	.LANCHOR3
+ 621 0048 00000000 		.word	.LANCHOR2
+ 622 004c 00000000 		.word	.LANCHOR4
+ 623              		.cfi_endproc
+ 624              	.LFE131:
+ 626              		.section	.text.APPL_OutputMapping,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	APPL_OutputMapping
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	APPL_OutputMapping:
+ARM GAS  /tmp/ccNNgH0Y.s 			page 19
+
+
+ 634              	.LVL48:
+ 635              	.LFB132:
+ 343:Lib/ssc_app/src/el9800appl.c **** 
+ 344:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 345:Lib/ssc_app/src/el9800appl.c **** /**
+ 346:Lib/ssc_app/src/el9800appl.c **** \param      pData  pointer to output process data
+ 347:Lib/ssc_app/src/el9800appl.c **** 
+ 348:Lib/ssc_app/src/el9800appl.c **** \brief    This function will copies the outputs from the ESC memory to the local memory
+ 349:Lib/ssc_app/src/el9800appl.c ****             to the hardware
+ 350:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 351:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO4  && AL_EVENT_ENABLED
+ 352:Lib/ssc_app/src/el9800appl.c **** /* the pragma interrupt_level is used to tell the compiler that these functions will not
+ 353:Lib/ssc_app/src/el9800appl.c ****    be called at the same time from the main function and the interrupt routine */
+ 354:Lib/ssc_app/src/el9800appl.c **** #pragma interrupt_level 1
+ 355:Lib/ssc_app/src/el9800appl.c **** #endif
+ 356:Lib/ssc_app/src/el9800appl.c **** void APPL_OutputMapping(UINT16* pData)
+ 357:Lib/ssc_app/src/el9800appl.c **** {
+ 636              		.loc 1 357 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640              		@ link register save eliminated.
+ 358:Lib/ssc_app/src/el9800appl.c ****     UINT16 j = 0;
+ 641              		.loc 1 358 5 view .LVU183
+ 359:Lib/ssc_app/src/el9800appl.c ****     UINT16 *pTmpData = (UINT16 *)pData;
+ 642              		.loc 1 359 5 view .LVU184
+ 360:Lib/ssc_app/src/el9800appl.c **** 
+ 361:Lib/ssc_app/src/el9800appl.c ****     /* we go through all entries of the RxPDO Assign object to get the assigned RxPDOs */
+ 362:Lib/ssc_app/src/el9800appl.c ****     for (j = 0; j < sRxPDOassign.u16SubIndex0; j++)
+ 643              		.loc 1 362 5 view .LVU185
+ 644              		.loc 1 362 12 is_stmt 0 view .LVU186
+ 645 0000 0023     		movs	r3, #0
+ 646              		.loc 1 362 5 view .LVU187
+ 647 0002 01E0     		b	.L39
+ 648              	.LVL49:
+ 649              	.L40:
+ 650              		.loc 1 362 48 is_stmt 1 discriminator 2 view .LVU188
+ 651              		.loc 1 362 49 is_stmt 0 discriminator 2 view .LVU189
+ 652 0004 0133     		adds	r3, r3, #1
+ 653              	.LVL50:
+ 654              		.loc 1 362 49 discriminator 2 view .LVU190
+ 655 0006 9BB2     		uxth	r3, r3
+ 656              	.LVL51:
+ 657              	.L39:
+ 658              		.loc 1 362 17 is_stmt 1 discriminator 1 view .LVU191
+ 659              		.loc 1 362 33 is_stmt 0 discriminator 1 view .LVU192
+ 660 0008 084A     		ldr	r2, .L43
+ 661 000a 1288     		ldrh	r2, [r2]
+ 662              		.loc 1 362 5 discriminator 1 view .LVU193
+ 663 000c 9A42     		cmp	r2, r3
+ 664 000e 0CD9     		bls	.L42
+ 363:Lib/ssc_app/src/el9800appl.c ****     {
+ 364:Lib/ssc_app/src/el9800appl.c ****         switch (sRxPDOassign.aEntries[j])
+ 665              		.loc 1 364 9 is_stmt 1 view .LVU194
+ 666              		.loc 1 364 38 is_stmt 0 view .LVU195
+ 667 0010 064A     		ldr	r2, .L43
+ 668 0012 02EB4302 		add	r2, r2, r3, lsl #1
+ARM GAS  /tmp/ccNNgH0Y.s 			page 20
+
+
+ 669 0016 5188     		ldrh	r1, [r2, #2]
+ 670              		.loc 1 364 9 view .LVU196
+ 671 0018 41F20162 		movw	r2, #5633
+ 672 001c 9142     		cmp	r1, r2
+ 673 001e F1D1     		bne	.L40
+ 365:Lib/ssc_app/src/el9800appl.c ****         {
+ 366:Lib/ssc_app/src/el9800appl.c ****         /* RxPDO 2 */
+ 367:Lib/ssc_app/src/el9800appl.c ****         case 0x1601:
+ 368:Lib/ssc_app/src/el9800appl.c ****             ((UINT16 *) &sDOOutputs)[1] = SWAPWORD(*pTmpData++);
+ 674              		.loc 1 368 13 is_stmt 1 view .LVU197
+ 675              	.LVL52:
+ 676              		.loc 1 368 43 is_stmt 0 view .LVU198
+ 677 0020 30F8021B 		ldrh	r1, [r0], #2
+ 678              	.LVL53:
+ 679              		.loc 1 368 41 view .LVU199
+ 680 0024 024A     		ldr	r2, .L43+4
+ 681 0026 5180     		strh	r1, [r2, #2]	@ movhi
+ 369:Lib/ssc_app/src/el9800appl.c ****             break;
+ 682              		.loc 1 369 13 is_stmt 1 view .LVU200
+ 683 0028 ECE7     		b	.L40
+ 684              	.L42:
+ 370:Lib/ssc_app/src/el9800appl.c ****         }
+ 371:Lib/ssc_app/src/el9800appl.c ****     }
+ 372:Lib/ssc_app/src/el9800appl.c **** }
+ 685              		.loc 1 372 1 is_stmt 0 view .LVU201
+ 686 002a 7047     		bx	lr
+ 687              	.L44:
+ 688              		.align	2
+ 689              	.L43:
+ 690 002c 00000000 		.word	.LANCHOR1
+ 691 0030 00000000 		.word	.LANCHOR0
+ 692              		.cfi_endproc
+ 693              	.LFE132:
+ 695              		.section	.text.APPL_Application,"ax",%progbits
+ 696              		.align	1
+ 697              		.global	APPL_Application
+ 698              		.syntax unified
+ 699              		.thumb
+ 700              		.thumb_func
+ 702              	APPL_Application:
+ 703              	.LFB133:
+ 373:Lib/ssc_app/src/el9800appl.c **** 
+ 374:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 375:Lib/ssc_app/src/el9800appl.c **** /**
+ 376:Lib/ssc_app/src/el9800appl.c **** \brief    This function will called from the synchronisation ISR 
+ 377:Lib/ssc_app/src/el9800appl.c ****             or from the mainloop if no synchronisation is supported
+ 378:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 379:Lib/ssc_app/src/el9800appl.c **** void APPL_Application(void)
+ 380:Lib/ssc_app/src/el9800appl.c **** {
+ 704              		.loc 1 380 1 is_stmt 1 view -0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 0
+ 707              		@ frame_needed = 0, uses_anonymous_args = 0
+ 708 0000 08B5     		push	{r3, lr}
+ 709              		.cfi_def_cfa_offset 8
+ 710              		.cfi_offset 3, -8
+ 711              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccNNgH0Y.s 			page 21
+
+
+ 381:Lib/ssc_app/src/el9800appl.c **** 
+ 382:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO4
+ 383:Lib/ssc_app/src/el9800appl.c ****     UINT16 analogValue;
+ 384:Lib/ssc_app/src/el9800appl.c **** #endif
+ 385:Lib/ssc_app/src/el9800appl.c ****     LED_1                        = sDOOutputs.bLED1;
+ 712              		.loc 1 385 5 view .LVU203
+ 713              		.loc 1 385 46 is_stmt 0 view .LVU204
+ 714 0002 444B     		ldr	r3, .L51
+ 715 0004 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 716 0006 01F00101 		and	r1, r1, #1
+ 717              		.loc 1 385 34 view .LVU205
+ 718 000a 434A     		ldr	r2, .L51+4
+ 719 000c C2F8B812 		str	r1, [r2, #696]
+ 386:Lib/ssc_app/src/el9800appl.c ****     LED_2                        = sDOOutputs.bLED2;
+ 720              		.loc 1 386 5 is_stmt 1 view .LVU206
+ 721              		.loc 1 386 46 is_stmt 0 view .LVU207
+ 722 0010 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 723 0012 C1F34001 		ubfx	r1, r1, #1, #1
+ 724              		.loc 1 386 34 view .LVU208
+ 725 0016 C2F8B412 		str	r1, [r2, #692]
+ 387:Lib/ssc_app/src/el9800appl.c ****     LED_3                        = sDOOutputs.bLED3;
+ 726              		.loc 1 387 5 is_stmt 1 view .LVU209
+ 727              		.loc 1 387 46 is_stmt 0 view .LVU210
+ 728 001a 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 729 001c C1F38001 		ubfx	r1, r1, #2, #1
+ 730              		.loc 1 387 34 view .LVU211
+ 731 0020 C2F8B012 		str	r1, [r2, #688]
+ 388:Lib/ssc_app/src/el9800appl.c ****     LED_4                        = sDOOutputs.bLED4;
+ 732              		.loc 1 388 5 is_stmt 1 view .LVU212
+ 733              		.loc 1 388 46 is_stmt 0 view .LVU213
+ 734 0024 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 735 0026 C1F3C001 		ubfx	r1, r1, #3, #1
+ 736              		.loc 1 388 34 view .LVU214
+ 737 002a C2F8AC12 		str	r1, [r2, #684]
+ 389:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 390:Lib/ssc_app/src/el9800appl.c ****     LED_5                        = sDOOutputs.bLED5;
+ 738              		.loc 1 390 5 is_stmt 1 view .LVU215
+ 739              		.loc 1 390 46 is_stmt 0 view .LVU216
+ 740 002e 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 741 0030 C1F30011 		ubfx	r1, r1, #4, #1
+ 742              		.loc 1 390 34 view .LVU217
+ 743 0034 C2F88412 		str	r1, [r2, #644]
+ 391:Lib/ssc_app/src/el9800appl.c ****     LED_7                        = sDOOutputs.bLED7;
+ 744              		.loc 1 391 5 is_stmt 1 view .LVU218
+ 745              		.loc 1 391 46 is_stmt 0 view .LVU219
+ 746 0038 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 747 003a C1F38011 		ubfx	r1, r1, #6, #1
+ 748              		.loc 1 391 34 view .LVU220
+ 749 003e 3748     		ldr	r0, .L51+8
+ 750 0040 C0F89412 		str	r1, [r0, #660]
+ 392:Lib/ssc_app/src/el9800appl.c ****     LED_6                        = sDOOutputs.bLED6;
+ 751              		.loc 1 392 5 is_stmt 1 view .LVU221
+ 752              		.loc 1 392 46 is_stmt 0 view .LVU222
+ 753 0044 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 754 0046 C1F34011 		ubfx	r1, r1, #5, #1
+ 755              		.loc 1 392 34 view .LVU223
+ 756 004a C2F88012 		str	r1, [r2, #640]
+ARM GAS  /tmp/ccNNgH0Y.s 			page 22
+
+
+ 393:Lib/ssc_app/src/el9800appl.c ****     LED_8                        = sDOOutputs.bLED8;
+ 757              		.loc 1 393 5 is_stmt 1 view .LVU224
+ 758              		.loc 1 393 46 is_stmt 0 view .LVU225
+ 759 004e 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 760 0050 D209     		lsrs	r2, r2, #7
+ 761              		.loc 1 393 34 view .LVU226
+ 762 0052 C0F89022 		str	r2, [r0, #656]
+ 394:Lib/ssc_app/src/el9800appl.c **** #endif	
+ 395:Lib/ssc_app/src/el9800appl.c **** 	if(sDOOutputs.bLED1){
+ 763              		.loc 1 395 2 is_stmt 1 view .LVU227
+ 764              		.loc 1 395 5 is_stmt 0 view .LVU228
+ 765 0056 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 766              		.loc 1 395 4 view .LVU229
+ 767 0058 13F0010F 		tst	r3, #1
+ 768 005c 4ED0     		beq	.L46
+ 396:Lib/ssc_app/src/el9800appl.c **** 			GPIO_SetBits(GPIOB,GPIO_Pin_14);
+ 769              		.loc 1 396 4 is_stmt 1 view .LVU230
+ 770 005e 4FF48041 		mov	r1, #16384
+ 771 0062 A0F10F70 		sub	r0, r0, #37486592
+ 772 0066 A0F53F30 		sub	r0, r0, #195584
+ 773 006a FFF7FEFF 		bl	GPIO_SetBits
+ 774              	.LVL54:
+ 775              	.L47:
+ 397:Lib/ssc_app/src/el9800appl.c **** 	}
+ 398:Lib/ssc_app/src/el9800appl.c **** 	else {
+ 399:Lib/ssc_app/src/el9800appl.c **** 		GPIO_ResetBits(GPIOB,GPIO_Pin_14);
+ 400:Lib/ssc_app/src/el9800appl.c **** 	}
+ 401:Lib/ssc_app/src/el9800appl.c **** 	
+ 402:Lib/ssc_app/src/el9800appl.c **** 	
+ 403:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch1    = SWITCH_1;
+ 776              		.loc 1 403 5 view .LVU231
+ 777              		.loc 1 403 29 is_stmt 0 view .LVU232
+ 778 006e 2B4A     		ldr	r2, .L51+8
+ 779 0070 D2F83002 		ldr	r0, [r2, #560]
+ 780              		.loc 1 403 27 view .LVU233
+ 781 0074 2A4B     		ldr	r3, .L51+12
+ 782 0076 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 783 0078 60F30001 		bfi	r1, r0, #0, #1
+ 784 007c 9970     		strb	r1, [r3, #2]
+ 404:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch2    = SWITCH_2;
+ 785              		.loc 1 404 5 is_stmt 1 view .LVU234
+ 786              		.loc 1 404 29 is_stmt 0 view .LVU235
+ 787 007e D2F82C02 		ldr	r0, [r2, #556]
+ 788              		.loc 1 404 27 view .LVU236
+ 789 0082 C9B2     		uxtb	r1, r1
+ 790 0084 60F34101 		bfi	r1, r0, #1, #1
+ 791 0088 9970     		strb	r1, [r3, #2]
+ 405:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch3    = SWITCH_3;
+ 792              		.loc 1 405 5 is_stmt 1 view .LVU237
+ 793              		.loc 1 405 29 is_stmt 0 view .LVU238
+ 794 008a D2F82802 		ldr	r0, [r2, #552]
+ 795              		.loc 1 405 27 view .LVU239
+ 796 008e C9B2     		uxtb	r1, r1
+ 797 0090 60F38201 		bfi	r1, r0, #2, #1
+ 798 0094 9970     		strb	r1, [r3, #2]
+ 406:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch4    = SWITCH_4;
+ 799              		.loc 1 406 5 is_stmt 1 view .LVU240
+ARM GAS  /tmp/ccNNgH0Y.s 			page 23
+
+
+ 800              		.loc 1 406 29 is_stmt 0 view .LVU241
+ 801 0096 D2F82402 		ldr	r0, [r2, #548]
+ 802              		.loc 1 406 27 view .LVU242
+ 803 009a C9B2     		uxtb	r1, r1
+ 804 009c 60F3C301 		bfi	r1, r0, #3, #1
+ 805 00a0 9970     		strb	r1, [r3, #2]
+ 407:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 408:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch5    = SWITCH_5;
+ 806              		.loc 1 408 5 is_stmt 1 view .LVU243
+ 807              		.loc 1 408 29 is_stmt 0 view .LVU244
+ 808 00a2 D2F82002 		ldr	r0, [r2, #544]
+ 809              		.loc 1 408 27 view .LVU245
+ 810 00a6 C9B2     		uxtb	r1, r1
+ 811 00a8 60F30411 		bfi	r1, r0, #4, #1
+ 812 00ac 9970     		strb	r1, [r3, #2]
+ 409:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch6    = SWITCH_6;
+ 813              		.loc 1 409 5 is_stmt 1 view .LVU246
+ 814              		.loc 1 409 29 is_stmt 0 view .LVU247
+ 815 00ae D2F81C02 		ldr	r0, [r2, #540]
+ 816              		.loc 1 409 27 view .LVU248
+ 817 00b2 C9B2     		uxtb	r1, r1
+ 818 00b4 60F34511 		bfi	r1, r0, #5, #1
+ 819 00b8 9970     		strb	r1, [r3, #2]
+ 410:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch7    = SWITCH_7;
+ 820              		.loc 1 410 5 is_stmt 1 view .LVU249
+ 821              		.loc 1 410 29 is_stmt 0 view .LVU250
+ 822 00ba D2F81812 		ldr	r1, [r2, #536]
+ 823              		.loc 1 410 27 view .LVU251
+ 824 00be 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 825 00c0 61F38612 		bfi	r2, r1, #6, #1
+ 826 00c4 9A70     		strb	r2, [r3, #2]
+ 411:Lib/ssc_app/src/el9800appl.c ****     sDIInputs.bSwitch8    = SWITCH_8;
+ 827              		.loc 1 411 5 is_stmt 1 view .LVU252
+ 828              		.loc 1 411 29 is_stmt 0 view .LVU253
+ 829 00c6 144A     		ldr	r2, .L51+4
+ 830 00c8 D2F83C12 		ldr	r1, [r2, #572]
+ 831              		.loc 1 411 27 view .LVU254
+ 832 00cc 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 833 00ce 61F3C712 		bfi	r2, r1, #7, #1
+ 834 00d2 9A70     		strb	r2, [r3, #2]
+ 412:Lib/ssc_app/src/el9800appl.c **** #endif
+ 413:Lib/ssc_app/src/el9800appl.c **** 
+ 414:Lib/ssc_app/src/el9800appl.c **** 				/* start the conversion of the A/D converter */
+ 415:Lib/ssc_app/src/el9800appl.c **** //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
+ 416:Lib/ssc_app/src/el9800appl.c **** 					
+ 417:Lib/ssc_app/src/el9800appl.c **** 		sAIInputs.i16Analoginput  = 0;
+ 835              		.loc 1 417 3 is_stmt 1 view .LVU255
+ 836              		.loc 1 417 29 is_stmt 0 view .LVU256
+ 837 00d4 1349     		ldr	r1, .L51+16
+ 838 00d6 0022     		movs	r2, #0
+ 839 00d8 8A80     		strh	r2, [r1, #4]	@ movhi
+ 418:Lib/ssc_app/src/el9800appl.c **** 
+ 419:Lib/ssc_app/src/el9800appl.c ****     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
+ 420:Lib/ssc_app/src/el9800appl.c ****     sAIInputs.bTxPDOToggle ^= 1;
+ 840              		.loc 1 420 5 is_stmt 1 view .LVU257
+ 841              		.loc 1 420 28 is_stmt 0 view .LVU258
+ 842 00da CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ARM GAS  /tmp/ccNNgH0Y.s 			page 24
+
+
+ 843 00dc C2F3C010 		ubfx	r0, r2, #7, #1
+ 844 00e0 80F00100 		eor	r0, r0, #1
+ 845 00e4 60F3C712 		bfi	r2, r0, #7, #1
+ 846 00e8 CA70     		strb	r2, [r1, #3]
+ 421:Lib/ssc_app/src/el9800appl.c **** 
+ 422:Lib/ssc_app/src/el9800appl.c ****     /* we simulate a problem of the analog input, if the Switch4 is on in this example,
+ 423:Lib/ssc_app/src/el9800appl.c ****        in this case the TxPDO State has to set to indicate the problem to the master */
+ 424:Lib/ssc_app/src/el9800appl.c ****     if ( sDIInputs.bSwitch4 )
+ 847              		.loc 1 424 5 is_stmt 1 view .LVU259
+ 848              		.loc 1 424 10 is_stmt 0 view .LVU260
+ 849 00ea 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 850              		.loc 1 424 8 view .LVU261
+ 851 00ec 13F0080F 		tst	r3, #8
+ 852 00f0 0AD0     		beq	.L48
+ 425:Lib/ssc_app/src/el9800appl.c ****         sAIInputs.bTxPDOState = 1;
+ 853              		.loc 1 425 9 is_stmt 1 view .LVU262
+ 854              		.loc 1 425 31 is_stmt 0 view .LVU263
+ 855 00f2 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+ 856 00f4 43F04003 		orr	r3, r3, #64
+ 857 00f8 CB70     		strb	r3, [r1, #3]
+ 858              	.L45:
+ 426:Lib/ssc_app/src/el9800appl.c ****     else
+ 427:Lib/ssc_app/src/el9800appl.c ****         sAIInputs.bTxPDOState = 0;
+ 428:Lib/ssc_app/src/el9800appl.c **** }
+ 859              		.loc 1 428 1 view .LVU264
+ 860 00fa 08BD     		pop	{r3, pc}
+ 861              	.L46:
+ 399:Lib/ssc_app/src/el9800appl.c **** 	}
+ 862              		.loc 1 399 3 is_stmt 1 view .LVU265
+ 863 00fc 4FF48041 		mov	r1, #16384
+ 864 0100 0948     		ldr	r0, .L51+20
+ 865 0102 FFF7FEFF 		bl	GPIO_ResetBits
+ 866              	.LVL55:
+ 867 0106 B2E7     		b	.L47
+ 868              	.L48:
+ 427:Lib/ssc_app/src/el9800appl.c **** }
+ 869              		.loc 1 427 9 view .LVU266
+ 427:Lib/ssc_app/src/el9800appl.c **** }
+ 870              		.loc 1 427 31 is_stmt 0 view .LVU267
+ 871 0108 064B     		ldr	r3, .L51+16
+ 872 010a DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
+ 873 010c 6FF38612 		bfc	r2, #6, #1
+ 874 0110 DA70     		strb	r2, [r3, #3]
+ 875              		.loc 1 428 1 view .LVU268
+ 876 0112 F2E7     		b	.L45
+ 877              	.L52:
+ 878              		.align	2
+ 879              	.L51:
+ 880 0114 00000000 		.word	.LANCHOR0
+ 881 0118 00804042 		.word	1111523328
+ 882 011c 00004142 		.word	1111556096
+ 883 0120 00000000 		.word	.LANCHOR3
+ 884 0124 00000000 		.word	.LANCHOR4
+ 885 0128 00040240 		.word	1073873920
+ 886              		.cfi_endproc
+ 887              	.LFE133:
+ 889              		.section	.text.ReadObject0x1802,"ax",%progbits
+ARM GAS  /tmp/ccNNgH0Y.s 			page 25
+
+
+ 890              		.align	1
+ 891              		.global	ReadObject0x1802
+ 892              		.syntax unified
+ 893              		.thumb
+ 894              		.thumb_func
+ 896              	ReadObject0x1802:
+ 897              	.LVL56:
+ 898              	.LFB134:
+ 429:Lib/ssc_app/src/el9800appl.c **** 
+ 430:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 431:Lib/ssc_app/src/el9800appl.c **** /**
+ 432:Lib/ssc_app/src/el9800appl.c ****  \param     index               index of the requested object.
+ 433:Lib/ssc_app/src/el9800appl.c ****  \param     subindex            subindex of the requested object.
+ 434:Lib/ssc_app/src/el9800appl.c ****  \param     objSize             size of the requested object data, calculated with OBJ_GetObjectLen
+ 435:Lib/ssc_app/src/el9800appl.c ****  \param     pData               Pointer to the buffer where the data can be copied to
+ 436:Lib/ssc_app/src/el9800appl.c ****  \param     bCompleteAccess     Indicates if a complete read of all subindices of the
+ 437:Lib/ssc_app/src/el9800appl.c ****                                 object shall be done or not
+ 438:Lib/ssc_app/src/el9800appl.c **** 
+ 439:Lib/ssc_app/src/el9800appl.c ****  \return    ABORTIDX_XXX
+ 440:Lib/ssc_app/src/el9800appl.c **** 
+ 441:Lib/ssc_app/src/el9800appl.c ****  \brief     Handles SDO read requests to TxPDO Parameter
+ 442:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 443:Lib/ssc_app/src/el9800appl.c **** UINT8 ReadObject0x1802( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM * pData, UINT8
+ 444:Lib/ssc_app/src/el9800appl.c **** {
+ 899              		.loc 1 444 1 is_stmt 1 view -0
+ 900              		.cfi_startproc
+ 901              		@ args = 4, pretend = 0, frame = 0
+ 902              		@ frame_needed = 0, uses_anonymous_args = 0
+ 903              		.loc 1 444 1 is_stmt 0 view .LVU270
+ 904 0000 10B5     		push	{r4, lr}
+ 905              		.cfi_def_cfa_offset 8
+ 906              		.cfi_offset 4, -8
+ 907              		.cfi_offset 14, -4
+ 908 0002 9DF80840 		ldrb	r4, [sp, #8]	@ zero_extendqisi2
+ 445:Lib/ssc_app/src/el9800appl.c **** 
+ 446:Lib/ssc_app/src/el9800appl.c ****     if(bCompleteAccess)
+ 909              		.loc 1 446 5 is_stmt 1 view .LVU271
+ 910              		.loc 1 446 7 is_stmt 0 view .LVU272
+ 911 0006 34BB     		cbnz	r4, .L58
+ 447:Lib/ssc_app/src/el9800appl.c ****         return ABORTIDX_UNSUPPORTED_ACCESS;
+ 448:Lib/ssc_app/src/el9800appl.c **** 
+ 449:Lib/ssc_app/src/el9800appl.c ****     if(subindex == 0)
+ 912              		.loc 1 449 5 is_stmt 1 view .LVU273
+ 913              		.loc 1 449 7 is_stmt 0 view .LVU274
+ 914 0008 21B9     		cbnz	r1, .L55
+ 450:Lib/ssc_app/src/el9800appl.c ****     {
+ 451:Lib/ssc_app/src/el9800appl.c ****         *pData = TxPDO1802Subindex0;
+ 915              		.loc 1 451 9 is_stmt 1 view .LVU275
+ 916              		.loc 1 451 16 is_stmt 0 view .LVU276
+ 917 000a 154A     		ldr	r2, .L65
+ 918              	.LVL57:
+ 919              		.loc 1 451 16 view .LVU277
+ 920 000c 1288     		ldrh	r2, [r2]
+ 921 000e 1A80     		strh	r2, [r3]	@ movhi
+ 452:Lib/ssc_app/src/el9800appl.c ****     }
+ 453:Lib/ssc_app/src/el9800appl.c ****     else if(subindex == 6)
+ 454:Lib/ssc_app/src/el9800appl.c ****     {
+ARM GAS  /tmp/ccNNgH0Y.s 			page 26
+
+
+ 455:Lib/ssc_app/src/el9800appl.c ****         /*clear destination buffer (no excluded TxPDO set)*/
+ 456:Lib/ssc_app/src/el9800appl.c ****         if(dataSize > 0)
+ 457:Lib/ssc_app/src/el9800appl.c ****             MBXMEMSET(pData,0x00,dataSize);
+ 458:Lib/ssc_app/src/el9800appl.c ****     }
+ 459:Lib/ssc_app/src/el9800appl.c ****     else if(subindex == 7)
+ 460:Lib/ssc_app/src/el9800appl.c ****     {
+ 461:Lib/ssc_app/src/el9800appl.c ****         /*min size is one Byte*/
+ 462:Lib/ssc_app/src/el9800appl.c ****         UINT8 *pu8Data = (UINT8*)pData;
+ 463:Lib/ssc_app/src/el9800appl.c ****         
+ 464:Lib/ssc_app/src/el9800appl.c ****         //Reset Buffer
+ 465:Lib/ssc_app/src/el9800appl.c ****         *pu8Data = 0; 
+ 466:Lib/ssc_app/src/el9800appl.c **** 
+ 467:Lib/ssc_app/src/el9800appl.c ****         *pu8Data = sAIInputs.bTxPDOState;
+ 468:Lib/ssc_app/src/el9800appl.c ****     }
+ 469:Lib/ssc_app/src/el9800appl.c ****     else if(subindex == 9)
+ 470:Lib/ssc_app/src/el9800appl.c ****     {
+ 471:Lib/ssc_app/src/el9800appl.c ****         /*min size is one Byte*/
+ 472:Lib/ssc_app/src/el9800appl.c ****         UINT8 *pu8Data = (UINT8*)pData;
+ 473:Lib/ssc_app/src/el9800appl.c ****         
+ 474:Lib/ssc_app/src/el9800appl.c ****         //Reset Buffer
+ 475:Lib/ssc_app/src/el9800appl.c ****         *pu8Data = 0; 
+ 476:Lib/ssc_app/src/el9800appl.c **** 
+ 477:Lib/ssc_app/src/el9800appl.c ****         *pu8Data = sAIInputs.bTxPDOToggle;
+ 478:Lib/ssc_app/src/el9800appl.c ****     }
+ 479:Lib/ssc_app/src/el9800appl.c ****     else
+ 480:Lib/ssc_app/src/el9800appl.c ****         return ABORTIDX_SUBINDEX_NOT_EXISTING;
+ 481:Lib/ssc_app/src/el9800appl.c **** 
+ 482:Lib/ssc_app/src/el9800appl.c ****     return 0;
+ 922              		.loc 1 482 12 view .LVU278
+ 923 0010 0846     		mov	r0, r1
+ 924              	.LVL58:
+ 925              	.L54:
+ 483:Lib/ssc_app/src/el9800appl.c **** }
+ 926              		.loc 1 483 1 view .LVU279
+ 927 0012 10BD     		pop	{r4, pc}
+ 928              	.LVL59:
+ 929              	.L55:
+ 453:Lib/ssc_app/src/el9800appl.c ****     {
+ 930              		.loc 1 453 10 is_stmt 1 view .LVU280
+ 453:Lib/ssc_app/src/el9800appl.c ****     {
+ 931              		.loc 1 453 12 is_stmt 0 view .LVU281
+ 932 0014 0629     		cmp	r1, #6
+ 933 0016 0CD0     		beq	.L62
+ 459:Lib/ssc_app/src/el9800appl.c ****     {
+ 934              		.loc 1 459 10 is_stmt 1 view .LVU282
+ 459:Lib/ssc_app/src/el9800appl.c ****     {
+ 935              		.loc 1 459 12 is_stmt 0 view .LVU283
+ 936 0018 0729     		cmp	r1, #7
+ 937 001a 13D0     		beq	.L63
+ 469:Lib/ssc_app/src/el9800appl.c ****     {
+ 938              		.loc 1 469 10 is_stmt 1 view .LVU284
+ 469:Lib/ssc_app/src/el9800appl.c ****     {
+ 939              		.loc 1 469 12 is_stmt 0 view .LVU285
+ 940 001c 0929     		cmp	r1, #9
+ 941 001e 1CD1     		bne	.L60
+ 942              	.LBB2:
+ 472:Lib/ssc_app/src/el9800appl.c ****         
+ARM GAS  /tmp/ccNNgH0Y.s 			page 27
+
+
+ 943              		.loc 1 472 9 is_stmt 1 view .LVU286
+ 944              	.LVL60:
+ 475:Lib/ssc_app/src/el9800appl.c **** 
+ 945              		.loc 1 475 9 view .LVU287
+ 475:Lib/ssc_app/src/el9800appl.c **** 
+ 946              		.loc 1 475 18 is_stmt 0 view .LVU288
+ 947 0020 0022     		movs	r2, #0
+ 948              	.LVL61:
+ 475:Lib/ssc_app/src/el9800appl.c **** 
+ 949              		.loc 1 475 18 view .LVU289
+ 950 0022 1A70     		strb	r2, [r3]
+ 477:Lib/ssc_app/src/el9800appl.c ****     }
+ 951              		.loc 1 477 9 is_stmt 1 view .LVU290
+ 477:Lib/ssc_app/src/el9800appl.c ****     }
+ 952              		.loc 1 477 29 is_stmt 0 view .LVU291
+ 953 0024 0F4A     		ldr	r2, .L65+4
+ 954 0026 D278     		ldrb	r2, [r2, #3]	@ zero_extendqisi2
+ 955 0028 C2F3C012 		ubfx	r2, r2, #7, #1
+ 477:Lib/ssc_app/src/el9800appl.c ****     }
+ 956              		.loc 1 477 18 view .LVU292
+ 957 002c 1A70     		strb	r2, [r3]
+ 958              	.LBE2:
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 959              		.loc 1 482 12 view .LVU293
+ 960 002e 2046     		mov	r0, r4
+ 961              	.LVL62:
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 962              		.loc 1 482 12 view .LVU294
+ 963 0030 EFE7     		b	.L54
+ 964              	.LVL63:
+ 965              	.L62:
+ 456:Lib/ssc_app/src/el9800appl.c ****             MBXMEMSET(pData,0x00,dataSize);
+ 966              		.loc 1 456 9 is_stmt 1 view .LVU295
+ 456:Lib/ssc_app/src/el9800appl.c ****             MBXMEMSET(pData,0x00,dataSize);
+ 967              		.loc 1 456 11 is_stmt 0 view .LVU296
+ 968 0032 0AB9     		cbnz	r2, .L64
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 969              		.loc 1 482 12 view .LVU297
+ 970 0034 2046     		mov	r0, r4
+ 971              	.LVL64:
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 972              		.loc 1 482 12 view .LVU298
+ 973 0036 ECE7     		b	.L54
+ 974              	.LVL65:
+ 975              	.L64:
+ 457:Lib/ssc_app/src/el9800appl.c ****     }
+ 976              		.loc 1 457 13 is_stmt 1 view .LVU299
+ 977 0038 0021     		movs	r1, #0
+ 978              	.LVL66:
+ 457:Lib/ssc_app/src/el9800appl.c ****     }
+ 979              		.loc 1 457 13 is_stmt 0 view .LVU300
+ 980 003a 1846     		mov	r0, r3
+ 981              	.LVL67:
+ 457:Lib/ssc_app/src/el9800appl.c ****     }
+ 982              		.loc 1 457 13 view .LVU301
+ 983 003c FFF7FEFF 		bl	memset
+ 984              	.LVL68:
+ARM GAS  /tmp/ccNNgH0Y.s 			page 28
+
+
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 985              		.loc 1 482 12 view .LVU302
+ 986 0040 2046     		mov	r0, r4
+ 987 0042 E6E7     		b	.L54
+ 988              	.LVL69:
+ 989              	.L63:
+ 990              	.LBB3:
+ 462:Lib/ssc_app/src/el9800appl.c ****         
+ 991              		.loc 1 462 9 is_stmt 1 view .LVU303
+ 465:Lib/ssc_app/src/el9800appl.c **** 
+ 992              		.loc 1 465 9 view .LVU304
+ 465:Lib/ssc_app/src/el9800appl.c **** 
+ 993              		.loc 1 465 18 is_stmt 0 view .LVU305
+ 994 0044 0022     		movs	r2, #0
+ 995              	.LVL70:
+ 465:Lib/ssc_app/src/el9800appl.c **** 
+ 996              		.loc 1 465 18 view .LVU306
+ 997 0046 1A70     		strb	r2, [r3]
+ 467:Lib/ssc_app/src/el9800appl.c ****     }
+ 998              		.loc 1 467 9 is_stmt 1 view .LVU307
+ 467:Lib/ssc_app/src/el9800appl.c ****     }
+ 999              		.loc 1 467 29 is_stmt 0 view .LVU308
+ 1000 0048 064A     		ldr	r2, .L65+4
+ 1001 004a D278     		ldrb	r2, [r2, #3]	@ zero_extendqisi2
+ 1002 004c C2F38012 		ubfx	r2, r2, #6, #1
+ 467:Lib/ssc_app/src/el9800appl.c ****     }
+ 1003              		.loc 1 467 18 view .LVU309
+ 1004 0050 1A70     		strb	r2, [r3]
+ 1005              	.LBE3:
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 1006              		.loc 1 482 12 view .LVU310
+ 1007 0052 2046     		mov	r0, r4
+ 1008              	.LVL71:
+ 482:Lib/ssc_app/src/el9800appl.c **** }
+ 1009              		.loc 1 482 12 view .LVU311
+ 1010 0054 DDE7     		b	.L54
+ 1011              	.LVL72:
+ 1012              	.L58:
+ 447:Lib/ssc_app/src/el9800appl.c **** 
+ 1013              		.loc 1 447 16 view .LVU312
+ 1014 0056 0520     		movs	r0, #5
+ 1015              	.LVL73:
+ 447:Lib/ssc_app/src/el9800appl.c **** 
+ 1016              		.loc 1 447 16 view .LVU313
+ 1017 0058 DBE7     		b	.L54
+ 1018              	.LVL74:
+ 1019              	.L60:
+ 480:Lib/ssc_app/src/el9800appl.c **** 
+ 1020              		.loc 1 480 16 view .LVU314
+ 1021 005a 1120     		movs	r0, #17
+ 1022              	.LVL75:
+ 480:Lib/ssc_app/src/el9800appl.c **** 
+ 1023              		.loc 1 480 16 view .LVU315
+ 1024 005c D9E7     		b	.L54
+ 1025              	.L66:
+ 1026 005e 00BF     		.align	2
+ 1027              	.L65:
+ARM GAS  /tmp/ccNNgH0Y.s 			page 29
+
+
+ 1028 0060 00000000 		.word	.LANCHOR5
+ 1029 0064 00000000 		.word	.LANCHOR4
+ 1030              		.cfi_endproc
+ 1031              	.LFE134:
+ 1033              		.section	.text.main,"ax",%progbits
+ 1034              		.align	1
+ 1035              		.global	main
+ 1036              		.syntax unified
+ 1037              		.thumb
+ 1038              		.thumb_func
+ 1040              	main:
+ 1041              	.LFB135:
+ 484:Lib/ssc_app/src/el9800appl.c **** 
+ 485:Lib/ssc_app/src/el9800appl.c **** #if EXPLICIT_DEVICE_ID
+ 486:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 487:Lib/ssc_app/src/el9800appl.c **** /**
+ 488:Lib/ssc_app/src/el9800appl.c ****  \return    The Explicit Device ID of the EtherCAT slave
+ 489:Lib/ssc_app/src/el9800appl.c **** 
+ 490:Lib/ssc_app/src/el9800appl.c ****  \brief     Calculate the Explicit Device ID
+ 491:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 492:Lib/ssc_app/src/el9800appl.c **** UINT16 APPL_GetDeviceID()
+ 493:Lib/ssc_app/src/el9800appl.c **** {
+ 494:Lib/ssc_app/src/el9800appl.c ****     UINT16 Value = (UINT16)(SWITCH_8<<7)|(SWITCH_7<<6)|(SWITCH_6<<5)|(SWITCH_5<<4)|(SWITCH_4<<3)|(S
+ 495:Lib/ssc_app/src/el9800appl.c ****     return Value;
+ 496:Lib/ssc_app/src/el9800appl.c **** }
+ 497:Lib/ssc_app/src/el9800appl.c **** #endif
+ 498:Lib/ssc_app/src/el9800appl.c **** 
+ 499:Lib/ssc_app/src/el9800appl.c **** #if USE_DEFAULT_MAIN
+ 500:Lib/ssc_app/src/el9800appl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 501:Lib/ssc_app/src/el9800appl.c **** /**
+ 502:Lib/ssc_app/src/el9800appl.c **** 
+ 503:Lib/ssc_app/src/el9800appl.c ****  \brief    This is the main function
+ 504:Lib/ssc_app/src/el9800appl.c **** 
+ 505:Lib/ssc_app/src/el9800appl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 506:Lib/ssc_app/src/el9800appl.c **** uint32_t times = 0x1000000;
+ 507:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 508:Lib/ssc_app/src/el9800appl.c **** int main(void)
+ 509:Lib/ssc_app/src/el9800appl.c **** #else
+ 510:Lib/ssc_app/src/el9800appl.c **** void main(void)
+ 511:Lib/ssc_app/src/el9800appl.c **** #endif
+ 512:Lib/ssc_app/src/el9800appl.c **** {
+ 1042              		.loc 1 512 1 is_stmt 1 view -0
+ 1043              		.cfi_startproc
+ 1044              		@ args = 0, pretend = 0, frame = 0
+ 1045              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1046 0000 08B5     		push	{r3, lr}
+ 1047              		.cfi_def_cfa_offset 8
+ 1048              		.cfi_offset 3, -8
+ 1049              		.cfi_offset 14, -4
+ 513:Lib/ssc_app/src/el9800appl.c ****     /* initialize the Hardware and the EtherCAT Slave Controller */
+ 514:Lib/ssc_app/src/el9800appl.c ****     HW_Init();
+ 1050              		.loc 1 514 5 view .LVU317
+ 1051 0002 FFF7FEFF 		bl	HW_Init
+ 1052              	.LVL76:
+ 515:Lib/ssc_app/src/el9800appl.c **** 
+ 516:Lib/ssc_app/src/el9800appl.c ****     MainInit();
+ 1053              		.loc 1 516 5 view .LVU318
+ARM GAS  /tmp/ccNNgH0Y.s 			page 30
+
+
+ 1054 0006 FFF7FEFF 		bl	MainInit
+ 1055              	.LVL77:
+ 517:Lib/ssc_app/src/el9800appl.c **** 
+ 518:Lib/ssc_app/src/el9800appl.c **** 		
+ 519:Lib/ssc_app/src/el9800appl.c ****     bRunApplication = TRUE;
+ 1056              		.loc 1 519 5 view .LVU319
+ 1057              		.loc 1 519 21 is_stmt 0 view .LVU320
+ 1058 000a 064B     		ldr	r3, .L70
+ 1059 000c 0122     		movs	r2, #1
+ 1060 000e 1A70     		strb	r2, [r3]
+ 1061              	.L68:
+ 520:Lib/ssc_app/src/el9800appl.c ****     do                                                                                             
+ 1062              		.loc 1 520 5 is_stmt 1 discriminator 1 view .LVU321
+ 521:Lib/ssc_app/src/el9800appl.c ****     {
+ 522:Lib/ssc_app/src/el9800appl.c ****         MainLoop();
+ 1063              		.loc 1 522 9 discriminator 1 view .LVU322
+ 1064 0010 FFF7FEFF 		bl	MainLoop
+ 1065              	.LVL78:
+ 523:Lib/ssc_app/src/el9800appl.c **** 
+ 524:Lib/ssc_app/src/el9800appl.c ****     } while (bRunApplication == TRUE);
+ 1066              		.loc 1 524 13 discriminator 1 view .LVU323
+ 1067              		.loc 1 524 30 is_stmt 0 discriminator 1 view .LVU324
+ 1068 0014 034B     		ldr	r3, .L70
+ 1069 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1070              		.loc 1 524 5 discriminator 1 view .LVU325
+ 1071 0018 012B     		cmp	r3, #1
+ 1072 001a F9D0     		beq	.L68
+ 525:Lib/ssc_app/src/el9800appl.c **** 		
+ 526:Lib/ssc_app/src/el9800appl.c **** 	
+ 527:Lib/ssc_app/src/el9800appl.c ****     HW_Release();
+ 1073              		.loc 1 527 5 is_stmt 1 view .LVU326
+ 1074 001c FFF7FEFF 		bl	HW_Release
+ 1075              	.LVL79:
+ 528:Lib/ssc_app/src/el9800appl.c **** #if _STM32_IO8
+ 529:Lib/ssc_app/src/el9800appl.c ****     return 0;
+ 1076              		.loc 1 529 5 view .LVU327
+ 530:Lib/ssc_app/src/el9800appl.c **** #endif
+ 531:Lib/ssc_app/src/el9800appl.c **** }
+ 1077              		.loc 1 531 1 is_stmt 0 view .LVU328
+ 1078 0020 0020     		movs	r0, #0
+ 1079 0022 08BD     		pop	{r3, pc}
+ 1080              	.L71:
+ 1081              		.align	2
+ 1082              	.L70:
+ 1083 0024 00000000 		.word	bRunApplication
+ 1084              		.cfi_endproc
+ 1085              	.LFE135:
+ 1087              		.global	times
+ 1088              		.global	sModulelist
+ 1089              		.global	sModulardeviceprofile
+ 1090              		.global	sAISettings
+ 1091              		.global	sDOOutputs
+ 1092              		.global	sAIInputs
+ 1093              		.global	sDIInputs
+ 1094              		.global	sTxPDOassign
+ 1095              		.global	sRxPDOassign
+ 1096              		.global	sAITxPDOMap
+ARM GAS  /tmp/ccNNgH0Y.s 			page 31
+
+
+ 1097              		.global	sDITxPDOMap
+ 1098              		.global	TxPDO1802Subindex0
+ 1099              		.global	sDORxPDOMap
+ 1100              		.section	.data.TxPDO1802Subindex0,"aw"
+ 1101              		.align	1
+ 1102              		.set	.LANCHOR5,. + 0
+ 1105              	TxPDO1802Subindex0:
+ 1106 0000 0900     		.short	9
+ 1107              		.section	.data.sAIInputs,"aw"
+ 1108              		.align	2
+ 1109              		.set	.LANCHOR4,. + 0
+ 1112              	sAIInputs:
+ 1113 0000 1100     		.short	17
+ 1114 0002 00       		.byte	0
+ 1115 0003 00       		.byte	0
+ 1116 0004 FF7F     		.short	32767
+ 1117              		.section	.data.sAISettings,"aw"
+ 1118              		.align	2
+ 1121              	sAISettings:
+ 1122 0000 1400     		.short	20
+ 1123 0002 00       		.byte	0
+ 1124 0003 00       		.byte	0
+ 1125 0004 0000     		.short	0
+ 1126 0006 0000     		.space	2
+ 1127 0008 00000000 		.word	0
+ 1128 000c 0000     		.short	0
+ 1129 000e 0000     		.short	0
+ 1130              		.section	.data.sAITxPDOMap,"aw"
+ 1131              		.align	2
+ 1134              	sAITxPDOMap:
+ 1135 0000 0800     		.short	8
+ 1136 0002 0000     		.space	2
+ 1137 0004 01012060 		.word	1612710145
+ 1138 0008 01022060 		.word	1612710401
+ 1139 000c 02032060 		.word	1612710658
+ 1140 0010 02052060 		.word	1612711170
+ 1141 0014 08000000 		.word	8
+ 1142 0018 01070218 		.word	402786049
+ 1143 001c 01090218 		.word	402786561
+ 1144 0020 10112060 		.word	1612714256
+ 1145              		.section	.data.sDIInputs,"aw"
+ 1146              		.align	2
+ 1147              		.set	.LANCHOR3,. + 0
+ 1150              	sDIInputs:
+ 1151 0000 0800     		.short	8
+ 1152 0002 00       		.byte	0
+ 1153 0003 00       		.byte	0
+ 1154              		.section	.data.sDITxPDOMap,"aw"
+ 1155              		.align	2
+ 1158              	sDITxPDOMap:
+ 1159 0000 0900     		.short	9
+ 1160 0002 0000     		.space	2
+ 1161 0004 01010060 		.word	1610612993
+ 1162 0008 01020060 		.word	1610613249
+ 1163 000c 01030060 		.word	1610613505
+ 1164 0010 01040060 		.word	1610613761
+ 1165 0014 01050060 		.word	1610614017
+ARM GAS  /tmp/ccNNgH0Y.s 			page 32
+
+
+ 1166 0018 01060060 		.word	1610614273
+ 1167 001c 01070060 		.word	1610614529
+ 1168 0020 01080060 		.word	1610614785
+ 1169 0024 08000000 		.word	8
+ 1170              		.section	.data.sDOOutputs,"aw"
+ 1171              		.align	2
+ 1172              		.set	.LANCHOR0,. + 0
+ 1175              	sDOOutputs:
+ 1176 0000 0800     		.short	8
+ 1177 0002 00       		.byte	0
+ 1178 0003 00       		.byte	0
+ 1179              		.section	.data.sDORxPDOMap,"aw"
+ 1180              		.align	2
+ 1183              	sDORxPDOMap:
+ 1184 0000 0900     		.short	9
+ 1185 0002 0000     		.space	2
+ 1186 0004 01011070 		.word	1880097025
+ 1187 0008 01021070 		.word	1880097281
+ 1188 000c 01031070 		.word	1880097537
+ 1189 0010 01041070 		.word	1880097793
+ 1190 0014 01051070 		.word	1880098049
+ 1191 0018 01061070 		.word	1880098305
+ 1192 001c 01071070 		.word	1880098561
+ 1193 0020 01081070 		.word	1880098817
+ 1194 0024 08000000 		.word	8
+ 1195              		.section	.data.sModulardeviceprofile,"aw"
+ 1196              		.align	2
+ 1199              	sModulardeviceprofile:
+ 1200 0000 0200     		.short	2
+ 1201 0002 1000     		.short	16
+ 1202 0004 0300     		.short	3
+ 1203              		.section	.data.sModulelist,"aw"
+ 1204              		.align	2
+ 1207              	sModulelist:
+ 1208 0000 0300     		.short	3
+ 1209 0002 0000     		.space	2
+ 1210 0004 64000000 		.word	100
+ 1211 0008 C8000000 		.word	200
+ 1212 000c 2C010000 		.word	300
+ 1213              		.section	.data.sRxPDOassign,"aw"
+ 1214              		.align	2
+ 1215              		.set	.LANCHOR1,. + 0
+ 1218              	sRxPDOassign:
+ 1219 0000 0100     		.short	1
+ 1220 0002 0116     		.short	5633
+ 1221              		.section	.data.sTxPDOassign,"aw"
+ 1222              		.align	2
+ 1223              		.set	.LANCHOR2,. + 0
+ 1226              	sTxPDOassign:
+ 1227 0000 0200     		.short	2
+ 1228 0002 001A     		.short	6656
+ 1229 0004 021A     		.short	6658
+ 1230              		.section	.data.times,"aw"
+ 1231              		.align	2
+ 1234              	times:
+ 1235 0000 00000001 		.word	16777216
+ 1236              		.text
+ARM GAS  /tmp/ccNNgH0Y.s 			page 33
+
+
+ 1237              	.Letext0:
+ 1238              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 1239              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 1240              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 1241              		.file 5 "Lib/ssc/include/sdoserv.h"
+ 1242              		.file 6 "Lib/ssc/include/objdef.h"
+ 1243              		.file 7 "Lib/ssc_app/include/el9800appl.h"
+ 1244              		.file 8 "Lib/ssc_app/include/ecatappl.h"
+ 1245              		.file 9 "Lib/ssc/include/el9800hw.h"
+ 1246              		.file 10 "Lib/ssc/include/applInterface.h"
+ 1247              		.file 11 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 1248              		.file 12 "<built-in>"
+ARM GAS  /tmp/ccNNgH0Y.s 			page 34
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 el9800appl.c
+     /tmp/ccNNgH0Y.s:20     .text.APPL_AckErrorInd:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:26     .text.APPL_AckErrorInd:0000000000000000 APPL_AckErrorInd
+     /tmp/ccNNgH0Y.s:41     .text.APPL_StartMailboxHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:47     .text.APPL_StartMailboxHandler:0000000000000000 APPL_StartMailboxHandler
+     /tmp/ccNNgH0Y.s:62     .text.APPL_StopMailboxHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:68     .text.APPL_StopMailboxHandler:0000000000000000 APPL_StopMailboxHandler
+     /tmp/ccNNgH0Y.s:83     .text.APPL_StartInputHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:89     .text.APPL_StartInputHandler:0000000000000000 APPL_StartInputHandler
+     /tmp/ccNNgH0Y.s:107    .text.APPL_StopInputHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:113    .text.APPL_StopInputHandler:0000000000000000 APPL_StopInputHandler
+     /tmp/ccNNgH0Y.s:128    .text.APPL_StartOutputHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:134    .text.APPL_StartOutputHandler:0000000000000000 APPL_StartOutputHandler
+     /tmp/ccNNgH0Y.s:149    .text.APPL_StopOutputHandler:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:155    .text.APPL_StopOutputHandler:0000000000000000 APPL_StopOutputHandler
+     /tmp/ccNNgH0Y.s:263    .text.APPL_StopOutputHandler:0000000000000098 $d
+     /tmp/ccNNgH0Y.s:270    .text.APPL_GenerateMapping:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:276    .text.APPL_GenerateMapping:0000000000000000 APPL_GenerateMapping
+     /tmp/ccNNgH0Y.s:533    .text.APPL_GenerateMapping:00000000000000e4 $d
+     /tmp/ccNNgH0Y.s:539    .text.APPL_InputMapping:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:545    .text.APPL_InputMapping:0000000000000000 APPL_InputMapping
+     /tmp/ccNNgH0Y.s:620    .text.APPL_InputMapping:0000000000000044 $d
+     /tmp/ccNNgH0Y.s:627    .text.APPL_OutputMapping:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:633    .text.APPL_OutputMapping:0000000000000000 APPL_OutputMapping
+     /tmp/ccNNgH0Y.s:690    .text.APPL_OutputMapping:000000000000002c $d
+     /tmp/ccNNgH0Y.s:696    .text.APPL_Application:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:702    .text.APPL_Application:0000000000000000 APPL_Application
+     /tmp/ccNNgH0Y.s:880    .text.APPL_Application:0000000000000114 $d
+     /tmp/ccNNgH0Y.s:890    .text.ReadObject0x1802:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:896    .text.ReadObject0x1802:0000000000000000 ReadObject0x1802
+     /tmp/ccNNgH0Y.s:1028   .text.ReadObject0x1802:0000000000000060 $d
+     /tmp/ccNNgH0Y.s:1034   .text.main:0000000000000000 $t
+     /tmp/ccNNgH0Y.s:1040   .text.main:0000000000000000 main
+     /tmp/ccNNgH0Y.s:1083   .text.main:0000000000000024 $d
+     /tmp/ccNNgH0Y.s:1234   .data.times:0000000000000000 times
+     /tmp/ccNNgH0Y.s:1207   .data.sModulelist:0000000000000000 sModulelist
+     /tmp/ccNNgH0Y.s:1199   .data.sModulardeviceprofile:0000000000000000 sModulardeviceprofile
+     /tmp/ccNNgH0Y.s:1121   .data.sAISettings:0000000000000000 sAISettings
+     /tmp/ccNNgH0Y.s:1175   .data.sDOOutputs:0000000000000000 sDOOutputs
+     /tmp/ccNNgH0Y.s:1112   .data.sAIInputs:0000000000000000 sAIInputs
+     /tmp/ccNNgH0Y.s:1150   .data.sDIInputs:0000000000000000 sDIInputs
+     /tmp/ccNNgH0Y.s:1226   .data.sTxPDOassign:0000000000000000 sTxPDOassign
+     /tmp/ccNNgH0Y.s:1218   .data.sRxPDOassign:0000000000000000 sRxPDOassign
+     /tmp/ccNNgH0Y.s:1134   .data.sAITxPDOMap:0000000000000000 sAITxPDOMap
+     /tmp/ccNNgH0Y.s:1158   .data.sDITxPDOMap:0000000000000000 sDITxPDOMap
+     /tmp/ccNNgH0Y.s:1105   .data.TxPDO1802Subindex0:0000000000000000 TxPDO1802Subindex0
+     /tmp/ccNNgH0Y.s:1183   .data.sDORxPDOMap:0000000000000000 sDORxPDOMap
+     /tmp/ccNNgH0Y.s:1101   .data.TxPDO1802Subindex0:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1108   .data.sAIInputs:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1118   .data.sAISettings:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1131   .data.sAITxPDOMap:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1146   .data.sDIInputs:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1155   .data.sDITxPDOMap:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1171   .data.sDOOutputs:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1180   .data.sDORxPDOMap:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1196   .data.sModulardeviceprofile:0000000000000000 $d
+ARM GAS  /tmp/ccNNgH0Y.s 			page 35
+
+
+     /tmp/ccNNgH0Y.s:1204   .data.sModulelist:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1214   .data.sRxPDOassign:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1222   .data.sTxPDOassign:0000000000000000 $d
+     /tmp/ccNNgH0Y.s:1231   .data.times:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+OBJ_GetEntryOffset
+OBJ_GetObjectHandle
+GPIO_SetBits
+GPIO_ResetBits
+memset
+HW_Init
+MainInit
+MainLoop
+HW_Release
+bRunApplication

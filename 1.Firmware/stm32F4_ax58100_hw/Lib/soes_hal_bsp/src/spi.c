@@ -57,8 +57,8 @@ void spi_setup(void)
     SPI_I2S_DeInit(SPI2);
     spi.SPI_Direction         = SPI_Direction_2Lines_FullDuplex;
     spi.SPI_DataSize          = SPI_DataSize_8b;
-    spi.SPI_CPOL              = SPI_CPOL_High;
-    spi.SPI_CPHA              = SPI_CPHA_2Edge;
+    spi.SPI_CPOL              = SPI_CPOL_Low;
+    spi.SPI_CPHA              = SPI_CPHA_1Edge;
     spi.SPI_NSS               = SPI_NSS_Soft;
     spi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
     spi.SPI_FirstBit          = SPI_FirstBit_MSB;

@@ -47,6 +47,7 @@ void DMA1_Stream3_IRQHandler(void)
     /* Test on DMA Stream Transfer Complete interrupt */
     if(DMA_GetITStatus(DMA1_Stream3, DMA_IT_TCIF3))
     {
+        GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
         /* Clear DMA Stream Transfer Complete interrupt pending bit */
         pdi_dma_transmission = NOT_STARTED;
         DMA_ClearITPendingBit(DMA1_Stream3, DMA_IT_TCIF3);
@@ -70,7 +71,7 @@ void spi_dma_setup(void)
     NVIC_InitTypeDef NVIC_InitStructure;
     DMA_StructInit(&DMA_InitStructure);
     DMA_InitStructure.DMA_BufferSize = (uint16_t)(PDO_TR_SIZE);
-    DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable ;
+    DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
     DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
     DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single ;
     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;

@@ -2968,7 +2968,7 @@
             <SubIndex>#x3</SubIndex>
             <BitLen>8</BitLen>
             <Name>IDE</Name>
-            <DataType>U</DataType>
+            <DataType>USINT</DataType>
           </Entry>
           <Entry>
             <Index>#x7002</Index>
@@ -3085,7 +3085,7 @@
             <SubIndex>#x2</SubIndex>
             <BitLen>8</BitLen>
             <Name>ExtId</Name>
-            <DataType>U</DataType>
+            <DataType>USINT</DataType>
           </Entry>
           <Entry>
             <Index>#x6000</Index>
@@ -3152,7 +3152,7 @@
             <SubIndex>#x6</SubIndex>
             <BitLen>8</BitLen>
             <Name>d6</Name>
-            <DataType>U</DataType>
+            <DataType>USINT</DataType>
           </Entry>
           <Entry>
             <Index>#x6001</Index>
@@ -3285,7 +3285,7 @@
         </Dc>
         <Eeprom>
           <ByteSize>4096</ByteSize>
-          <ConfigData>050603446400000000001A000000</ConfigData>
+          <ConfigData>050600446400000000001A000000</ConfigData>
         </Eeprom>
       </Device>
     </Devices>

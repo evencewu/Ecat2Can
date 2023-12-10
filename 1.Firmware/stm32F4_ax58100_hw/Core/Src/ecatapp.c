@@ -195,14 +195,14 @@ void cb_set_outputs()
     //Can2_TxMessage.Data[6] = Obj.can2_tx_data[6];
     //Can2_TxMessage.Data[7] = Obj.can2_tx_data[7];
 
-    if (Obj.led[0] != 0)
-    {
-         GPIO_SetBits(GPIOB, GPIO_Pin_15);
-     }
-     else
-    {
-         GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-     }
+    //if (Obj.led[0] != 0)
+    //{
+    //     GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    // }
+    // else
+    //{
+    //     GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    // }
 
      if (Obj.led[1] != 0)
     {
