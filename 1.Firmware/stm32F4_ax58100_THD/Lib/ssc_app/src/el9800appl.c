@@ -200,6 +200,12 @@ UINT16 APPL_StartOutputHandler(void)
 
 #include "bsp_led.h"
 
+extern CanTxMsg Can1_TxMessage; // 发送缓冲区
+extern CanRxMsg Can1_RxMessage; // 接收缓冲区
+
+extern CanTxMsg Can2_TxMessage; // 发送缓冲区
+extern CanRxMsg Can2_RxMessage; // 接收缓冲区
+
 UINT16 APPL_StopOutputHandler(void)
 {
     /*ECATCHANGE_START(V5.11) EL9800 1*/
@@ -240,6 +246,21 @@ UINT16 APPL_StopOutputHandler(void)
     {
         GPIO_ResetBits(GPIOB, GPIO_Pin_13);
     }
+
+    Can1_TxMessage.StdId = 0;
+    Can1_TxMessage.ExtId = 0;
+    Can1_TxMessage.IDE = 0;
+    Can1_TxMessage.RTR = 0;
+    Can1_TxMessage.DLC = 0;
+    
+    Can1_TxMessage.Data[0] = 0;
+    Can1_TxMessage.Data[1] = 0;
+    Can1_TxMessage.Data[2] = 0;
+    Can1_TxMessage.Data[3] = 0;
+    Can1_TxMessage.Data[4] = 0;
+    Can1_TxMessage.Data[5] = 0;
+    Can1_TxMessage.Data[6] = 0;
+    Can1_TxMessage.Data[7] = 0;
 
     /*ECATCHANGE_END(V5.11) EL9800 1*/
     return ALSTATUSCODE_NOERROR;
@@ -411,11 +432,7 @@ void APPL_OutputMapping(UINT16 *pData)
 */
 ///////////////////////////////////////////////////////////////////////////////////////
 
-extern CanTxMsg Can1_TxMessage; // 发送缓冲区
-extern CanRxMsg Can1_RxMessage; // 接收缓冲区
 
-extern CanTxMsg Can2_TxMessage; // 发送缓冲区
-extern CanRxMsg Can2_RxMessage; // 接收缓冲区
 
 void APPL_Application(void)
 {
