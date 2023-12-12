@@ -527,7 +527,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1601</Name>
-								<BitSize>656</BitSize>
+								<BitSize>1140</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -754,6 +754,171 @@
 									<Type>UDINT</Type>
 									<BitSize>32</BitSize>
 									<BitOffs>624</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>21</SubIdx>
+									<Name>SubIndex 021</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>656</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>22</SubIdx>
+									<Name>SubIndex 022</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>688</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>23</SubIdx>
+									<Name>SubIndex 023</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>720</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>24</SubIdx>
+									<Name>SubIndex 024</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>752</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>25</SubIdx>
+									<Name>SubIndex 025</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>784</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>26</SubIdx>
+									<Name>SubIndex 026</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>816</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>27</SubIdx>
+									<Name>SubIndex 027</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>848</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>28</SubIdx>
+									<Name>SubIndex 028</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>880</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>29</SubIdx>
+									<Name>SubIndex 029</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>912</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>30</SubIdx>
+									<Name>SubIndex 030</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>944</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>31</SubIdx>
+									<Name>SubIndex 031</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>976</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>32</SubIdx>
+									<Name>SubIndex 032</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>1008</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>33</SubIdx>
+									<Name>SubIndex 033</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>1040</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>34</SubIdx>
+									<Name>SubIndex 034</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>1072</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>35</SubIdx>
+									<Name>SubIndex 035</Name>
+									<Type>UDINT</Type>
+									<BitSize>32</BitSize>
+									<BitOffs>1104</BitOffs>
 									<Flags>
 										<Access>ro</Access>
 										<Category>o</Category>
@@ -1179,7 +1344,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT7010</Name>
-								<BitSize>128</BitSize>
+								<BitSize>256</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -1290,7 +1455,7 @@
 								<SubItem>
 									<SubIdx>9</SubIdx>
 									<Name>can1_h0</Name>
-									<Type>INT</Type>
+									<Type>UINT</Type>
 									<BitSize>16</BitSize>
 									<BitOffs>24</BitOffs>
 									<Flags>
@@ -1302,7 +1467,7 @@
 								<SubItem>
 									<SubIdx>10</SubIdx>
 									<Name>can1_h1</Name>
-									<Type>SINT</Type>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>40</BitOffs>
 									<Flags>
@@ -1314,7 +1479,7 @@
 								<SubItem>
 									<SubIdx>11</SubIdx>
 									<Name>can1_h2</Name>
-									<Type>SINT</Type>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>48</BitOffs>
 									<Flags>
@@ -1326,7 +1491,7 @@
 								<SubItem>
 									<SubIdx>12</SubIdx>
 									<Name>can1_h3</Name>
-									<Type>SINT</Type>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>56</BitOffs>
 									<Flags>
@@ -1337,8 +1502,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>13</SubIdx>
-									<Name>can1_d0</Name>
-									<Type>SINT</Type>
+									<Name>can1_h4</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>64</BitOffs>
 									<Flags>
@@ -1349,8 +1514,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>14</SubIdx>
-									<Name>can1_d1</Name>
-									<Type>SINT</Type>
+									<Name>can1_d0</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>72</BitOffs>
 									<Flags>
@@ -1361,8 +1526,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>15</SubIdx>
-									<Name>can1_d2</Name>
-									<Type>SINT</Type>
+									<Name>can1_d1</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>80</BitOffs>
 									<Flags>
@@ -1373,8 +1538,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>16</SubIdx>
-									<Name>can1_d3</Name>
-									<Type>SINT</Type>
+									<Name>can1_d2</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>88</BitOffs>
 									<Flags>
@@ -1385,8 +1550,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>17</SubIdx>
-									<Name>can1_d4</Name>
-									<Type>SINT</Type>
+									<Name>can1_d3</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>96</BitOffs>
 									<Flags>
@@ -1397,8 +1562,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>18</SubIdx>
-									<Name>can1_d5</Name>
-									<Type>SINT</Type>
+									<Name>can1_d4</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>104</BitOffs>
 									<Flags>
@@ -1409,8 +1574,8 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>19</SubIdx>
-									<Name>can1_d6</Name>
-									<Type>SINT</Type>
+									<Name>can1_d5</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>112</BitOffs>
 									<Flags>
@@ -1421,10 +1586,190 @@
 								</SubItem>
 								<SubItem>
 									<SubIdx>20</SubIdx>
-									<Name>can1_d7</Name>
-									<Type>SINT</Type>
+									<Name>can1_d6</Name>
+									<Type>USINT</Type>
 									<BitSize>8</BitSize>
 									<BitOffs>120</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>21</SubIdx>
+									<Name>can1_d7</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>128</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>22</SubIdx>
+									<Name>can2_h0</Name>
+									<Type>UINT</Type>
+									<BitSize>16</BitSize>
+									<BitOffs>136</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>23</SubIdx>
+									<Name>can2_h1</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>152</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>24</SubIdx>
+									<Name>can2_h2</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>160</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>25</SubIdx>
+									<Name>can2_h3</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>168</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>26</SubIdx>
+									<Name>can2_h4</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>176</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>27</SubIdx>
+									<Name>can2_d0</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>184</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>28</SubIdx>
+									<Name>can2_d1</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>192</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>29</SubIdx>
+									<Name>can2_d2</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>200</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>30</SubIdx>
+									<Name>can2_d3</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>208</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>31</SubIdx>
+									<Name>can2_d4</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>216</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>32</SubIdx>
+									<Name>can2_d5</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>224</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>33</SubIdx>
+									<Name>can2_d6</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>232</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>34</SubIdx>
+									<Name>can2_d7</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>240</BitOffs>
+									<Flags>
+										<Access>ro</Access>
+										<Category>o</Category>
+										<PdoMapping>R</PdoMapping>
+									</Flags>
+								</SubItem>
+								<SubItem>
+									<SubIdx>35</SubIdx>
+									<Name>null_no</Name>
+									<Type>USINT</Type>
+									<BitSize>8</BitSize>
+									<BitOffs>248</BitOffs>
 									<Flags>
 										<Access>ro</Access>
 										<Category>o</Category>
@@ -1975,7 +2320,7 @@
 								<Index>#x1601</Index>
 								<Name>DO RxPDO-Map</Name>
 								<Type>DT1601</Type>
-								<BitSize>656</BitSize>
+								<BitSize>1140</BitSize>
 								<Info>
 									<SubItem>
 										<Name>SubIndex 000</Name>
@@ -2101,6 +2446,96 @@
 										<Name>SubIndex 020</Name>
 										<Info>
 											<DefaultData>10201070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 021</Name>
+										<Info>
+											<DefaultData>10211070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 022</Name>
+										<Info>
+											<DefaultData>10221070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 023</Name>
+										<Info>
+											<DefaultData>10231070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 024</Name>
+										<Info>
+											<DefaultData>10241070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 025</Name>
+										<Info>
+											<DefaultData>10251070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 026</Name>
+										<Info>
+											<DefaultData>10261070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 027</Name>
+										<Info>
+											<DefaultData>10271070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 028</Name>
+										<Info>
+											<DefaultData>10281070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 029</Name>
+										<Info>
+											<DefaultData>10291070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 030</Name>
+										<Info>
+											<DefaultData>10301070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 031</Name>
+										<Info>
+											<DefaultData>10311070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 032</Name>
+										<Info>
+											<DefaultData>10321070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 033</Name>
+										<Info>
+											<DefaultData>10331070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 034</Name>
+										<Info>
+											<DefaultData>10341070</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>SubIndex 035</Name>
+										<Info>
+											<DefaultData>10351070</DefaultData>
 										</Info>
 									</SubItem>
 								</Info>
@@ -2387,7 +2822,7 @@
 								<Index>#x7010</Index>
 								<Name>DO Outputs</Name>
 								<Type>DT7010</Type>
-								<BitSize>128</BitSize>
+								<BitSize>256</BitSize>
 								<Info>
 									<SubItem>
 										<Name>SubIndex 000</Name>
@@ -2468,6 +2903,12 @@
 										</Info>
 									</SubItem>
 									<SubItem>
+										<Name>can1_h4</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
 										<Name>can1_d0</Name>
 										<Info>
 											<DefaultData>00</DefaultData>
@@ -2511,6 +2952,90 @@
 									</SubItem>
 									<SubItem>
 										<Name>can1_d7</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_h0</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_h1</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_h2</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_h3</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_h4</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d0</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d1</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d2</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d3</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d4</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d5</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d6</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>can2_d7</Name>
+										<Info>
+											<DefaultData>00</DefaultData>
+										</Info>
+									</SubItem>
+									<SubItem>
+										<Name>null_no</Name>
 										<Info>
 											<DefaultData>00</DefaultData>
 										</Info>
@@ -2662,7 +3187,7 @@
 				<Sm MinSize="34" MaxSize="128" DefaultSize="128" StartAddress="#x1000" ControlByte="#x26" Enable="1">MBoxOut</Sm>
 				<Sm MinSize="34" MaxSize="128" DefaultSize="128" StartAddress="#x1080" ControlByte="#x22" Enable="1">MBoxIn</Sm>
 				<Sm DefaultSize="2" StartAddress="#x1100" ControlByte="#x64" Enable="1">Outputs</Sm>
-				<Sm DefaultSize="18" StartAddress="#x1400" ControlByte="#x20" Enable="1">Inputs</Sm>
+				<Sm DefaultSize="30" StartAddress="#x1400" ControlByte="#x20" Enable="1">Inputs</Sm>
 				<RxPdo Mandatory="true" Fixed="true" Sm="2">
 					<Index>#x1601</Index>
 					<Name>DO Outputs</Name>
@@ -2754,56 +3279,161 @@
 						<Index>#x7010</Index>
 						<SubIndex>13</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d0</Name>
+						<Name>can1_h4</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>14</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d1</Name>
+						<Name>can1_d0</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>15</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d2</Name>
+						<Name>can1_d1</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>16</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d3</Name>
+						<Name>can1_d2</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>17</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d4</Name>
+						<Name>can1_d3</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>18</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d5</Name>
+						<Name>can1_d4</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>19</SubIndex>
 						<BitLen>8</BitLen>
-						<Name>can1_d6</Name>
+						<Name>can1_d5</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 					<Entry>
 						<Index>#x7010</Index>
 						<SubIndex>20</SubIndex>
 						<BitLen>8</BitLen>
+						<Name>can1_d6</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>21</SubIndex>
+						<BitLen>8</BitLen>
 						<Name>can1_d7</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>22</SubIndex>
+						<BitLen>16</BitLen>
+						<Name>can2_h0</Name>
+						<DataType>INT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>23</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_h1</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>24</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_h2</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>25</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_h3</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>26</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_h4</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>27</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d0</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>28</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d1</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>29</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d2</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>30</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d3</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>31</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d4</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>32</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d5</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>33</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d6</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>34</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>can2_d7</Name>
+						<DataType>SINT</DataType>
+					</Entry>
+					<Entry>
+						<Index>#x7010</Index>
+						<SubIndex>35</SubIndex>
+						<BitLen>8</BitLen>
+						<Name>null_no</Name>
 						<DataType>SINT</DataType>
 					</Entry>
 				</RxPdo>
