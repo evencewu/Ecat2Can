@@ -24,7 +24,6 @@
 --------------------------------------------------------------------------------------*/
 
 
-#include "RST.h"
 
 #ifndef ECAT_TIMER_INC_P_MS
 /**
@@ -377,6 +376,11 @@ void Sync1_Isr(void)
 
 *////////////////////////////////////////////////////////////////////////////////////////
 
+
+#include "RST.h"
+#include "bsp_can.h"
+#include "bsp_led.h"
+
 UINT16 MainInit(void)
 {
     UINT16 Error = 0;
@@ -395,6 +399,10 @@ UINT16 MainInit(void)
 
     //user code
     rst_setup();
+
+    led_setup();
+    CAN1_Config();
+	CAN2_Config();
 
 
     /*Timer initialization*/

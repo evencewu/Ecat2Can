@@ -82,6 +82,8 @@ Lib/bsp/src/EXIT.c \
 Lib/bsp/src/RST.c \
 Lib/bsp/src/SPI1.c \
 Lib/bsp/src/Timer.c \
+Lib/bsp/src/bsp_can.c \
+Lib/bsp/src/bsp_led.c \
 Lib/bsp/src/system_stm32f4xx.c \
 Lib/ssc/src/bootmode.c \
 Lib/ssc/src/diag.c \

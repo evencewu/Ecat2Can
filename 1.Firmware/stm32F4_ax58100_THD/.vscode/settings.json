@@ -16,7 +16,8 @@
         "stdint.h": "c",
         "spi.h": "c",
         "stm32f4xx_conf.h": "c",
-        "rst.h": "c"
+        "rst.h": "c",
+        "bsp_led.h": "c"
     },
     "cortex-debug.armToolchainPath": "/usr/bin",
     "cortex-debug.openocdPath": "/usr/bin/openocd",

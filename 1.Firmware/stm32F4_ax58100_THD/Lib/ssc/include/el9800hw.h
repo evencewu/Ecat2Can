@@ -43,33 +43,11 @@ V5.01 : Start file change log
 
 extern	uint16_t uhADCxConvertedValue;
 
-#define SWITCH_1            PCin(12)				// PORTDbits.RD7 /**< \brief Access to switch 1 input*/
-#define SWITCH_2            PCin(11)				// PORTDbits.RD6 /**< \brief Access to switch 2 input*/
-#define SWITCH_3            PCin(10)				// PORTDbits.RD5 /**< \brief Access to switch 3 input*/
-#define SWITCH_4            PCin(9)				// PORTDbits.RD4 /**< \brief Access to switch 4 input*/
-#define SWITCH_5            PCin(8)				// PORTDbits.RD3 /**< \brief Access to switch 5 input*/
-#define SWITCH_6            PCin(7)				// PORTDbits.RD2 /**< \brief Access to switch 6 input*/
-#define SWITCH_7            PCin(6)				// PORTDbits.RD1 /**< \brief Access to switch 7 input*/
-#define SWITCH_8            PBin(15)				// PORTDbits.RD0 /**< \brief Access to switch 8 input*/
-
-#define LED_1               PBout(14)				// LATBbits.LATB8 /**< \brief Access to led 1 output*/
-#define LED_2               PBout(13)				//LATBbits.LATB9 /**< \brief Access to led 2 output*/
-#define LED_3               PBout(12)				// LATBbits.LATB10 /**< \brief Access to led 3 output*/
-#define LED_4               PBout(11)				//LATBbits.LATB11 /**< \brief Access to led 4 output*/
-#define LED_5               PBout(1)				// LATBbits.LATB12 /**< \brief Access to led 5 output*/
-#define LED_6               PBout(0)				// LATBbits.LATB13 /**< \brief Access to led 6 output*/
-#define LED_7               PCout(5)				//LATBbits.LATB14 /**< \brief Access to led 7 output*/
-#define LED_8               PCout(4)				//LATBbits.LATB15 /**< \brief Access to led 8 output*/
-
-
-
-
 /*---------------------------------------------
 -    hardware timer settings
 -----------------------------------------------*/
 
 #define ECAT_TIMER_INC_P_MS                2000 //72000   	//0x271 /**< \brief 625 ticks per ms*/
-
 
 
 /*---------------------------------------------

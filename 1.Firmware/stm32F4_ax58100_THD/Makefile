@@ -79,6 +79,8 @@ Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_flash.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmpi2c.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fsmc.c \
 Core/Src/stm32f4xx_it.c \
+Lib/bsp/src/bsp_can.c \
+Lib/bsp/src/bsp_led.c \
 Lib/bsp/src/RST.c \
 Lib/bsp/src/EXIT.c \
 Lib/bsp/src/SPI1.c \

@@ -1,11 +1,11 @@
-//############################################################
-//������ֻ��ѧϰʹ�ã�δ���������ɣ��������������κ���;
-//��Ȩ���У�����ؾ�
-//EtherCAT��վѧϰ��
-//Author��͢���������
-//�Ա�����: https://shop461235811.taobao.com/
-//�ҵĲ��ͣ�https://blog.csdn.net/zhandouhu/article/category/9455918
-//############################################################
+// ############################################################
+// ������ֻ��ѧϰʹ�ã�δ���������ɣ��������������κ���;
+// ��Ȩ���У�����ؾ�
+// EtherCAT��վѧϰ��
+// Author��͢���������
+// �Ա�����: https://shop461235811.taobao.com/
+// �ҵĲ��ͣ�https://blog.csdn.net/zhandouhu/article/category/9455918
+// ############################################################
 /**
 \addtogroup EL9800Appl EL9800 application
 @{
@@ -31,7 +31,6 @@ V4.50 COE2: Handle invalid PDO assign values.<br>
 V4.30 : create file
 */
 
-
 /*-----------------------------------------------------------------------------------------
 ------
 ------    Includes
@@ -45,7 +44,7 @@ V4.30 : create file
 #include "applInterface.h"
 /* ECATCHANGE_END(V5.11) ECAT11*/
 
-//#include "el9800hw.h"
+// #include "el9800hw.h"
 
 #define _EVALBOARD_
 #include "el9800appl.h"
@@ -85,10 +84,11 @@ V4.30 : create file
 /**
  \brief    The function is called when an error state was acknowledged by the master
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
-void    APPL_AckErrorInd(UINT16 stateTrans)
-{ 
+void APPL_AckErrorInd(UINT16 stateTrans)
+{
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -100,10 +100,11 @@ void    APPL_AckErrorInd(UINT16 stateTrans)
            informs the application about the state transition, the application can refuse
            the state transition when returning an AL Status error code.
            The return code NOERROR_INWORK can be used, if the application cannot confirm
-           the state transition immediately, in that case the application need to be complete 
+           the state transition immediately, in that case the application need to be complete
            the transition by calling ECAT_StateChange.
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
 UINT16 APPL_StartMailboxHandler(void)
 {
@@ -119,7 +120,8 @@ UINT16 APPL_StartMailboxHandler(void)
              about the state transition, the application cannot refuse
              the state transition.
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
 UINT16 APPL_StopMailboxHandler(void)
 {
@@ -138,9 +140,10 @@ UINT16 APPL_StopMailboxHandler(void)
              informs the application about the state transition, the application can refuse
              the state transition when returning an AL Status error code.
             The return code NOERROR_INWORK can be used, if the application cannot confirm
-            the state transition immediately, in that case the application need to be complete 
+            the state transition immediately, in that case the application need to be complete
             the transition by calling ECAT_StateChange.
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
 UINT16 APPL_StartInputHandler(UINT16 *pIntMask)
 {
@@ -156,7 +159,8 @@ UINT16 APPL_StartInputHandler(UINT16 *pIntMask)
              about the state transition, the application cannot refuse
              the state transition.
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
 UINT16 APPL_StopInputHandler(void)
 {
@@ -172,9 +176,10 @@ UINT16 APPL_StopInputHandler(void)
              informs the application about the state transition, the application can refuse
              the state transition when returning an AL Status error code.
            The return code NOERROR_INWORK can be used, if the application cannot confirm
-           the state transition immediately, in that case the application need to be complete 
+           the state transition immediately, in that case the application need to be complete
            the transition by calling ECAT_StateChange.
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 
 UINT16 APPL_StartOutputHandler(void)
 {
@@ -190,11 +195,14 @@ UINT16 APPL_StartOutputHandler(void)
              about the state transition, the application cannot refuse
              the state transition.
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
+
+#include "bsp_led.h"
 
 UINT16 APPL_StopOutputHandler(void)
 {
-/*ECATCHANGE_START(V5.11) EL9800 1*/
+    /*ECATCHANGE_START(V5.11) EL9800 1*/
     sDOOutputs.bLED1 = 0;
     sDOOutputs.bLED2 = 0;
     sDOOutputs.bLED3 = 0;
@@ -205,18 +213,35 @@ UINT16 APPL_StopOutputHandler(void)
     sDOOutputs.bLED6 = 0;
     sDOOutputs.bLED8 = 0;
 #endif
-    
-    LED_1                        = sDOOutputs.bLED1;
-    LED_2                        = sDOOutputs.bLED2;
-    LED_3                        = sDOOutputs.bLED3;
-    LED_4                        = sDOOutputs.bLED4;
-#if _STM32_IO8
-    LED_5                        = sDOOutputs.bLED5;
-    LED_7                        = sDOOutputs.bLED7;
-    LED_6                        = sDOOutputs.bLED6;
-    LED_8                        = sDOOutputs.bLED8;
-#endif
-/*ECATCHANGE_END(V5.11) EL9800 1*/
+
+    if (sDOOutputs.bLED1 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    }
+
+    if (sDOOutputs.bLED2 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_14);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+    }
+
+    if (sDOOutputs.bLED3 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_13);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+    }
+
+    /*ECATCHANGE_END(V5.11) EL9800 1*/
     return ALSTATUSCODE_NOERROR;
 }
 
@@ -228,13 +253,14 @@ UINT16 APPL_StopOutputHandler(void)
 
 \brief    This function calculates the process data sizes from the actual SM-PDO-Assign
             and PDO mapping
-*////////////////////////////////////////////////////////////////////////////////////////
-UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
+*/
+///////////////////////////////////////////////////////////////////////////////////////
+UINT16 APPL_GenerateMapping(UINT16 *pInputSize, UINT16 *pOutputSize)
 {
 #if COE_SUPPORTED
     UINT16 result = ALSTATUSCODE_NOERROR;
     UINT16 PDOAssignEntryCnt = 0;
-    OBJCONST TOBJECT OBJMEM * pPDO = NULL;
+    OBJCONST TOBJECT OBJMEM *pPDO = NULL;
     UINT16 PDOSubindex0 = 0;
     UINT32 *pPDOEntry = NULL;
     UINT16 PDOEntryCnt = 0;
@@ -242,19 +268,19 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
     UINT16 OutputSize = 0;
 
     /*Scan object 0x1C12 RXPDO assign*/
-    for(PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sRxPDOassign.u16SubIndex0; PDOAssignEntryCnt++)
+    for (PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sRxPDOassign.u16SubIndex0; PDOAssignEntryCnt++)
     {
         pPDO = OBJ_GetObjectHandle(sRxPDOassign.aEntries[PDOAssignEntryCnt]);
-        if(pPDO != NULL)
+        if (pPDO != NULL)
         {
             PDOSubindex0 = *((UINT16 *)pPDO->pVarPtr);
-            for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+            for (PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
             {
-			//				result = *(UINT8 *)pPDO->pVarPtr;
-			//				result=(OBJ_GetEntryOffset((PDOEntryCnt+1),pPDO)>>3);
-                pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCnt+1),pPDO)>>3));    //goto PDO entry
+                //				result = *(UINT8 *)pPDO->pVarPtr;
+                //				result=(OBJ_GetEntryOffset((PDOEntryCnt+1),pPDO)>>3);
+                pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCnt + 1), pPDO) >> 3)); // goto PDO entry
                 // we increment the expected output size depending on the mapped Entry
-                OutputSize += (UINT16) ((*pPDOEntry) & 0xFF);
+                OutputSize += (UINT16)((*pPDOEntry) & 0xFF);
             }
         }
         else
@@ -268,20 +294,20 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
 
     OutputSize = (OutputSize + 7) >> 3;
 
-    if(result == 0)
+    if (result == 0)
     {
         /*Scan Object 0x1C13 TXPDO assign*/
-        for(PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sTxPDOassign.u16SubIndex0; PDOAssignEntryCnt++)
+        for (PDOAssignEntryCnt = 0; PDOAssignEntryCnt < sTxPDOassign.u16SubIndex0; PDOAssignEntryCnt++)
         {
             pPDO = OBJ_GetObjectHandle(sTxPDOassign.aEntries[PDOAssignEntryCnt]);
-            if(pPDO != NULL)
+            if (pPDO != NULL)
             {
                 PDOSubindex0 = *((UINT16 *)pPDO->pVarPtr);
-                for(PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
+                for (PDOEntryCnt = 0; PDOEntryCnt < PDOSubindex0; PDOEntryCnt++)
                 {
-                    pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCnt+1),pPDO)>>3));    //goto PDO entry
+                    pPDOEntry = (UINT32 *)((UINT8 *)pPDO->pVarPtr + (OBJ_GetEntryOffset((PDOEntryCnt + 1), pPDO) >> 3)); // goto PDO entry
                     // we increment the expected output size depending on the mapped Entry
-                    InputSize += (UINT16) ((*pPDOEntry) & 0xFF);
+                    InputSize += (UINT16)((*pPDOEntry) & 0xFF);
                 }
             }
             else
@@ -303,42 +329,41 @@ UINT16 APPL_GenerateMapping(UINT16* pInputSize,UINT16* pOutputSize)
     *pOutputSize = 2;
     return ALSTATUSCODE_NOERROR;
 #endif
-
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
 \param      pData  pointer to input process data
 \brief      This function will copies the inputs from the local memory to the ESC memory
             to the hardware
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 #if _STM32_IO4 && AL_EVENT_ENABLED
 /* the pragma interrupt_level is used to tell the compiler that these functions will not
    be called at the same time from the main function and the interrupt routine */
 #pragma interrupt_level 1
 #endif
-void APPL_InputMapping(UINT16* pData)
+void APPL_InputMapping(UINT16 *pData)
 {
     UINT16 j = 0;
     UINT16 *pTmpData = (UINT16 *)pData;
 
     /* we go through all entries of the TxPDO Assign object to get the assigned TxPDOs */
-   for (j = 0; j < sTxPDOassign.u16SubIndex0; j++)
-   {
-      switch (sTxPDOassign.aEntries[j])
-      {
-      /* TxPDO 1 */
-      case 0x1A00:
-         *pTmpData++ = SWAPWORD(((UINT16 *) &sDIInputs)[1]);
-         break;
-      /* TxPDO 3 */
-      case 0x1A02:
-         *pTmpData++ = SWAPWORD(((UINT16 *) &sAIInputs)[1]);
-         *pTmpData++ = SWAPWORD(((UINT16 *) &sAIInputs)[2]);
-         break;
-      }
-   }
+    for (j = 0; j < sTxPDOassign.u16SubIndex0; j++)
+    {
+        switch (sTxPDOassign.aEntries[j])
+        {
+        /* TxPDO 1 */
+        case 0x1A00:
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sDIInputs)[1]);
+            break;
+        /* TxPDO 3 */
+        case 0x1A02:
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[1]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[2]);
+            break;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -347,13 +372,14 @@ void APPL_InputMapping(UINT16* pData)
 
 \brief    This function will copies the outputs from the ESC memory to the local memory
             to the hardware
-*////////////////////////////////////////////////////////////////////////////////////////
-#if _STM32_IO4  && AL_EVENT_ENABLED
+*/
+///////////////////////////////////////////////////////////////////////////////////////
+#if _STM32_IO4 && AL_EVENT_ENABLED
 /* the pragma interrupt_level is used to tell the compiler that these functions will not
    be called at the same time from the main function and the interrupt routine */
 #pragma interrupt_level 1
 #endif
-void APPL_OutputMapping(UINT16* pData)
+void APPL_OutputMapping(UINT16 *pData)
 {
     UINT16 j = 0;
     UINT16 *pTmpData = (UINT16 *)pData;
@@ -365,7 +391,14 @@ void APPL_OutputMapping(UINT16* pData)
         {
         /* RxPDO 2 */
         case 0x1601:
-            ((UINT16 *) &sDOOutputs)[1] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[1] = SWAPWORD(*pTmpData);
+            ((UINT16 *)&sDOOutputs)[2] = (SWAPWORD(*pTmpData) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+1)) & 0xFF) << 8; //
+            ((UINT16 *)&sDOOutputs)[3] = (SWAPWORD(*(pTmpData+1)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+2)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[4] = (SWAPWORD(*(pTmpData+2)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+3)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[5] = (SWAPWORD(*(pTmpData+3)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+4)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[6] = (SWAPWORD(*(pTmpData+4)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+5)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[7] = (SWAPWORD(*(pTmpData+5)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+6)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[8] = (SWAPWORD(*(pTmpData+6)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData+7)) & 0xFF) << 8;
             break;
         }
     }
@@ -373,55 +406,83 @@ void APPL_OutputMapping(UINT16* pData)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
-\brief    This function will called from the synchronisation ISR 
+\brief    This function will called from the synchronisation ISR
             or from the mainloop if no synchronisation is supported
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
+
+extern CanTxMsg Can1_TxMessage; // 发送缓冲区
+extern CanRxMsg Can1_RxMessage; // 接收缓冲区
+
+extern CanTxMsg Can2_TxMessage; // 发送缓冲区
+extern CanRxMsg Can2_RxMessage; // 接收缓冲区
+
 void APPL_Application(void)
 {
+    if (sDOOutputs.bLED1 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    }
 
-#if _STM32_IO4
-    UINT16 analogValue;
-#endif
-    LED_1                        = sDOOutputs.bLED1;
-    LED_2                        = sDOOutputs.bLED2;
-    LED_3                        = sDOOutputs.bLED3;
-    LED_4                        = sDOOutputs.bLED4;
-#if _STM32_IO8
-    LED_5                        = sDOOutputs.bLED5;
-    LED_7                        = sDOOutputs.bLED7;
-    LED_6                        = sDOOutputs.bLED6;
-    LED_8                        = sDOOutputs.bLED8;
-#endif	
-	if(sDOOutputs.bLED1){
-			GPIO_SetBits(GPIOB,GPIO_Pin_14);
-	}
-	else {
-		GPIO_ResetBits(GPIOB,GPIO_Pin_14);
-	}
-	
-	
-    sDIInputs.bSwitch1    = SWITCH_1;
-    sDIInputs.bSwitch2    = SWITCH_2;
-    sDIInputs.bSwitch3    = SWITCH_3;
-    sDIInputs.bSwitch4    = SWITCH_4;
-#if _STM32_IO8
-    sDIInputs.bSwitch5    = SWITCH_5;
-    sDIInputs.bSwitch6    = SWITCH_6;
-    sDIInputs.bSwitch7    = SWITCH_7;
-    sDIInputs.bSwitch8    = SWITCH_8;
-#endif
+    if (sDOOutputs.bLED2 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_14);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+    }
 
-				/* start the conversion of the A/D converter */
-//		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
-					
-		sAIInputs.i16Analoginput  = 0;
+     if (sDOOutputs.bLED3 != 0)
+    {
+         GPIO_SetBits(GPIOB, GPIO_Pin_13);
+     }
+     else
+    {
+         GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+     }
+
+    Can1_TxMessage.StdId = sDOOutputs.can1_h0;
+    Can1_TxMessage.ExtId = 0;
+    Can1_TxMessage.IDE = sDOOutputs.can1_h1;
+    Can1_TxMessage.RTR = sDOOutputs.can1_h2;
+    Can1_TxMessage.DLC = sDOOutputs.can1_h3;
+    
+    Can1_TxMessage.Data[0] = sDOOutputs.can1_d0;
+    Can1_TxMessage.Data[1] = sDOOutputs.can1_d1;
+    Can1_TxMessage.Data[2] = sDOOutputs.can1_d2;
+    Can1_TxMessage.Data[3] = sDOOutputs.can1_d3;
+    Can1_TxMessage.Data[4] = sDOOutputs.can1_d4;
+    Can1_TxMessage.Data[5] = sDOOutputs.can1_d5;
+    Can1_TxMessage.Data[6] = sDOOutputs.can1_d6;
+    Can1_TxMessage.Data[7] = sDOOutputs.can1_d7;
+
+    CAN_Transmit(CAN1, &Can1_TxMessage);
+    
+    sDIInputs.bSwitch1 = 0;
+    sDIInputs.bSwitch2 = 0;
+    sDIInputs.bSwitch3 = 0;
+    sDIInputs.bSwitch4 = 0;
+    sDIInputs.bSwitch5 = 0;
+    sDIInputs.bSwitch6 = 0;
+    sDIInputs.bSwitch7 = 0;
+    sDIInputs.bSwitch8 = 0;
+
+    /* start the conversion of the A/D converter */
+    //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
+
+    sAIInputs.i16Analoginput = 0;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
 
     /* we simulate a problem of the analog input, if the Switch4 is on in this example,
        in this case the TxPDO State has to set to indicate the problem to the master */
-    if ( sDIInputs.bSwitch4 )
+    if (sDIInputs.bSwitch4)
         sAIInputs.bTxPDOState = 1;
     else
         sAIInputs.bTxPDOState = 0;
@@ -439,40 +500,41 @@ void APPL_Application(void)
  \return    ABORTIDX_XXX
 
  \brief     Handles SDO read requests to TxPDO Parameter
-*////////////////////////////////////////////////////////////////////////////////////////
-UINT8 ReadObject0x1802( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM * pData, UINT8 bCompleteAccess )
+*/
+///////////////////////////////////////////////////////////////////////////////////////
+UINT8 ReadObject0x1802(UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM *pData, UINT8 bCompleteAccess)
 {
 
-    if(bCompleteAccess)
+    if (bCompleteAccess)
         return ABORTIDX_UNSUPPORTED_ACCESS;
 
-    if(subindex == 0)
+    if (subindex == 0)
     {
         *pData = TxPDO1802Subindex0;
     }
-    else if(subindex == 6)
+    else if (subindex == 6)
     {
         /*clear destination buffer (no excluded TxPDO set)*/
-        if(dataSize > 0)
-            MBXMEMSET(pData,0x00,dataSize);
+        if (dataSize > 0)
+            MBXMEMSET(pData, 0x00, dataSize);
     }
-    else if(subindex == 7)
+    else if (subindex == 7)
     {
         /*min size is one Byte*/
-        UINT8 *pu8Data = (UINT8*)pData;
-        
-        //Reset Buffer
-        *pu8Data = 0; 
+        UINT8 *pu8Data = (UINT8 *)pData;
+
+        // Reset Buffer
+        *pu8Data = 0;
 
         *pu8Data = sAIInputs.bTxPDOState;
     }
-    else if(subindex == 9)
+    else if (subindex == 9)
     {
         /*min size is one Byte*/
-        UINT8 *pu8Data = (UINT8*)pData;
-        
-        //Reset Buffer
-        *pu8Data = 0; 
+        UINT8 *pu8Data = (UINT8 *)pData;
+
+        // Reset Buffer
+        *pu8Data = 0;
 
         *pu8Data = sAIInputs.bTxPDOToggle;
     }
@@ -488,10 +550,11 @@ UINT8 ReadObject0x1802( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MB
  \return    The Explicit Device ID of the EtherCAT slave
 
  \brief     Calculate the Explicit Device ID
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 UINT16 APPL_GetDeviceID()
 {
-    UINT16 Value = (UINT16)(SWITCH_8<<7)|(SWITCH_7<<6)|(SWITCH_6<<5)|(SWITCH_5<<4)|(SWITCH_4<<3)|(SWITCH_3<<2)|(SWITCH_2<<1)|(SWITCH_1);
+    UINT16 Value = (UINT16)(SWITCH_8 << 7) | (SWITCH_7 << 6) | (SWITCH_6 << 5) | (SWITCH_5 << 4) | (SWITCH_4 << 3) | (SWITCH_3 << 2) | (SWITCH_2 << 1) | (SWITCH_1);
     return Value;
 }
 #endif
@@ -502,7 +565,8 @@ UINT16 APPL_GetDeviceID()
 
  \brief    This is the main function
 
-*////////////////////////////////////////////////////////////////////////////////////////
+*/
+///////////////////////////////////////////////////////////////////////////////////////
 uint32_t times = 0x1000000;
 #if _STM32_IO8
 int main(void)
@@ -515,21 +579,19 @@ void main(void)
 
     MainInit();
 
-		
     bRunApplication = TRUE;
-    do                                                                                                                                                                                                                                            
+    do
     {
         MainLoop();
 
     } while (bRunApplication == TRUE);
-		
-	
+
     HW_Release();
 #if _STM32_IO8
     return 0;
 #endif
 }
-#endif //#if USE_DEFAULT_MAIN
-#endif //#if EL9800_APPLICATION
+#endif // #if USE_DEFAULT_MAIN
+#endif // #if EL9800_APPLICATION
 
 /** @} */
