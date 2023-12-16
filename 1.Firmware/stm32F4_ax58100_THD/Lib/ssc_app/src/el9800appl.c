@@ -382,6 +382,32 @@ void APPL_InputMapping(UINT16 *pData)
         case 0x1A02:
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[1]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[2]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[3]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[4]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[5]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[6]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[7]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[8]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[9]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[10]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[11]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[12]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[13]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[20]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[21]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[22]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[23]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[24]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
             break;
         }
     }
@@ -516,6 +542,40 @@ void APPL_Application(void)
     //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
 
     sAIInputs.i16Analoginput = 0;
+
+    sAIInputs.can1_h0 = Can1_RxMessage.StdId;
+    sAIInputs.can1_h1 = Can1_RxMessage.ExtId;
+    sAIInputs.can1_h2 = Can1_RxMessage.IDE;
+    sAIInputs.can1_h3 = Can1_RxMessage.RTR;
+    sAIInputs.can1_h4 = Can1_RxMessage.DLC; 
+    
+    sAIInputs.can1_d0 = Can1_RxMessage.Data[0];
+    sAIInputs.can1_d1 = Can1_RxMessage.Data[1];
+    sAIInputs.can1_d2 = Can1_RxMessage.Data[2];
+    sAIInputs.can1_d3 = Can1_RxMessage.Data[3];
+    sAIInputs.can1_d4 = Can1_RxMessage.Data[4];
+    sAIInputs.can1_d5 = Can1_RxMessage.Data[5];
+    sAIInputs.can1_d6 = Can1_RxMessage.Data[6];
+    sAIInputs.can1_d7 = Can1_RxMessage.Data[7];
+
+    sAIInputs.can1_d7 = 223;
+
+    sAIInputs.can2_h0 = Can2_RxMessage.StdId;
+    sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
+    sAIInputs.can2_h2 = Can2_RxMessage.IDE;
+    sAIInputs.can2_h3 = Can2_RxMessage.RTR;
+    sAIInputs.can2_h4 = Can2_RxMessage.DLC; 
+    
+    sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
+    sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
+    sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
+    sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
+    sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
+    sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
+    sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
+    sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+
+    sAIInputs.can2_d7 = 223;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
