@@ -213,40 +213,12 @@ UINT16 APPL_StopOutputHandler(void)
     sDOOutputs.bLED2 = 0;
     sDOOutputs.bLED3 = 0;
     sDOOutputs.bLED4 = 0;
-#if _STM32_IO8
     sDOOutputs.bLED5 = 0;
     sDOOutputs.bLED7 = 0;
     sDOOutputs.bLED6 = 0;
     sDOOutputs.bLED8 = 0;
-#endif
-
-    if (sDOOutputs.bLED1 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-    }
-
-    if (sDOOutputs.bLED2 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_14);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-    }
-
-    if (sDOOutputs.bLED3 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_13);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
-    }
-
+    
+    /*
     Can1_TxMessage.StdId = 0;
     Can1_TxMessage.ExtId = 0;
     Can1_TxMessage.IDE = 0;
@@ -262,6 +234,22 @@ UINT16 APPL_StopOutputHandler(void)
     Can1_TxMessage.Data[6] = 0;
     Can1_TxMessage.Data[7] = 0;
 
+    Can2_TxMessage.StdId = 0;
+    Can2_TxMessage.ExtId = 0;
+    Can2_TxMessage.IDE = 0;
+    Can2_TxMessage.RTR = 0;
+    Can2_TxMessage.DLC = 0;
+    
+    Can2_TxMessage.Data[0] = 0;
+    Can2_TxMessage.Data[1] = 0;
+    Can2_TxMessage.Data[2] = 0;
+    Can2_TxMessage.Data[3] = 0;
+    Can2_TxMessage.Data[4] = 0;
+    Can2_TxMessage.Data[5] = 0;
+    Can2_TxMessage.Data[6] = 0;
+    Can2_TxMessage.Data[7] = 0;
+    */
+    
     /*ECATCHANGE_END(V5.11) EL9800 1*/
     return ALSTATUSCODE_NOERROR;
 }
@@ -510,6 +498,22 @@ void APPL_Application(void)
     Can1_TxMessage.Data[5] = sDOOutputs.can1_d5;
     Can1_TxMessage.Data[6] = sDOOutputs.can1_d6;
     Can1_TxMessage.Data[7] = sDOOutputs.can1_d7;
+/*
+    Can1_TxMessage.StdId = 0x01ff;
+    Can1_TxMessage.ExtId = 0;
+    Can1_TxMessage.IDE = 0;
+    Can1_TxMessage.RTR = 0;
+    Can1_TxMessage.DLC = 8;
+    
+    Can1_TxMessage.Data[0] = 0;
+    Can1_TxMessage.Data[1] = 0;
+    Can1_TxMessage.Data[2] = 1;
+    Can1_TxMessage.Data[3] = 0;
+    Can1_TxMessage.Data[4] = 1;
+    Can1_TxMessage.Data[5] = 0;
+    Can1_TxMessage.Data[6] = 0;
+    Can1_TxMessage.Data[7] = 0;
+*/
 
     Can2_TxMessage.StdId = sDOOutputs.can2_h0;
     Can2_TxMessage.ExtId = sDOOutputs.can2_h1;
@@ -558,8 +562,6 @@ void APPL_Application(void)
     sAIInputs.can1_d6 = Can1_RxMessage.Data[6];
     sAIInputs.can1_d7 = Can1_RxMessage.Data[7];
 
-    sAIInputs.can1_d7 = 223;
-
     sAIInputs.can2_h0 = Can2_RxMessage.StdId;
     sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
     sAIInputs.can2_h2 = Can2_RxMessage.IDE;
@@ -574,8 +576,6 @@ void APPL_Application(void)
     sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
-
-    sAIInputs.can2_d7 = 223;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
