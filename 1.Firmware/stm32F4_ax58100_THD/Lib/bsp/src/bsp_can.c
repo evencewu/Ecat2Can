@@ -105,7 +105,7 @@ static void CAN1_NVIC_Config(void)
 
     NVIC_InitStructure.NVIC_IRQChannel = CAN1_RX_IRQ; // CAN RX中断
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -224,7 +224,7 @@ static void CAN2_NVIC_Config(void)
 
     NVIC_InitStructure.NVIC_IRQChannel = CAN2_RX_IRQ; // CAN RX中断
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }

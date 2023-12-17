@@ -218,7 +218,6 @@ UINT16 APPL_StopOutputHandler(void)
     sDOOutputs.bLED6 = 0;
     sDOOutputs.bLED8 = 0;
     
-    /*
     Can1_TxMessage.StdId = 0;
     Can1_TxMessage.ExtId = 0;
     Can1_TxMessage.IDE = 0;
@@ -248,7 +247,6 @@ UINT16 APPL_StopOutputHandler(void)
     Can2_TxMessage.Data[5] = 0;
     Can2_TxMessage.Data[6] = 0;
     Can2_TxMessage.Data[7] = 0;
-    */
     
     /*ECATCHANGE_END(V5.11) EL9800 1*/
     return ALSTATUSCODE_NOERROR;
@@ -498,23 +496,9 @@ void APPL_Application(void)
     Can1_TxMessage.Data[5] = sDOOutputs.can1_d5;
     Can1_TxMessage.Data[6] = sDOOutputs.can1_d6;
     Can1_TxMessage.Data[7] = sDOOutputs.can1_d7;
-/*
-    Can1_TxMessage.StdId = 0x01ff;
-    Can1_TxMessage.ExtId = 0;
-    Can1_TxMessage.IDE = 0;
-    Can1_TxMessage.RTR = 0;
-    Can1_TxMessage.DLC = 8;
-    
-    Can1_TxMessage.Data[0] = 0;
-    Can1_TxMessage.Data[1] = 0;
-    Can1_TxMessage.Data[2] = 1;
-    Can1_TxMessage.Data[3] = 0;
-    Can1_TxMessage.Data[4] = 1;
-    Can1_TxMessage.Data[5] = 0;
-    Can1_TxMessage.Data[6] = 0;
-    Can1_TxMessage.Data[7] = 0;
-*/
 
+    CAN_Transmit(CAN1, &Can1_TxMessage);
+    
     Can2_TxMessage.StdId = sDOOutputs.can2_h0;
     Can2_TxMessage.ExtId = sDOOutputs.can2_h1;
     Can2_TxMessage.IDE = sDOOutputs.can2_h2;
@@ -530,7 +514,7 @@ void APPL_Application(void)
     Can2_TxMessage.Data[6] = sDOOutputs.can2_d6;
     Can2_TxMessage.Data[7] = sDOOutputs.can2_d7;
 
-    CAN_Transmit(CAN1, &Can1_TxMessage);
+    
     CAN_Transmit(CAN2, &Can2_TxMessage);
     
     sDIInputs.bSwitch1 = 0;
@@ -546,6 +530,7 @@ void APPL_Application(void)
     //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
 
     sAIInputs.i16Analoginput = 0;
+
 
     sAIInputs.can1_h0 = Can1_RxMessage.StdId;
     sAIInputs.can1_h1 = Can1_RxMessage.ExtId;

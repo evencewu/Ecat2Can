@@ -14,23 +14,30 @@
 #define GM6020_TAG2 0x2FF
 
 // GM6020_demo
-void GM6020_can_set(uint8_t canid, Ecat2Can_Outputs_Pack *pack, uint32_t tag, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
+
+namespace ecat
 {
+    class GM6020dlc
+    {
+    public:
+        GM6020dlc(uint8_t can_id, uint32_t motor_id);
+        void GM6020_can_set(Ecat2Can_Outputs_Pack *pack, uint16_t I);
+        void GM6020_can_analyze(Ecat2Can_Inputs_Pack *pack);
 
-    pack->can[canid-1].StdId = tag;
-    pack->can[canid-1].ExtId = 0x00;
-    pack->can[canid-1].IDE = 0x00;
-    pack->can[canid-1].RTR = 0x00;
-    pack->can[canid-1].DLC = 0x08;
+        /* motor rx data*/
+        int16_t pos = 0;
+        int16_t vec = 0;
+        int16_t toq = 0;
+        int8_t temp = 0;
 
-    pack->can[canid-1].Data[0] = v1 >> 8 & 0xFF;
-    pack->can[canid-1].Data[1] = v1 & 0xFF;
-    pack->can[canid-1].Data[2] = v2 >> 8 & 0xFF;
-    pack->can[canid-1].Data[3] = v2 & 0xFF;
-    pack->can[canid-1].Data[4] = v3 >> 8 & 0xFF;
-    pack->can[canid-1].Data[5] = v3 & 0xFF;
-    pack->can[canid-1].Data[6] = v4 >> 8 & 0xFF;
-    pack->can[canid-1].Data[7] = v4 & 0xFF;
+    private:
+        /* can&motor port*/
+        uint8_t can_id;
+        uint32_t motor_id;
+
+        /* motor tx data*/
+        int16_t I = 0; // Electric current
+    };
 }
 
 #endif
