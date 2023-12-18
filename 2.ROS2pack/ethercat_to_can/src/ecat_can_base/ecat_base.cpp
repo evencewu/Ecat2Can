@@ -81,7 +81,7 @@ namespace ecat
     {
         if (ec_slave[0].state == EC_STATE_OPERATIONAL)
         {
-            memcpy(ec_slave[0].outputs, &packet_tx, sizeof(packet_tx));
+            memcpy(ec_slave[0].outputs, &packet_tx, pdo_output_byte);
 
             ec_send_processdata();
 
@@ -89,7 +89,7 @@ namespace ecat
 
             if (wkc >= expectedWKC)
             {
-                memcpy(&packet_rx, ec_slave[0].outputs, sizeof(packet_rx));
+                memcpy(&packet_rx, ec_slave[0].inputs, pdo_input_byte);
             }
 
             osal_usleep(500);

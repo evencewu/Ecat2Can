@@ -10,8 +10,6 @@
 
 #define EC_VER1
 
-#define EC_TIMEOUTMON 500
-
 namespace ecat
 {
     class EcatBase
@@ -37,6 +35,7 @@ namespace ecat
         char IOmap[4096];
         volatile int wkc;
         int expectedWKC;
+        int EC_TIMEOUTMON=500;
     };
 }
 

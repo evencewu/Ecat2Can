@@ -105,7 +105,7 @@ static void CAN1_NVIC_Config(void)
 
     NVIC_InitStructure.NVIC_IRQChannel = CAN1_RX_IRQ; // CAN RX中断
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -189,7 +189,7 @@ static void CAN2_Filter_Config(void)
     CAN_FilterInitTypeDef CAN_FilterInitStructure;
 
     /*CAN筛选器初始化*/
-    CAN_FilterInitStructure.CAN_FilterNumber = 15; // 筛选器组0
+    CAN_FilterInitStructure.CAN_FilterNumber = 14; // 筛选器组0
     // 工作在掩码模式
     CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;
     // 筛选器位宽为单个32位。
@@ -207,12 +207,12 @@ static void CAN2_Filter_Config(void)
     // 筛选器低16位每位必须匹配
     CAN_FilterInitStructure.CAN_FilterMaskIdLow = 0;
     // 筛选器被关联到FIFO0
-    CAN_FilterInitStructure.CAN_FilterFIFOAssignment = CAN_Filter_FIFO1;
+    CAN_FilterInitStructure.CAN_FilterFIFOAssignment = CAN_Filter_FIFO0;
     // 使能筛选器
     CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
     CAN_FilterInit(&CAN_FilterInitStructure);
     /*CAN通信中断使能*/
-    CAN_ITConfig(CAN2, CAN_IT_FMP1, ENABLE);
+    CAN_ITConfig(CAN2, CAN_IT_FMP0, ENABLE);
 }
 
 static void CAN2_NVIC_Config(void)
@@ -224,7 +224,7 @@ static void CAN2_NVIC_Config(void)
 
     NVIC_InitStructure.NVIC_IRQChannel = CAN2_RX_IRQ; // CAN RX中断
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
@@ -244,7 +244,9 @@ void CAN1_RX0_IRQHandler(void)
 
     /*从邮箱中读出报文*/
     CAN_Receive(CAN1, CAN_FIFO0, &Can1_RxMessage);
+    //GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
 
+    GPIO_ToggleBits(GPIOB, GPIO_Pin_14);
     //if (Can1_RxMessage.StdId == 0x205)
     //{
     //    can1_rx_flag = 1;
@@ -254,5 +256,6 @@ void CAN1_RX0_IRQHandler(void)
 void CAN2_RX0_IRQHandler(void)
 {
     /*从邮箱中读出报文*/
-    CAN_Receive(CAN2, CAN_FIFO1, &Can2_RxMessage);
+    GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
+    CAN_Receive(CAN2, CAN_FIFO0, &Can2_RxMessage);
 }

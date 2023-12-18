@@ -21,8 +21,8 @@ namespace ecat
     {
     public:
         GM6020dlc(uint8_t can_id, uint32_t motor_id);
-        void GM6020_can_set(Ecat2Can_Outputs_Pack *pack, uint16_t I);
-        void GM6020_can_analyze(Ecat2Can_Inputs_Pack *pack);
+        void GM6020_can_set(Ecat_Outputs_Pack *pack, uint16_t I_);
+        void GM6020_can_analyze(Ecat_Inputs_Pack *pack);
 
         /* motor rx data*/
         int16_t pos = 0;

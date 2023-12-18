@@ -31,13 +31,13 @@ namespace ecat
         can_pack can[2];
 
         uint8_t LED;
-    } __attribute__((packed)) Ecat2Can_Outputs_Pack;
+    } __attribute__((packed)) Ecat_Outputs_Pack;
 
     /// @brief ecat pdo recive data (slv to master)
     typedef struct Ecat_Inputs_Pack
     {
         can_pack can[2];
-    } __attribute__((packed)) Ecat2Can_Inputs_Pack;
+    } __attribute__((packed)) Ecat_Inputs_Pack;
 
 #endif
 
@@ -47,7 +47,7 @@ namespace ecat
         uint8_t LED;
         can_pack can[2];
         uint8_t null;
-    } __attribute__((packed)) Ecat2Can_Outputs_Pack;
+    } __attribute__((packed)) Ecat_Outputs_Pack;
 
     /// @brief ecat pdo recive data (slv to master)
     typedef struct Ecat_Inputs_Pack
@@ -56,7 +56,7 @@ namespace ecat
         uint8_t null[5];
 
         can_pack can[2];
-    } __attribute__((packed)) Ecat2Can_Inputs_Pack;
+    } __attribute__((packed)) Ecat_Inputs_Pack;
 
 }
 #endif

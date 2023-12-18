@@ -8,10 +8,10 @@
 
 
 bool app_stopped = false;
-Ecat2Can_Outputs_Pack packet_tx;
-Ecat2Can_Inputs_Pack packet_rx;
+Ecat_Outputs_Pack packet_tx;
+Ecat_Inputs_Pack packet_rx;
 
-void Stop_all(Ecat2Can_Outputs_Pack *packet_tx, Ecat2Can_Inputs_Pack *packet_rx);
+void Stop_all(Ecat_Outputs_Pack *packet_tx, Ecat_Inputs_Pack *packet_rx);
 void sigint_handler(int sig);
 
 int main()
@@ -21,7 +21,7 @@ int main()
     char phy[] = "enp5s0";
     EcatStart(phy);
 
-    memset(&packet_tx, 0, sizeof(Ecat2Can_Outputs_Pack));
+    memset(&packet_tx, 0, sizeof(Ecat_Outputs_Pack));
     EcatSyncMsg((uint8_t *)&packet_tx, (uint8_t *)&packet_rx);
 
     //-------------//
@@ -96,9 +96,9 @@ int main()
 }
 
 // stop
-void Stop_all(Ecat2Can_Outputs_Pack *packet_tx, Ecat2Can_Inputs_Pack *packet_rx)
+void Stop_all(Ecat_Outputs_Pack *packet_tx, Ecat_Inputs_Pack *packet_rx)
 {
-    // memset(&packet, 0, sizeof(Ecat2Can_Outputs_Pack));
+    // memset(&packet, 0, sizeof(Ecat_Outputs_Pack));
 
     // stop led
     packet_tx->LED = 0x00;
