@@ -55,7 +55,7 @@
 
 float uint_to_float(int x_int, float x_min, float x_max, int bits);
 int float_to_uint(float x, float x_min, float x_max, int bits);
-void DM_can_set(uint8_t canid, Ecat2Can_Outputs_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq);
+void DM_can_set(uint8_t canid, ecat::Ecat_Outputs_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq);
 
 
 #endif

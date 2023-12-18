@@ -8,52 +8,55 @@
 
 #define USE_SSC
 
-/// @brief Standard can packet
-struct can_pack
+namespace ecat
 {
-    uint16_t StdId;
-    uint8_t ExtId;
-    //uint32_t ExtId;
-    uint8_t IDE;
-    uint8_t RTR;
-    uint8_t DLC;
+    /// @brief Standard can packet
+    struct can_pack
+    {
+        uint16_t StdId;
+        uint8_t ExtId;
+        // uint32_t ExtId;
+        uint8_t IDE;
+        uint8_t RTR;
+        uint8_t DLC;
 
-    uint8_t Data[8];
-};
+        uint8_t Data[8];
+    };
 
 #ifndef USE_SSC
 
-/// @brief ecat pdo send data (master to slv)
-typedef struct Ecat2Can_Outputs_Pack
-{
-    can_pack can[2];
+    /// @brief ecat pdo send data (master to slv)
+    typedef struct Ecat_Outputs_Pack
+    {
+        can_pack can[2];
 
-    uint8_t LED;
-} __attribute__((packed)) Ecat2Can_Outputs_Pack;
+        uint8_t LED;
+    } __attribute__((packed)) Ecat2Can_Outputs_Pack;
 
-/// @brief ecat pdo recive data (slv to master)
-typedef struct Ecat2Can_Inputs_Pack
-{
-    can_pack can[2];
-} __attribute__((packed)) Ecat2Can_Inputs_Pack;
+    /// @brief ecat pdo recive data (slv to master)
+    typedef struct Ecat_Inputs_Pack
+    {
+        can_pack can[2];
+    } __attribute__((packed)) Ecat2Can_Inputs_Pack;
 
 #endif
 
-/// @brief ecat pdo send data (master to slv)
-typedef struct Ecat2Can_Outputs_Pack
-{
-    uint8_t LED;
-    can_pack can[2];
-    uint8_t null;
-} __attribute__((packed)) Ecat2Can_Outputs_Pack;
+    /// @brief ecat pdo send data (master to slv)
+    typedef struct Ecat_Outputs_Pack
+    {
+        uint8_t LED;
+        can_pack can[2];
+        uint8_t null;
+    } __attribute__((packed)) Ecat2Can_Outputs_Pack;
 
-/// @brief ecat pdo recive data (slv to master)
-typedef struct Ecat2Can_Inputs_Pack
-{
-    uint8_t switch_io;
-    uint8_t null[5];
+    /// @brief ecat pdo recive data (slv to master)
+    typedef struct Ecat_Inputs_Pack
+    {
+        uint8_t switch_io;
+        uint8_t null[5];
 
-    can_pack can[2];
-} __attribute__((packed)) Ecat2Can_Inputs_Pack;
+        can_pack can[2];
+    } __attribute__((packed)) Ecat2Can_Inputs_Pack;
 
+}
 #endif

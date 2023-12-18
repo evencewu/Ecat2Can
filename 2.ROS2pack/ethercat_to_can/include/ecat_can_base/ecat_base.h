@@ -6,6 +6,7 @@
 #include <inttypes.h>
 
 #include "soem_ros2/soem.h"
+#include "ecat_can_base/ecat_typedef.h"
 
 #define EC_VER1
 
@@ -20,10 +21,13 @@ namespace ecat
         ~EcatBase();
 
         void EcatStart(char *ifname);
-        void EcatSyncMsg(uint8_t *output_data, uint8_t *input_data);
+        void EcatSyncMsg();
         void EcatStop();
 
         void SetUserStop(void (*save_stop)());
+
+        Ecat_Outputs_Pack packet_tx;
+        Ecat_Inputs_Pack packet_rx;
     private:
         void (*UserStop)();
 

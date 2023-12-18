@@ -14,7 +14,7 @@ int float_to_uint(float x, float x_min, float x_max, int bits)
 }
 
 // DM4310_demo
-void DM_can_set(uint8_t canid, Ecat2Can_Outputs_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq)
+void DM_can_set(uint8_t canid, ecat::Ecat_Outputs_Pack *pack, int mode, uint8_t id,float _pos, float _vel, float _KP, float _KD, float _torq)
 {
     if (_KP > KP_MAX)_KP = KP_MAX;
     else if (_KP < KP_MIN)_KP = KP_MIN;

@@ -6,6 +6,8 @@ namespace ecat
 {
     EcatBase::EcatBase()
     {
+        memset(&packet_tx, 0, sizeof(Ecat_Outputs_Pack));
+        memset(&packet_rx, 0, sizeof(Ecat_Inputs_Pack));
     }
 
     EcatBase::~EcatBase()
@@ -75,14 +77,11 @@ namespace ecat
     /// @brief Data sending and receiving, calling in a loop
     /// @param output_data Pointer to the output data
     /// @param input_data  Pointer to the input data
-    void EcatBase::EcatSyncMsg(uint8_t *output_data, uint8_t *input_data)
+    void EcatBase::EcatSyncMsg()
     {
         if (ec_slave[0].state == EC_STATE_OPERATIONAL)
         {
-            for (int i = 0; i < pdo_output_byte; i++)
-            {
-                ec_slave[0].outputs[i] = *(output_data + i);
-            }
+            memcpy(ec_slave[0].outputs, &packet_tx, sizeof(packet_tx));
 
             ec_send_processdata();
 
@@ -90,10 +89,7 @@ namespace ecat
 
             if (wkc >= expectedWKC)
             {
-                for (int i = 0; i < pdo_input_byte; i++)
-                {
-                    *(input_data + i) = ec_slave[0].inputs[i];
-                }
+                memcpy(&packet_rx, ec_slave[0].outputs, sizeof(packet_rx));
             }
 
             osal_usleep(500);
